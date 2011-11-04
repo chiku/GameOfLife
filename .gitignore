@@ -1,0 +1,3 @@
+**/*.o
+.sconsign.dblite
+tests/check_game_of_life
