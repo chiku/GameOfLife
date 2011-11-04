@@ -1,3 +1,3 @@
 env = Environment(CPPPATH = ['src'])
-env.Program('tests/check_game_of_life.c', LIBS=['check'])
+env.Program('tests/game_of_life_tests', ['src/cell.c', 'src/world.c', 'tests/test_suite.c'], LIBS=['check'])
 
