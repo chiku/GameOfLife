@@ -4,11 +4,11 @@
 
 const long int MAX_WORLD_SIZE = 10000;
 
-World World_Initialize()
+World *World_Initialize()
 {
-	World self;
-	self.cell_count = 0;
-	self.cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
+	World *self = (World*) (malloc( sizeof(World) ));
+	self->cell_count = 0;
+	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
 	return self;
 }
 
@@ -43,9 +43,25 @@ int World_Has_Cell(World *self, Cell *cell)
 	return 0;
 }
 
+int World_Has_Cell_At(World *self, int x, int y)
+{
+	int i;
+	for (i = 0; i < self->cell_count; i++)
+		if (self->cells[i]->x == x && self->cells[i]->y == y)
+			return 1;
+	return 0;
+}
+
 void World_Tick(World *self)
 {
-	// LEAK
-	*self = World_Initialize();
+	World *new_world = World_Initialize();
+	int count, i;
+
+	for (i = 0; i < self->cell_count; i++) {
+		count = Cell_Total_Neighbours(self->cells[i]);
+		if (count == 2 || count == 3)
+			World_Add_Cell(new_world, self->cells[i]);
+	}
+	*self = *new_world;
 }
 

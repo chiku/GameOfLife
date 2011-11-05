@@ -28,11 +28,12 @@ Cell* Cell_Spawn_At(Cell *self, long int x, long int y);
 long int Cell_Total_Neighbours(Cell *self);
 
 
-World World_Initialize();
+World* World_Initialize();
 void World_Destroy(World *self);
 Cell** World_Cells(World *self);
 long int World_Cell_Count(World *self);
 int World_Has_Cell(World *self, Cell* cell);
+int World_Has_Cell_At(World *self, int x, int y);
 void World_Tick(World *self);
 
 #endif /* GAME_OF_LIFE_H */
