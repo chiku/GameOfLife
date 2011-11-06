@@ -13,8 +13,7 @@ Suite *create_game_of_life_suite(void)
 
 	TCase *tc_cell = tcase_create("Cell");
 	tcase_add_test(tc_cell, test_Cell_Is_created_at_origin);
-	tcase_add_test(tc_cell, test_Cell_Is_spawned_relative_to_an_existing_cell);
-	tcase_add_test(tc_cell, test_Cell_Is_spawned_in_the_same_world);
+	tcase_add_test(tc_cell, test_Cell_Is_created_at_specified_location);
 	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north);
 	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north_east);
 	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_east);
@@ -24,6 +23,9 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_west);
 	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north_west);
 	tcase_add_test(tc_cell, test_Cell_Knows_does_not_consider_far_away_cell_as_neighbours);
+	tcase_add_test(tc_cell, test_Cell_Is_at_location_when_its_coordinates_and_world_match);
+	tcase_add_test(tc_cell, test_Cell_Is_not_at_location_when_its_coordinates_do_not_match);
+	tcase_add_test(tc_cell, test_Cell_Is_not_at_location_when_its_world_does_not_match);
 	suite_add_tcase(s, tc_cell);
 
 	TCase *tc_world = tcase_create("World");
@@ -32,7 +34,9 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_world, test_World_knows_its_cell_count);
 	tcase_add_test(tc_world, test_World_if_it_has_a_cell);
 	tcase_add_test(tc_world, test_World_if_it_has_a_cell_at_specified_location);
-	tcase_add_test(tc_world, test_World_has_the_neighbours_for_a_cell);
+	tcase_add_test(tc_world, test_World_does_not_have_a_cell_at_specified_location_when_cell_is_in_different_world);
+	tcase_add_test(tc_world, test_World_knows_living_cell_count_around_an_occupied_location);
+	tcase_add_test(tc_world, test_World_knows_living_cell_count_around_an_unoccupied_location);
 	suite_add_tcase(s, tc_world);
 
 	TCase *tc_rules = tcase_create("Rules");
@@ -53,7 +57,7 @@ int main(void)
 	Suite *game_of_life_suite = create_game_of_life_suite();
 	SRunner *game_of_life_suite_runner = srunner_create(game_of_life_suite);
 
-	srunner_run_all(game_of_life_suite_runner, CK_VERBOSE);
+	srunner_run_all(game_of_life_suite_runner, CK_NORMAL);
 
 	number_failed = srunner_ntests_failed(game_of_life_suite_runner);
 	srunner_free(game_of_life_suite_runner);

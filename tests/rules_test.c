@@ -16,7 +16,7 @@ START_TEST (test_Rule_1_Any_live_cell_with_one_live_neighbour_dies_As_if_caused_
 {
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world);
-	Cell_Spawn_At(cell, 0, 1);
+	Cell_Initialize_At(world, 0, 1);
 
 	World_Tick(world);
 
@@ -31,8 +31,8 @@ START_TEST (test_Rule_2_Any_live_cell_with_two_live_neighbours_lives_on_to_the_n
 {
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world);
-	Cell_Spawn_At(cell, 0, 1);
-	Cell_Spawn_At(cell, 1, 1);
+	Cell_Initialize_At(world, 0, 1);
+	Cell_Initialize_At(world, 1, 1);
 
 	World_Tick(world);
 
@@ -47,9 +47,9 @@ START_TEST (test_Rule_2_Any_live_cell_with_three_live_neighbours_lives_on_to_the
 {
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world);
-	Cell_Spawn_At(cell, 0, 1);
-	Cell_Spawn_At(cell, 1, 0);
-	Cell_Spawn_At(cell, 1, 1);
+	Cell_Initialize_At(world, 0, 1);
+	Cell_Initialize_At(world, 1, 0);
+	Cell_Initialize_At(world, 1, 1);
 
 	World_Tick(world);
 
@@ -64,10 +64,10 @@ START_TEST (test_Rule_3_Any_live_cell_with_more_than_three_live_neighbours_dies_
 {
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world);
-	Cell_Spawn_At(cell, 0, 1);
-	Cell_Spawn_At(cell, 1, 0);
-	Cell_Spawn_At(cell, 1, 1);
-	Cell_Spawn_At(cell, -1, 1);
+	Cell_Initialize_At(world, 0, 1);
+	Cell_Initialize_At(world, 1, 0);
+	Cell_Initialize_At(world, 1, 1);
+	Cell_Initialize_At(world, -1, 1);
 
 	World_Tick(world);
 
@@ -82,8 +82,8 @@ START_TEST (test_Rule_4_Any_dead_cell_with_exactly_three_live_neighbours_becomes
 {
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world);
-	Cell_Spawn_At(cell, 0, 1);
-	Cell_Spawn_At(cell, 1, 1);
+	Cell_Initialize_At(world, 0, 1);
+	Cell_Initialize_At(world, 1, 1);
 
 	fail("Unimplemented");
 

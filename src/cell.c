@@ -4,9 +4,14 @@
 
 Cell* Cell_Initialize(World *world)
 {
+	return Cell_Initialize_At(world, 0, 0);
+}
+
+Cell* Cell_Initialize_At(World *world, int x, int y)
+{
 	Cell *self = (Cell*) (malloc( sizeof(Cell) ));
-	self->x = 0;
-	self->y = 0;
+	self->x = x;
+	self->y = y;
 	self->world = world;
 	World_Add_Cell(world, self);
 	return self;
@@ -32,33 +37,13 @@ World* Cell_World(Cell *self)
 	return self->world;
 }
 
-Cell* Cell_Spawn_At(Cell *self, long int x, long int y)
-{
-	Cell *new_cell = Cell_Initialize(self->world);
-	new_cell->x = x;
-	new_cell->y = y;
-	return new_cell;
-}
-
 long int Cell_Total_Neighbours(Cell *self)
 {
-	long int count = 0, i;
-	Cell *other_cell;
-	Cell **all_cells = World_Cells(self->world);
-	long int all_cells_count = World_Cell_Count(self->world);
+	return World_Cell_Count_Around(self->world, self->x, self->y);
+}
 
-	for (i = 0; i < all_cells_count; i++) {
-		other_cell = all_cells[i];
-		if (self->x     == other_cell->x && self->y + 1 == other_cell->y) count += 1;
-		if (self->x + 1 == other_cell->x && self->y + 1 == other_cell->y) count += 1;
-		if (self->x + 1 == other_cell->x && self->y     == other_cell->y) count += 1;
-		if (self->x + 1 == other_cell->x && self->y - 1 == other_cell->y) count += 1;
-		if (self->x     == other_cell->x && self->y - 1 == other_cell->y) count += 1;
-		if (self->x - 1 == other_cell->x && self->y - 1 == other_cell->y) count += 1;
-		if (self->x - 1 == other_cell->x && self->y     == other_cell->y) count += 1;
-		if (self->x - 1 == other_cell->x && self->y + 1 == other_cell->y) count += 1;
-	}
-
-	return count;
+int Cell_Is_At(Cell *self, World *world, int x, int y)
+{
+	return (self->world == world && self->x == x && self->y ==y) ? 1 : 0;
 }
 
