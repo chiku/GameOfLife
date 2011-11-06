@@ -20,7 +20,7 @@ Cell* Cell_Initialize_At(World *world, long int x, long int y)
 
 void Cell_Destroy(Cell *self)
 {
-	// LEAK
+	free(self);
 }
 
 long int Cell_X(Cell *self)

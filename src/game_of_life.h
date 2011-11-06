@@ -42,8 +42,9 @@ long int World_Cell_Count(World *self);
 int World_Has_Cell(World *self, Cell* cell);
 int World_Has_Cell_At(World *self, long int x, long int y);
 int World_Cell_Count_Around(World *self, long int x, long int y);
-void World_Tick(World *self);
 World* World_All_Potential_Births(World *self);
+
+World* World_Tick(World *self);
 
 void World_Dump(World *self);
 /* World Methods */

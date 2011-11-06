@@ -15,8 +15,11 @@ World *World_Initialize()
 
 void World_Destroy(World *self)
 {
-	// LEAK
+	int i;
+	for (i = 0; i < self->cell_count; i++)
+		free(self->cells[i]);
 	free(self->cells);
+	free(self);
 }
 
 Cell** World_Cells(World *self)
@@ -110,16 +113,17 @@ World* World_All_Potential_Births(World *self)
 	return potential_births;
 }
 
-void World_Tick(World *self)
+World* World_Tick(World *self)
 {
 	World *new_world = World_Initialize();
 	Cell *cell, *new_cell;
 	int count, i;
 
 	for (i = 0; i < self->cell_count; i++) {
-		count = Cell_Total_Neighbours(self->cells[i]);
+		cell = self->cells[i];
+		count = Cell_Total_Neighbours(cell);
 		if (count == 2 || count == 3)
-			World_Add_Cell(new_world, self->cells[i]);
+			new_cell = Cell_Initialize_At(new_world, Cell_X(cell), Cell_Y(cell));
 	}
 
 	World *potential_births = World_All_Potential_Births(self);
@@ -128,11 +132,10 @@ void World_Tick(World *self)
 		count = World_Cell_Count_Around(self, Cell_X(cell), Cell_Y(cell));
 		if (count == 3) {
 			new_cell = Cell_Initialize_At(new_world, Cell_X(cell), Cell_Y(cell));
-			new_cell->world = self; // HACK
 		}
 	}
 
-	*self = *new_world; // LEAK
+	return new_world;
 }
 
 void World_Dump(World *self)
