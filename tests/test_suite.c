@@ -37,6 +37,7 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_world, test_World_does_not_have_a_cell_at_specified_location_when_cell_is_in_different_world);
 	tcase_add_test(tc_world, test_World_knows_living_cell_count_around_an_occupied_location);
 	tcase_add_test(tc_world, test_World_knows_living_cell_count_around_an_unoccupied_location);
+	tcase_add_test(tc_world, test_World_knows_all_dead_cell_locations_near_all_living_cells);
 	suite_add_tcase(s, tc_world);
 
 	TCase *tc_rules = tcase_create("Rules");
@@ -46,6 +47,9 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_rules, test_Rule_2_Any_live_cell_with_three_live_neighbours_lives_on_to_the_next_generation);
 	tcase_add_test(tc_rules, test_Rule_3_Any_live_cell_with_more_than_three_live_neighbours_dies_As_if_by_overcrowding);
 	tcase_add_test(tc_rules, test_Rule_4_Any_dead_cell_with_exactly_three_live_neighbours_becomes_a_live_cell_As_if_by_reproduction);
+	tcase_add_test(tc_rules, test_Rule_4_Any_dead_cell_with_two_live_neighbours_does_not_become_a_live_cell);
+	tcase_add_test(tc_rules, test_Rule_4_Any_dead_cell_with_four_live_neighbours_does_not_become_a_live_cell);
+
 	suite_add_tcase(s, tc_rules);
 
 	return s;

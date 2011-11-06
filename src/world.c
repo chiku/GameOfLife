@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #include <game_of_life.h>
@@ -31,6 +32,9 @@ long int World_Cell_Count(World *self)
 
 void World_Add_Cell(World *self, Cell *cell)
 {
+	if ( World_Has_Cell_At(self, Cell_X(cell), Cell_Y(cell)) )
+		return;
+
 	self->cells[self->cell_count] = cell;
 	self->cell_count ++;
 }
@@ -44,7 +48,7 @@ int World_Has_Cell(World *self, Cell *cell)
 	return 0;
 }
 
-int World_Has_Cell_At(World *self, int x, int y)
+int World_Has_Cell_At(World *self, long int x, long int y)
 {
 	long int i;
 	for (i = 0; i < self->cell_count; i++)
@@ -53,9 +57,9 @@ int World_Has_Cell_At(World *self, int x, int y)
 	return 0;
 }
 
-int World_Cell_Count_Around(World *self, int x, int y)
+int World_Cell_Count_Around(World *self, long int x, long int y)
 {
-	long int count = 0, i, j, k;
+	long int count = 0, i;
 	Cell *cell;
 
 	for (i = 0; i < self->cell_count; i++) {
@@ -75,9 +79,41 @@ int World_Cell_Count_Around(World *self, int x, int y)
 	return count;
 }
 
+World* World_All_Potential_Births(World *self)
+{
+	long int i, x, y;
+	Cell *cell;
+	World *potential_births = World_Initialize();
+
+	for (i = 0; i < self->cell_count; i++) {
+		cell = self->cells[i];
+		x = Cell_X(cell);
+		y = Cell_Y(cell);
+		if (!World_Has_Cell_At(self, x - 1, y - 1))
+			Cell_Initialize_At(potential_births, x - 1, y - 1);
+		if (!World_Has_Cell_At(self, x - 1, y    ))
+			Cell_Initialize_At(potential_births, x - 1, y    );
+		if (!World_Has_Cell_At(self, x - 1, y + 1))
+			Cell_Initialize_At(potential_births, x - 1, y + 1);
+		if (!World_Has_Cell_At(self, x    , y - 1))
+			Cell_Initialize_At(potential_births, x    , y - 1);
+		if (!World_Has_Cell_At(self, x    , y + 1))
+			Cell_Initialize_At(potential_births, x    , y + 1);
+		if (!World_Has_Cell_At(self, x + 1, y - 1))
+			Cell_Initialize_At(potential_births, x + 1, y - 1);
+		if (!World_Has_Cell_At(self, x + 1, y    ))
+			Cell_Initialize_At(potential_births, x + 1, y    );
+		if (!World_Has_Cell_At(self, x + 1, y + 1))
+			Cell_Initialize_At(potential_births, x + 1, y + 1);
+	}
+
+	return potential_births;
+}
+
 void World_Tick(World *self)
 {
 	World *new_world = World_Initialize();
+	Cell *cell, *new_cell;
 	int count, i;
 
 	for (i = 0; i < self->cell_count; i++) {
@@ -85,6 +121,28 @@ void World_Tick(World *self)
 		if (count == 2 || count == 3)
 			World_Add_Cell(new_world, self->cells[i]);
 	}
-	*self = *new_world;
+
+	World *potential_births = World_All_Potential_Births(self);
+	for (i = 0; i < potential_births->cell_count; i++) {
+		cell = potential_births->cells[i];
+		count = World_Cell_Count_Around(self, Cell_X(cell), Cell_Y(cell));
+		if (count == 3) {
+			new_cell = Cell_Initialize_At(new_world, Cell_X(cell), Cell_Y(cell));
+			new_cell->world = self; // HACK
+		}
+	}
+
+	*self = *new_world; // LEAK
+}
+
+void World_Dump(World *self)
+{
+	int i;
+
+	printf("Pointer to world = %p\n", self);
+	printf("Total cells = %ld\n", self->cell_count);
+	for (i = 0; i < self->cell_count; i++)
+		Cell_Dump(self->cells[i]);
+	printf("\n");
 }
 
