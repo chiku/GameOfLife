@@ -12,7 +12,7 @@ Suite *create_game_of_life_suite(void)
 	Suite *s = suite_create("Game of Life");
 
 	TCase *tc_cell = tcase_create("Cell");
-	tcase_add_test(tc_cell, test_Cell_Is_created_at_origin);
+	tcase_add_test(tc_cell, test_Cell_Is_created_at_specified_world);
 	tcase_add_test(tc_cell, test_Cell_Is_created_at_specified_location);
 	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north);
 	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north_east);

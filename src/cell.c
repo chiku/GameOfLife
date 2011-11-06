@@ -3,14 +3,16 @@
 
 #include <game_of_life.h>
 
-Cell* Cell_Initialize(World *world)
+/* Private */
+Cell* Cell_Create()
 {
-	return Cell_Initialize_At(world, 0, 0);
+	return (Cell*) (malloc( sizeof(Cell) ));
 }
+/* Private */
 
-Cell* Cell_Initialize_At(World *world, long int x, long int y)
+Cell* Cell_Initialize(World *world, long int x, long int y)
 {
-	Cell *self = (Cell*) (malloc( sizeof(Cell) ));
+	Cell *self = Cell_Create();
 	self->x = x;
 	self->y = y;
 	self->world = world;

@@ -5,11 +5,19 @@
 
 const long int MAX_WORLD_SIZE = 10000;
 
-World *World_Initialize()
+/* Private */
+World* World_Create()
 {
 	World *self = (World*) (malloc( sizeof(World) ));
-	self->cell_count = 0;
 	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
+	return self;
+}
+/* Private */
+
+World *World_Initialize()
+{
+	World *self = World_Create();
+	self->cell_count = 0;
 	return self;
 }
 
@@ -93,21 +101,21 @@ World* World_All_Potential_Births(World *self)
 		x = Cell_X(cell);
 		y = Cell_Y(cell);
 		if (!World_Has_Cell_At(self, x - 1, y - 1))
-			Cell_Initialize_At(potential_births, x - 1, y - 1);
+			Cell_Initialize(potential_births, x - 1, y - 1);
 		if (!World_Has_Cell_At(self, x - 1, y    ))
-			Cell_Initialize_At(potential_births, x - 1, y    );
+			Cell_Initialize(potential_births, x - 1, y    );
 		if (!World_Has_Cell_At(self, x - 1, y + 1))
-			Cell_Initialize_At(potential_births, x - 1, y + 1);
+			Cell_Initialize(potential_births, x - 1, y + 1);
 		if (!World_Has_Cell_At(self, x    , y - 1))
-			Cell_Initialize_At(potential_births, x    , y - 1);
+			Cell_Initialize(potential_births, x    , y - 1);
 		if (!World_Has_Cell_At(self, x    , y + 1))
-			Cell_Initialize_At(potential_births, x    , y + 1);
+			Cell_Initialize(potential_births, x    , y + 1);
 		if (!World_Has_Cell_At(self, x + 1, y - 1))
-			Cell_Initialize_At(potential_births, x + 1, y - 1);
+			Cell_Initialize(potential_births, x + 1, y - 1);
 		if (!World_Has_Cell_At(self, x + 1, y    ))
-			Cell_Initialize_At(potential_births, x + 1, y    );
+			Cell_Initialize(potential_births, x + 1, y    );
 		if (!World_Has_Cell_At(self, x + 1, y + 1))
-			Cell_Initialize_At(potential_births, x + 1, y + 1);
+			Cell_Initialize(potential_births, x + 1, y + 1);
 	}
 
 	return potential_births;
@@ -123,7 +131,7 @@ World* World_Tick(World *self)
 		cell = self->cells[i];
 		count = Cell_Total_Neighbours(cell);
 		if (count == 2 || count == 3)
-			new_cell = Cell_Initialize_At(new_world, Cell_X(cell), Cell_Y(cell));
+			new_cell = Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
 	}
 
 	World *potential_births = World_All_Potential_Births(self);
@@ -131,7 +139,7 @@ World* World_Tick(World *self)
 		cell = potential_births->cells[i];
 		count = World_Cell_Count_Around(self, Cell_X(cell), Cell_Y(cell));
 		if (count == 3) {
-			new_cell = Cell_Initialize_At(new_world, Cell_X(cell), Cell_Y(cell));
+			new_cell = Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
 		}
 	}
 

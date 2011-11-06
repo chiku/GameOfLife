@@ -18,8 +18,7 @@ struct World
 };
 
 /* Cell Methods */
-Cell* Cell_Initialize(World *world);
-Cell* Cell_Initialize_At(World *world, long int x, long int y);
+Cell* Cell_Initialize(World *world, long int x, long int y);
 void Cell_Destroy(Cell *self);
 
 long int Cell_X(Cell *self);
