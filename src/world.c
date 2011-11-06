@@ -135,6 +135,9 @@ World* World_Tick(World *self)
 		}
 	}
 
+	World_Destroy(self);
+	World_Destroy(potential_births);
+
 	return new_world;
 }
 

@@ -1,3 +1,7 @@
 **/*.o
+**/*.os
+**/*.so
+bin
+lib
 .sconsign.dblite
 tests/game_of_life_tests
