@@ -30,12 +30,6 @@ void World_Destroy(World *self)
 	free(self);
 }
 
-Cell** World_Cells(World *self)
-{
-	return self->cells;
-}
-
-
 long int World_Cell_Count(World *self)
 {
 	return self->cell_count;
@@ -43,9 +37,6 @@ long int World_Cell_Count(World *self)
 
 void World_Add_Cell(World *self, Cell *cell)
 {
-	if ( World_Has_Cell_At(self, Cell_X(cell), Cell_Y(cell)) )
-		return;
-
 	self->cells[self->cell_count] = cell;
 	self->cell_count ++;
 }
@@ -59,13 +50,18 @@ int World_Has_Cell(World *self, Cell *cell)
 	return 0;
 }
 
-int World_Has_Cell_At(World *self, long int x, long int y)
+Cell* World_Cell_At(World *self, long int x, long int y)
 {
 	long int i;
 	for (i = 0; i < self->cell_count; i++)
 		if (Cell_Is_At(self->cells[i], self, x, y))
-			return 1;
-	return 0;
+			return self->cells[i];
+	return '\0';
+}
+
+int World_Has_Cell_At(World *self, long int x, long int y)
+{
+	return World_Cell_At(self, x, y) == '\0' ? 0 : 1;
 }
 
 int World_Cell_Count_Around(World *self, long int x, long int y)
@@ -90,7 +86,7 @@ int World_Cell_Count_Around(World *self, long int x, long int y)
 	return count;
 }
 
-World* World_All_Potential_Births(World *self)
+World* World_Active_Zone(World *self)
 {
 	long int i, x, y;
 	Cell *cell;
@@ -100,22 +96,14 @@ World* World_All_Potential_Births(World *self)
 		cell = self->cells[i];
 		x = Cell_X(cell);
 		y = Cell_Y(cell);
-		if (!World_Has_Cell_At(self, x - 1, y - 1))
-			Cell_Initialize(potential_births, x - 1, y - 1);
-		if (!World_Has_Cell_At(self, x - 1, y    ))
-			Cell_Initialize(potential_births, x - 1, y    );
-		if (!World_Has_Cell_At(self, x - 1, y + 1))
-			Cell_Initialize(potential_births, x - 1, y + 1);
-		if (!World_Has_Cell_At(self, x    , y - 1))
-			Cell_Initialize(potential_births, x    , y - 1);
-		if (!World_Has_Cell_At(self, x    , y + 1))
-			Cell_Initialize(potential_births, x    , y + 1);
-		if (!World_Has_Cell_At(self, x + 1, y - 1))
-			Cell_Initialize(potential_births, x + 1, y - 1);
-		if (!World_Has_Cell_At(self, x + 1, y    ))
-			Cell_Initialize(potential_births, x + 1, y    );
-		if (!World_Has_Cell_At(self, x + 1, y + 1))
-			Cell_Initialize(potential_births, x + 1, y + 1);
+		Cell_Initialize(potential_births, x - 1, y - 1);
+		Cell_Initialize(potential_births, x - 1, y    );
+		Cell_Initialize(potential_births, x - 1, y + 1);
+		Cell_Initialize(potential_births, x    , y - 1);
+		Cell_Initialize(potential_births, x    , y + 1);
+		Cell_Initialize(potential_births, x + 1, y - 1);
+		Cell_Initialize(potential_births, x + 1, y    );
+		Cell_Initialize(potential_births, x + 1, y + 1);
 	}
 
 	return potential_births;
@@ -124,27 +112,24 @@ World* World_All_Potential_Births(World *self)
 World* World_Tick(World *self)
 {
 	World *new_world = World_Initialize();
-	Cell *cell, *new_cell;
+	Cell *cell;
 	int count, i;
 
-	for (i = 0; i < self->cell_count; i++) {
-		cell = self->cells[i];
-		count = Cell_Total_Neighbours(cell);
-		if (count == 2 || count == 3)
-			new_cell = Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
-	}
-
-	World *potential_births = World_All_Potential_Births(self);
-	for (i = 0; i < potential_births->cell_count; i++) {
-		cell = potential_births->cells[i];
+	World *active_zone = World_Active_Zone(self);
+	for (i = 0; i < active_zone->cell_count; i++) {
+		cell = active_zone->cells[i];
 		count = World_Cell_Count_Around(self, Cell_X(cell), Cell_Y(cell));
-		if (count == 3) {
-			new_cell = Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
+		if (World_Has_Cell_At(self, cell->x, cell->y)) {
+			if (count == 2 || count == 3)
+				Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
+		} else {
+			if (count == 3)
+				Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
 		}
 	}
 
 	World_Destroy(self);
-	World_Destroy(potential_births);
+	World_Destroy(active_zone);
 
 	return new_world;
 }

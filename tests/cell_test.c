@@ -24,6 +24,17 @@ START_TEST (test_Cell_Is_created_at_specified_location)
 }
 END_TEST
 
+START_TEST (test_Cell_Is_not_created_if_it_already_exists_in_the_world)
+{
+	World *world = World_Initialize();
+	Cell *original = Cell_Initialize(world, 5, 4);
+	Cell *duplicate = Cell_Initialize(world, 5, 4);
+
+	fail_unless(duplicate == original, "Expected duplicate cell (address=%p) to be same as original cell (address=%p), but wasn't", duplicate, original);
+	World_Destroy(world);
+}
+END_TEST
+
 START_TEST (test_Cell_Knows_its_neighbour_to_north)
 {
 	World *world = World_Initialize();

@@ -12,7 +12,13 @@ Cell* Cell_Create()
 
 Cell* Cell_Initialize(World *world, long int x, long int y)
 {
-	Cell *self = Cell_Create();
+	Cell *self;
+
+	self = World_Cell_At(world, x, y);
+	if (self != '\0')
+		return self;
+
+	self = Cell_Create();
 	self->x = x;
 	self->y = y;
 	self->world = world;

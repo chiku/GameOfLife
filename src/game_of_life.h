@@ -38,10 +38,11 @@ void World_Destroy(World *self);
 Cell** World_Cells(World *self);
 long int World_Cell_Count(World *self);
 
+Cell* World_Cell_At(World *self, long int x, long int y);
 int World_Has_Cell(World *self, Cell* cell);
 int World_Has_Cell_At(World *self, long int x, long int y);
 int World_Cell_Count_Around(World *self, long int x, long int y);
-World* World_All_Potential_Births(World *self);
+World* World_Active_Zone(World *self);
 
 World* World_Tick(World *self);
 
