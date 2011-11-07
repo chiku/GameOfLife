@@ -12,6 +12,19 @@ World* World_Create()
 	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
 	return self;
 }
+
+void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
+{
+	long int x = Cell_X(cell);
+	long int y = Cell_Y(cell);
+	int count = World_Cell_Count_Around(self, x, y);
+	int cell_alive = World_Has_Cell_At(self, x, y);
+
+	int live_cell_remains = cell_alive && (count == 2 || count == 3);
+	int dead_cell_comes_alive = !cell_alive && count == 3;
+	if (live_cell_remains || dead_cell_comes_alive)
+		Cell_Initialize(new_world, x, y);
+}
 /* Private */
 
 World *World_Initialize()
@@ -116,17 +129,8 @@ World* World_Tick(World *self)
 	int count, i;
 
 	World *active_zone = World_Active_Zone(self);
-	for (i = 0; i < active_zone->cell_count; i++) {
-		cell = active_zone->cells[i];
-		count = World_Cell_Count_Around(self, Cell_X(cell), Cell_Y(cell));
-		if (World_Has_Cell_At(self, cell->x, cell->y)) {
-			if (count == 2 || count == 3)
-				Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
-		} else {
-			if (count == 3)
-				Cell_Initialize(new_world, Cell_X(cell), Cell_Y(cell));
-		}
-	}
+	for (i = 0; i < active_zone->cell_count; i++)
+		World_Create_Cell_In_New_World(self, active_zone->cells[i], new_world);
 
 	World_Destroy(self);
 	World_Destroy(active_zone);
