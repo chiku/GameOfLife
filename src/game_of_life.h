@@ -45,6 +45,7 @@ int World_Cell_Count_Around(World *self, long int x, long int y);
 World* World_Active_Zone(World *self);
 
 World* World_Tick(World *self);
+void World_At_Each_Cell(World *world, void (*visitor)(long int, long int));
 
 void World_Dump(World *self);
 /* World Methods */

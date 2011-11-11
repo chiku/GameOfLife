@@ -37,7 +37,7 @@ static World* create_world_with_file(char *file_name)
 {
 	FILE *fp = fopen(file_name, "r");
 	if (fp == NULL) {
-		printf("File %s doesn't exist", file_name);
+		printf("File %s doesn't exist\n", file_name);
 		exit(11);
 	}
 
@@ -49,6 +49,11 @@ static World* create_world_with_file(char *file_name)
 	fclose(fp);
 
 	return world;
+}
+
+static void print_cell(long int x, long int y)
+{
+	mvprintw(y + LINES/2, x + COLS/2, "X");
 }
 
 int main(int argc, char *argv[])
@@ -69,25 +74,19 @@ int main(int argc, char *argv[])
 	signal(SIGTERM, catch_sigterm);
 	signal(SIGKILL, catch_sigkill);
 
-	initscr();
-	noecho();
-	curs_set(0);
-
 	World *world = create_world_with_file(argv[1]);
 	long int i, count;
 	Cell *cell;
 
-	for (;;) {
-		count = World_Cell_Count(world);
-		for (i = 0; i < count; i++) {
-			cell = world->cells[i]; // HACK
-			mvprintw(Cell_Y(cell) + 20, Cell_X(cell) + 40, "X");
-		}
+	initscr();
+	noecho();
+	curs_set(0);
 
+	for (;;) {
+		World_At_Each_Cell(world, print_cell);
 		refresh();
 		usleep(500000L);
 		erase();
-
 		world = World_Tick(world);
 	}
 	endwin();
