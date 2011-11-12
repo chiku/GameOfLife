@@ -40,7 +40,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_north)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, 0, 1);
+	Cell_Initialize(world, 0, 1); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -53,7 +53,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_north_east)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, 1, 1);
+	Cell_Initialize(world, 1, 1); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -66,7 +66,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_east)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, 1, 0);
+	Cell_Initialize(world, 1, 0); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -79,7 +79,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_south_east)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, 1, -1);
+	Cell_Initialize(world, 1, -1); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -92,7 +92,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_south)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, 0, -1);
+	Cell_Initialize(world, 0, -1); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -105,7 +105,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_south_west)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, -1, -1);
+	Cell_Initialize(world, -1, -1); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -118,7 +118,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_west)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, -1, 0);
+	Cell_Initialize(world, -1, 0); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -131,7 +131,7 @@ START_TEST (test_Cell_Knows_its_neighbour_to_north_west)
 	World *world = World_Initialize();
 	Cell *cell = Cell_Initialize(world, 0, 0);
 
-	Cell *another_cell = Cell_Initialize(world, -1, 1);
+	Cell_Initialize(world, -1, 1); /* another cell */
 
 	long int count = Cell_Total_Neighbours(cell);
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);

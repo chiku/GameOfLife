@@ -1,7 +1,7 @@
 START_TEST (test_World_knows_its_cell_count)
 {
 	World *world = World_Initialize();
-	Cell *first_cell = Cell_Initialize(world, 0, 0);
+	Cell_Initialize(world, 0, 0);
 	Cell_Initialize(world, 1, 4);
 	Cell_Initialize(world, 2, 4);
 
@@ -50,7 +50,7 @@ END_TEST
 START_TEST (test_World_does_not_have_a_cell_at_specified_location_when_cell_is_in_different_world)
 {
 	World *world = World_Initialize();
-	Cell *cell_in_other_world = Cell_Initialize(World_Initialize(), 0, 0);
+	Cell_Initialize(World_Initialize(), 0, 0); /* cell in another world */
 
 	fail_if(World_Has_Cell_At(world, 0, 0), "Excepted cell (x=%d, y=%d) to be not present in the world, but was", 0, 0);
 	World_Destroy(world);

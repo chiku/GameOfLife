@@ -125,8 +125,7 @@ World* World_Active_Zone(World *self)
 World* World_Tick(World *self)
 {
 	World *new_world = World_Initialize();
-	Cell *cell;
-	int count, i;
+	long int i;
 
 	World *active_zone = World_Active_Zone(self);
 	for (i = 0; i < active_zone->cell_count; i++)

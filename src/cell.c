@@ -58,6 +58,6 @@ int Cell_Is_At(Cell *self, World *world, long int x, long int y)
 
 void Cell_Dump(Cell* self)
 {
-	printf("world <%p> : (x=%d, y=%d)\n", self->world, self->x, self->y);
+	printf("world <%p> : (x=%ld, y=%ld)\n", self->world, self->x, self->y);
 }
 

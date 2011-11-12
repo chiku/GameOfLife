@@ -46,7 +46,7 @@ END_TEST
 START_TEST (test_Rule_2_Any_live_cell_with_three_live_neighbours_lives_on_to_the_next_generation)
 {
 	World *world = World_Initialize();
-	Cell *cell = Cell_Initialize(world, 0, 0);
+	Cell_Initialize(world, 0, 0);
 	Cell_Initialize(world, 0, 1);
 	Cell_Initialize(world, 1, 0);
 	Cell_Initialize(world, 1, 1);
