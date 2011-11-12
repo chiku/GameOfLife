@@ -53,7 +53,7 @@ static World* create_world_with_file(char *file_name)
 
 static void print_cell(long int x, long int y)
 {
-	mvprintw(y + LINES/2, x + COLS/2, "X");
+	mvaddch(y + LINES/2, x + COLS/2, ACS_DIAMOND);
 }
 
 int main(int argc, char *argv[])
