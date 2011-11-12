@@ -38,6 +38,7 @@ void World_Destroy(World *self);
 Cell** World_Cells(World *self);
 long int World_Cell_Count(World *self);
 
+void World_Add_Cell(World *self, Cell *cell);
 Cell* World_Cell_At(World *self, long int x, long int y);
 int World_Has_Cell(World *self, Cell* cell);
 int World_Has_Cell_At(World *self, long int x, long int y);
@@ -50,5 +51,9 @@ void World_At_Each_Cell(World *world, void (*visitor)(long int, long int));
 void World_Dump(World *self);
 /* World Methods */
 
+/* Utility Functions */
+char *handle_command_line_arguments(int argc, char *argv[]);
+World* create_world_with_file(char *file_name);
+/* Utility Functions */
 #endif /* GAME_OF_LIFE_H */
 
