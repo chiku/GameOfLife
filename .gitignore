@@ -1,6 +1,6 @@
-**/*.o
-**/*.os
-**/*.so
+*.o
+*.os
+*.so
 bin
 lib
 .sconsign.dblite
