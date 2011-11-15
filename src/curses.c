@@ -16,7 +16,7 @@ void handle_signal_for(char *message, int exit_status)
 	exit(exit_status);
 }
 
-static void print_cell(long int x, long int y)
+static void print_cell(long int x, long int y, void *data)
 {
 	mvaddch(y + LINES/2, x + COLS/2, ACS_DIAMOND);
 }
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	curs_set(0);
 
 	for (;;) {
-		World_At_Each_Cell(world, print_cell);
+		World_At_Each_Cell(world, print_cell, NULL);
 		refresh();
 		usleep(500000L);
 		erase();

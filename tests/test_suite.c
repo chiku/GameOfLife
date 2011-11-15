@@ -40,6 +40,7 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_world, test_World_knows_living_cell_count_around_an_unoccupied_location);
 	tcase_add_test(tc_world, test_World_knows_all_cell_locations_near_all_living_cells);
 	tcase_add_test(tc_world, test_World_at_cells_is_visitable);
+	tcase_add_test(tc_world, test_World_visits_accept_custom_data);
 	suite_add_tcase(s, tc_world);
 
 	TCase *tc_rules = tcase_create("Rules");
