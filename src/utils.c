@@ -30,7 +30,7 @@ World* create_world_with_file(char *file_name)
 {
 	FILE *fp = fopen(file_name, "r");
 	if (fp == NULL) {
-		printf("File %s doesn't exist\n", file_name);
+		fprintf(stderr, "File %s doesn't exist\n", file_name);
 		exit(11);
 	}
 

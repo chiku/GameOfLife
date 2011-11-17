@@ -9,7 +9,7 @@ static Display *initialize_display(void)
 {
 	Display *display = XOpenDisplay(NULL);
 	if (display == NULL) {
-		printf("Cannot open display!\n");
+		fprintf(stderr, "Cannot open display!\n");
 		exit(2);
 	}
 	return display;

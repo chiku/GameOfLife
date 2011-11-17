@@ -12,7 +12,7 @@ void handle_signal_for(char *message, int exit_status)
 {
 	curs_set(1);
 	endwin();
-	printf(message);
+	fprintf((exit_status ? stderr : stdout), message);
 	exit(exit_status);
 }
 
