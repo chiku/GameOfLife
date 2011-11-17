@@ -9,7 +9,7 @@ static Display *initialize_display(void)
 {
 	Display *display = XOpenDisplay(NULL);
 	if (display == NULL) {
-		printf("Cannot open display\n");
+		printf("Cannot open display!\n");
 		exit(2);
 	}
 	return display;
@@ -36,9 +36,11 @@ Graphics *Graphics_Initialize()
 	self->display = initialize_display();
 	self->screen = DefaultScreen(self->display);
 	self->window = initialize_window(self->display, self->screen);
+	self->graphical_context = DefaultGC(self->display, self->screen);
 
 	XSelectInput(self->display, self->window, ExposureMask);
 	XMapWindow(self->display, self->window);
+	XStoreName(self->display, self->window, "Conway's Game of Life");
 
 	return self;
 }
@@ -49,31 +51,28 @@ void Graphics_Destroy(Graphics *self)
 	free(self);
 }
 
-void Graphics_Start_Loop(Graphics *self)
-{
-	XEvent event;
-	do {
-		XNextEvent(self->display, &event);
-	} while(event.type != Expose);
-}
-
 void Graphics_Draw_Rectangle(Graphics *self, long int x, long int y)
 {
 	XFillRectangle(self->display,
 		self->window,
-		DefaultGC(self->display, self->screen),
+		self->graphical_context,
 		SCREEN / 2 + x * SQUARE,
 		SCREEN / 2 + y * SQUARE,
 		SQUARE, SQUARE);
 }
 
+void Graphics_Flush(Graphics *self)
+{
+	XFlush(self->display);
+}
+
 void Graphics_Set_Foreground(Graphics *self)
 {
-	XSetForeground(self->display, DefaultGC(self->display, self->screen), BlackPixel(self->display, self->screen));
+	XSetForeground(self->display, self->graphical_context, BlackPixel(self->display, self->screen));
 }
 
 void Graphics_Set_Reverse_Foreground(Graphics *self)
 {
-	XSetForeground(self->display, DefaultGC(self->display, self->screen), WhitePixel(self->display, self->screen));
+	XSetForeground(self->display, self->graphical_context, WhitePixel(self->display, self->screen));
 }
 

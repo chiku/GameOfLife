@@ -27,13 +27,13 @@ int main(int argc, char *argv[])
 	World *world = create_world_with_file(file_name);
 
 	Graphics *graphics = Graphics_Initialize();
-	Graphics_Start_Loop(graphics);
 
 	for (;;) {
 		Graphics_Set_Foreground(graphics);
 		World_At_Each_Cell(world, draw_cell, graphics);
 
-		usleep(5000L);
+		Graphics_Flush(graphics);
+		usleep(500000L);
 
 		Graphics_Set_Reverse_Foreground(graphics);
 		World_At_Each_Cell(world, draw_cell, graphics);
