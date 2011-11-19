@@ -1,3 +1,23 @@
+START_TEST (test_World_creation_from_file_is_proper)
+{
+	FILE *fp;
+	const char file_name[] = "data/oscillator.lif";
+	fp = fopen(file_name, "r");
+	if (fp == NULL) {
+		fail("Could not open test data file %s", file_name);
+	}
+
+	World* world = World_Create_From_File(fp);
+
+	long int cell_count = World_Cell_Count(world);
+	fail_unless(cell_count == 3, "Expected cell count to be %ld, but was %ld", 3, cell_count);
+	fail_unless(World_Has_Cell_At(world, 0, 0), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(World_Has_Cell_At(world, 0, 1), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(World_Has_Cell_At(world, 0, 2), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	World_Destroy(world);
+}
+END_TEST
+
 START_TEST (test_World_knows_its_cell_count)
 {
 	World *world = World_Initialize();
@@ -112,7 +132,7 @@ START_TEST (test_World_knows_all_cell_locations_near_all_living_cells)
 END_TEST
 
 static long int sum_x, sum_y, trace;
-static void add_up_cell_values(long int y, long int x, void *data)
+static void add_up_cell_values(long int x, long int y, void *data)
 {
 	sum_x += x;
 	sum_y += y;

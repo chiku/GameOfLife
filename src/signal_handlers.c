@@ -1,4 +1,4 @@
-extern void handle_signal_for(char *message, int exit_status);
+extern void handle_signal_for(const char *message, int exit_status);
 
 static void catch_sigint(int sig_num)
 {

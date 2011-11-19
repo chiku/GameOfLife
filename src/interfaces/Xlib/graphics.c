@@ -51,7 +51,7 @@ void Graphics_Destroy(Graphics *self)
 	free(self);
 }
 
-void Graphics_Draw_Rectangle(Graphics *self, long int x, long int y)
+void Graphics_Draw_Square(Graphics *self, long int x, long int y)
 {
 	XFillRectangle(self->display,
 		self->window,

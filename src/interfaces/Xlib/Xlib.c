@@ -8,7 +8,7 @@
 
 #include "signal_handlers.c"
 
-void handle_signal_for(char *message, int exit_status)
+void handle_signal_for(const char *message, int exit_status)
 {
 	fprintf((exit_status ? stderr : stdout), message);
 	exit(exit_status);
@@ -16,7 +16,7 @@ void handle_signal_for(char *message, int exit_status)
 
 static void draw_cell(long int x, long int y, void *data)
 {
-	Graphics_Draw_Rectangle((Graphics*)data, y, x);
+	Graphics_Draw_Square((Graphics*)data, x, y);
 }
 
 int main(int argc, char *argv[])

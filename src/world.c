@@ -43,7 +43,18 @@ void World_Destroy(World *self)
 	free(self);
 }
 
-long int World_Cell_Count(World *self)
+World* World_Create_From_File(FILE *fp)
+{
+	World *world = World_Initialize();
+	long int x, y;
+	while (fscanf(fp, "%ld %ld", &x, &y) != EOF)
+		Cell_Initialize(world, x, y);
+	fclose(fp);
+
+	return world;
+}
+
+long int World_Cell_Count(const World *self)
 {
 	return self->cell_count;
 }
@@ -54,7 +65,7 @@ void World_Add_Cell(World *self, Cell *cell)
 	self->cell_count ++;
 }
 
-int World_Has_Cell(World *self, Cell *cell)
+int World_Has_Cell(const World *self, const Cell *cell)
 {
 	long int i;
 	for (i = 0; i < self->cell_count; i++)
@@ -63,7 +74,7 @@ int World_Has_Cell(World *self, Cell *cell)
 	return 0;
 }
 
-Cell* World_Cell_At(World *self, long int x, long int y)
+Cell* World_Cell_At(const World *self, long int x, long int y)
 {
 	long int i;
 	for (i = 0; i < self->cell_count; i++)
@@ -72,12 +83,12 @@ Cell* World_Cell_At(World *self, long int x, long int y)
 	return '\0';
 }
 
-int World_Has_Cell_At(World *self, long int x, long int y)
+int World_Has_Cell_At(const World *self, long int x, long int y)
 {
 	return World_Cell_At(self, x, y) == '\0' ? 0 : 1;
 }
 
-int World_Cell_Count_Around(World *self, long int x, long int y)
+int World_Cell_Count_Around(const World *self, long int x, long int y)
 {
 	long int count = 0, i;
 	Cell *cell;
@@ -99,7 +110,7 @@ int World_Cell_Count_Around(World *self, long int x, long int y)
 	return count;
 }
 
-World* World_Active_Zone(World *self)
+World* World_Active_Zone(const World *self)
 {
 	long int i, x, y;
 	Cell *cell;
@@ -137,17 +148,17 @@ World* World_Tick(World *self)
 	return new_world;
 }
 
-void World_At_Each_Cell(World *world, void (*visitor)(long int, long int, void *), void *data)
+void World_At_Each_Cell(const World *world, void (*visitor)(long int, long int, void *), void *data)
 {
 	Cell *cell;
 	long int i;
 	for (i = 0; i < world->cell_count; i++) {
 		cell = world->cells[i];
-		visitor(Cell_Y(cell), Cell_X(cell), data);
+		visitor(Cell_X(cell), Cell_Y(cell), data);
 	}
 }
 
-void World_Dump(World *self)
+void World_Dump(const World *self)
 {
 	int i;
 

@@ -8,7 +8,7 @@
 
 #include "signal_handlers.c"
 
-void handle_signal_for(char *message, int exit_status)
+void handle_signal_for(const char *message, int exit_status)
 {
 	curs_set(1);
 	endwin();
@@ -18,7 +18,7 @@ void handle_signal_for(char *message, int exit_status)
 
 static void print_cell(long int x, long int y, void *data)
 {
-	mvaddch(y + LINES/2, x + COLS/2, ACS_DIAMOND);
+	mvaddch(x + LINES/2, y + COLS/2, ACS_DIAMOND);
 }
 
 int main(int argc, char *argv[])

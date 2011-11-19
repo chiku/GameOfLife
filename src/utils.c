@@ -34,12 +34,6 @@ World* create_world_with_file(char *file_name)
 		exit(11);
 	}
 
-	World *world = World_Initialize();
-	long int x, y;
-	while (fscanf(fp, "%ld %ld", &x, &y) != EOF)
-		Cell_Initialize(world, x, y);
-	fclose(fp);
-
-	return world;
+	return World_Create_From_File(fp);
 }
 
