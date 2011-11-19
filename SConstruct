@@ -6,4 +6,5 @@ env.Program('bin/game_of_life_tests', Split(['lib/libgol.so', 'tests/test_suite.
 
 env.Program('bin/golc', ['src/interfaces/curses/curses.c', 'lib/libgol.so'], LIBS=['ncurses'])
 env.Program('bin/golX', ['src/interfaces/Xlib/graphics.c', 'src/interfaces/Xlib/Xlib.c', 'lib/libgol.so'], LIBS=['X11'])
+env.Program('bin/golFLTK', ['src/interfaces/fltk/graphics.cxx', 'src/interfaces/fltk/fltk.cxx', 'lib/libgol.so'], LIBS=['fltk'])
 
