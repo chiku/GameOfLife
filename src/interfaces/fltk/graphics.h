@@ -1,7 +1,7 @@
-#include <FL/Fl_Double_Window.H>
+#ifndef FLTK_GRAPHICS_H
+#define FLTK_GRAPHICS_H
 
-#ifndef XLIB_GRAPHICS_H
-#define XLIB_GRAPHICS_H
+#include <FL/Fl_Double_Window.H>
 
 const int SCREEN = 700;
 const int SQUARE = 5;

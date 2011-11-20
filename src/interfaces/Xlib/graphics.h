@@ -1,5 +1,8 @@
 #include <X11/Xlib.h>
 
+#ifndef XLIB_GRAPHICS_H
+#define XLIB_GRAPHICS_H
+
 #define SCREEN 800
 #define SQUARE 5
 
@@ -22,4 +25,6 @@ void Graphics_Flush(Graphics *self);
 void Graphics_Clear(Graphics *self);
 void Graphics_Set_Draw_Color(Graphics *self);
 void Graphics_Set_Erase_Color(Graphics *self);
+
+#endif
 

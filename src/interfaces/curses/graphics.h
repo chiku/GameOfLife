@@ -1,3 +1,6 @@
+#ifndef CURSES_GRAPHICS_H
+#define CURSES_GRAPHICS_H
+
 typedef struct Graphics Graphics;
 
 struct Graphics
@@ -14,4 +17,6 @@ void Graphics_Flush(Graphics *self);
 void Graphics_Clear(Graphics *self);
 void Graphics_Set_Draw_Color(Graphics *self);
 void Graphics_Set_Erase_Color(Graphics *self);
+
+#endif
 
