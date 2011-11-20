@@ -1,11 +1,9 @@
-#include <FL/Fl.H>
-#include <FL/Fl_Double_Window.H>
-#include <FL/Fl_Box.H>
-
 #include <cstdio>
 #include <cstdlib>
 #include <csignal>
 #include <unistd.h>
+
+#include <FL/Fl.H>
 
 using namespace std;
 
@@ -27,26 +25,31 @@ static void draw_cell(long int x, long int y, void *data)
 	((Graphics*)data)->Draw_Square(x, y);
 }
 
+Graphics *graphics;
+World *world;
+
+static void repeat(void*)
+{
+	World_At_Each_Cell(world, draw_cell, graphics);
+	graphics->Redraw();
+	graphics->Flush();
+
+	world = World_Tick(world);
+
+	graphics->Clear();
+	Fl::repeat_timeout(0.5, repeat);
+}
+
 int main(int argc, char *argv[])
 {
 	initialize_signal_handlers();
 
 	char *file_name = handle_command_line_arguments(argc, argv);
-	World *world = create_world_with_file(file_name);
+	world = create_world_with_file(file_name);
 
-	Graphics *graphics = new Graphics();
+	graphics = new Graphics();
 
-	for (;;) {
-		World_At_Each_Cell(world, draw_cell, graphics);
-		graphics->Redraw();
-		graphics->Flush();
-
-		usleep(500000L);
-		world = World_Tick(world);
-
-		graphics->Clear();
-	}
-
-	return 0;
+	Fl::add_timeout(0.5, repeat);
+	return Fl::run();
 }
 

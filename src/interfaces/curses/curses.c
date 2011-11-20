@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
 		World_At_Each_Cell(world, print_cell, NULL);
 		refresh();
 		usleep(500000L);
-		erase();
 		world = World_Tick(world);
+		erase();
 	}
 	endwin();
 

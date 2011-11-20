@@ -5,7 +5,7 @@ const int SQUARE = 5;
 
 class Graphics
 {
-public:
+private:
 	Fl_Double_Window *window;
 	Fl_Color orange;
 
@@ -18,6 +18,5 @@ public:
 	void Flush();
 	void Clear();
 	void Redraw();
-	void Wait();
 };
 

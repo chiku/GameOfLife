@@ -6,11 +6,12 @@
 
 Graphics::Graphics()
 {
-	window = new Fl_Double_Window(SCREEN, SCREEN, "Conway's Game of Life'");
+	window = new Fl_Double_Window(SCREEN, SCREEN, "Conway's Game of Life");
 	orange = fl_rgb_color(200, 100, 50);
 
+	window->end();
 	window->show();
-	Graphics::Wait();
+	Fl::wait();
 }
 
 Graphics::~Graphics()
@@ -44,10 +45,5 @@ void Graphics::Clear()
 void Graphics::Redraw()
 {
 	window->redraw();
-}
-
-void Graphics::Wait()
-{
-	Fl::wait();
 }
 
