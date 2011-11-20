@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <game_of_life.h>
+#include "game_of_life.h"
 
 const long int MAX_WORLD_SIZE = 10000;
 
 /* Private */
-World* World_Create()
+static World* World_Create()
 {
 	World *self = (World*) (malloc( sizeof(World) ));
 	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
 	return self;
 }
 
-void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
+static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
 {
 	long int x = Cell_X(cell);
 	long int y = Cell_Y(cell);
@@ -43,12 +43,15 @@ void World_Destroy(World *self)
 	free(self);
 }
 
-World* World_Create_From_File(FILE *fp)
+World* World_Create_From_File(const char file_name[])
 {
+	FILE *fp = fopen(file_name, "r");
 	World *world = World_Initialize();
 	long int x, y;
+
 	while (fscanf(fp, "%ld %ld", &x, &y) != EOF)
 		Cell_Initialize(world, x, y);
+
 	fclose(fp);
 
 	return world;

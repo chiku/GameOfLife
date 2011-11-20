@@ -1,6 +1,5 @@
 #include <cstdio>
 #include <cstdlib>
-#include <csignal>
 #include <unistd.h>
 
 #include <FL/Fl.H>
@@ -8,17 +7,13 @@
 using namespace std;
 
 extern "C" {
-	#include <game_of_life.h>
-	#include "signal_handlers.c"
+	#include "game_of_life.h"
+	#include "event_loop/event_loop.h"
 }
 
 #include "graphics.h"
 
-void handle_signal_for(const char *message, int exit_status)
-{
-	fprintf((exit_status ? stderr : stdout), message);
-	exit(exit_status);
-}
+void cleanup_on_signal() { }
 
 static void draw_cell(long int x, long int y, void *data)
 {
@@ -45,7 +40,7 @@ int main(int argc, char *argv[])
 	initialize_signal_handlers();
 
 	char *file_name = handle_command_line_arguments(argc, argv);
-	world = create_world_with_file(file_name);
+	world = World_Create_From_File(file_name);
 
 	graphics = new Graphics();
 

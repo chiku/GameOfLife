@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <game_of_life.h>
+#include "game_of_life.h"
 
 /* Private */
-Cell* Cell_Create()
+static Cell* Cell_Create()
 {
 	return (Cell*) (malloc( sizeof(Cell) ));
 }

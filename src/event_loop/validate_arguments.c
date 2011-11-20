@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
-#include <game_of_life.h>
+#include "event_loop.h"
 
 static void usage(char *exec_file_name)
 {
@@ -23,17 +26,17 @@ char *handle_command_line_arguments(int argc, char *argv[])
 		exit(0);
 	}
 
-	return argv[1];
-}
+	struct stat sb;
+	if (stat(argv[1], &sb) == -1) {
+		perror("stat");
+		exit(EXIT_FAILURE);
+	}
 
-World* create_world_with_file(char *file_name)
-{
-	FILE *fp = fopen(file_name, "r");
-	if (fp == NULL) {
-		fprintf(stderr, "File %s doesn't exist\n", file_name);
+	if (!S_ISREG(sb.st_mode) && !S_ISLNK(sb.st_mode)) {
+		fprintf(stderr, "'%s' is not a file or a symlink!\n", argv[1]);
 		exit(11);
 	}
 
-	return World_Create_From_File(fp);
+	return argv[1];
 }
 

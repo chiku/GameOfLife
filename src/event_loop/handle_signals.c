@@ -1,4 +1,15 @@
-extern void handle_signal_for(const char *message, int exit_status);
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+
+#include "event_loop.h"
+
+static void handle_signal_for(const char *message, int exit_status)
+{
+	cleanup_on_signal();
+	fprintf((exit_status ? stderr : stdout), message);
+	exit(exit_status);
+}
 
 static void catch_sigint(int sig_num)
 {

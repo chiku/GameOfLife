@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #ifndef GAME_OF_LIFE_H
 #define GAME_OF_LIFE_H
 
@@ -37,7 +35,7 @@ void Cell_Dump(const Cell *self);
 World* World_Initialize();
 void World_Destroy(World *self);
 
-World* World_Create_From_File(FILE *fp);
+World* World_Create_From_File(const char file_name[]);
 
 long int World_Cell_Count(const World *self);
 

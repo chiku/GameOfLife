@@ -1,13 +1,7 @@
 START_TEST (test_World_creation_from_file_is_proper)
 {
-	FILE *fp;
 	const char file_name[] = "data/oscillator.lif";
-	fp = fopen(file_name, "r");
-	if (fp == NULL) {
-		fail("Could not open test data file %s", file_name);
-	}
-
-	World* world = World_Create_From_File(fp);
+	World* world = World_Create_From_File(file_name);
 
 	long int cell_count = World_Cell_Count(world);
 	fail_unless(cell_count == 3, "Expected cell count to be %ld, but was %ld", 3, cell_count);
