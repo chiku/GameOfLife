@@ -84,3 +84,6 @@ void Graphics_Set_Erase_Color(Graphics *self)
 	XSetForeground(self->display, self->graphical_context, WhitePixel(self->display, self->screen));
 }
 
+/* Signal handling */
+void cleanup_on_signal() {}
+

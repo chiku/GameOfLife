@@ -4,8 +4,6 @@
 #include "../game_of_life.h"
 #include "event_loop.h"
 
-#include <ncurses.h>
-
 EventLoop* EventLoop_Initialize(World *world, Graphics *graphics, void (*draw_cell)(long int, long int, void *))
 {
 	EventLoop *self = (EventLoop*)(malloc( sizeof(EventLoop) ));
@@ -24,7 +22,7 @@ void EventLoop_Destroy(EventLoop *self)
 
 void EventLoop_Begin(EventLoop *self)
 {
-	Graphics_Callback_Handler(self->graphics, 0.01);
+	Graphics_Callback_Handler(self->graphics, 0.0);
 
 	for(;;) {
 		EventLoop_Draw(self);

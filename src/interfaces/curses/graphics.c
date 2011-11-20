@@ -46,3 +46,10 @@ void Graphics_Set_Draw_Color(Graphics *self) { }
 
 void Graphics_Set_Erase_Color(Graphics *self) { }
 
+/* Signal handing */
+void cleanup_on_signal()
+{
+	curs_set(1);
+	endwin();
+}
+

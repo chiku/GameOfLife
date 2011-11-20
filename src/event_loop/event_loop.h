@@ -27,24 +27,21 @@ void EventLoop_Cleanup(EventLoop *self);
 /* Interface of Graphics */
 extern Graphics* Graphics_Initialize();
 extern void Graphics_Destroy(Graphics *self);
-extern void Graphics_Draw_At(Graphics *self, long int x, long int y);
+
 extern void Graphics_Callback_Handler(Graphics *self, double time_in_ms);
+
+extern void Graphics_Draw_At(Graphics *self, long int x, long int y);
 extern void Graphics_Flush(Graphics *self);
 extern void Graphics_Clear(Graphics *self);
 extern void Graphics_Set_Draw_Color(Graphics *self);
 extern void Graphics_Set_Erase_Color(Graphics *self);
 /* Interface of Graphics */
 
-/* Interface of main */
+/* Interface of signal handling and main */
 extern void cleanup_on_signal();
-extern void draw_cell(long int x, long int y, void *data);
-/* Interface of main */
-
-/* Utils */
-char *handle_command_line_arguments(int argc, char *argv[]);
 void initialize_signal_handlers(void);
-void cleanup_on_signal();
-/* Utils */
+char *handle_command_line_arguments(int argc, char *argv[]);
+/* Interface of signal handling and main */
 
 #endif
 
