@@ -31,6 +31,11 @@ extern void Graphics_Set_Draw_Color(Graphics *self);
 extern void Graphics_Set_Erase_Color(Graphics *self);
 /* Interface of Graphics */
 
+/* Interface of main */
+extern void cleanup_on_signal();
+extern void draw_cell(long int x, long int y, void *data);
+/* Interface of main */
+
 /* Utils */
 char *handle_command_line_arguments(int argc, char *argv[]);
 void initialize_signal_handlers(void);

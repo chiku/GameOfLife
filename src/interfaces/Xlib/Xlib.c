@@ -8,7 +8,7 @@
 
 void cleanup_on_signal() { }
 
-static void draw_cell(long int x, long int y, void *data)
+void draw_cell(long int x, long int y, void *data)
 {
 	Graphics_Draw_Square((Graphics*)data, x, y);
 }
