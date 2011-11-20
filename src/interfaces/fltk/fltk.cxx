@@ -9,6 +9,7 @@ using namespace std;
 extern "C" {
 	#include "game_of_life.h"
 	#include "event_loop/event_loop.h"
+	#include "graphics.h"
 }
 
 #include "graphics.h"
@@ -17,7 +18,7 @@ void cleanup_on_signal() { }
 
 void draw_cell(long int x, long int y, void *data)
 {
-	((Graphics*)data)->Draw_Square(x, y);
+	Graphics_Draw_At((Graphics*)data, x, y);
 }
 
 Graphics *graphics;
@@ -26,12 +27,11 @@ World *world;
 static void repeat(void*)
 {
 	World_At_Each_Cell(world, draw_cell, graphics);
-	graphics->Redraw();
-	graphics->Flush();
+	Graphics_Flush(graphics);
 
 	world = World_Tick(world);
 
-	graphics->Clear();
+	Graphics_Clear(graphics);
 	Fl::repeat_timeout(0.5, repeat);
 }
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	char *file_name = handle_command_line_arguments(argc, argv);
 	world = World_Create_From_File(file_name);
 
-	graphics = new Graphics();
+	graphics = Graphics_Initialize();
 
 	Fl::add_timeout(0.5, repeat);
 	return Fl::run();

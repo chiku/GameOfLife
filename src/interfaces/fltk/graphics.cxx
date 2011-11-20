@@ -2,24 +2,30 @@
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Box.H>
 
-#include "graphics.h"
+extern "C" {
+	#include "graphics.h"
+}
 
-Graphics::Graphics()
+Graphics* Graphics_Initialize()
 {
-	window = new Fl_Double_Window(SCREEN, SCREEN, "Conway's Game of Life");
-	orange = fl_rgb_color(200, 100, 50);
+	Graphics *self = (Graphics*)(malloc( sizeof(Graphics) ));
+	self->window = new Fl_Double_Window(SCREEN, SCREEN, "Conway's Game of Life");
+	self->orange = fl_rgb_color(200, 100, 50);
 
-	window->end();
-	window->show();
+	self->window->end();
+	self->window->show();
 	Fl::wait();
+
+	return self;
 }
 
-Graphics::~Graphics()
+void Graphics_Destroy(Graphics *self)
 {
-	window->clear();
+	self->window->clear();
+	free(self);
 }
 
-void Graphics::Draw_Square(long int x, long int y)
+void Graphics_Draw_At(Graphics *self, long int x, long int y)
 {
 	Fl_Box *box = new Fl_Box(
 		SCREEN/2 + x * SQUARE,
@@ -28,22 +34,22 @@ void Graphics::Draw_Square(long int x, long int y)
 		""
 	);
 	box->box(FL_FLAT_BOX);
-	box->color(orange);
-	window->add(box);
+	box->color(self->orange);
+	self->window->add(box);
 }
 
-void Graphics::Flush()
+void Graphics_Flush(Graphics *self)
 {
+	self->window->redraw();
 	Fl::flush();
 }
 
-void Graphics::Clear()
+void Graphics_Clear(Graphics *self)
 {
-	window->clear();
+	self->window->clear();
 }
 
-void Graphics::Redraw()
+void Graphics_Redraw(Graphics *self)
 {
-	window->redraw();
 }
 
