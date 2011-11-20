@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <X11/Xlib.h>
 
 #include "graphics.h"
@@ -51,7 +52,7 @@ void Graphics_Destroy(Graphics *self)
 	free(self);
 }
 
-void Graphics_Draw_Square(Graphics *self, long int x, long int y)
+void Graphics_Draw_At(Graphics *self, long int x, long int y)
 {
 	XFillRectangle(self->display,
 		self->window,
@@ -66,12 +67,19 @@ void Graphics_Flush(Graphics *self)
 	XFlush(self->display);
 }
 
-void Graphics_Set_Foreground(Graphics *self)
+void Graphics_Callback_Handler(Graphics *self, double time_in_s)
+{
+	usleep( (long)(time_in_s * 1000000) );
+}
+
+void Graphics_Clear(Graphics *self) {}
+
+void Graphics_Set_Draw_Color(Graphics *self)
 {
 	XSetForeground(self->display, self->graphical_context, BlackPixel(self->display, self->screen));
 }
 
-void Graphics_Set_Reverse_Foreground(Graphics *self)
+void Graphics_Set_Erase_Color(Graphics *self)
 {
 	XSetForeground(self->display, self->graphical_context, WhitePixel(self->display, self->screen));
 }

@@ -24,6 +24,7 @@ void EventLoop_Cleanup(EventLoop *self);
 /* Interface of Graphics */
 extern Graphics* Graphics_Initialize();
 extern void Graphics_Destroy(Graphics *self);
+extern void Graphics_Draw_At(Graphics *self, long int x, long int y);
 extern void Graphics_Callback_Handler(Graphics *self, double time_in_ms);
 extern void Graphics_Flush(Graphics *self);
 extern void Graphics_Clear(Graphics *self);

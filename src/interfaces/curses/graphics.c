@@ -27,6 +27,11 @@ void Graphics_Callback_Handler(Graphics *self, double time_in_s)
 	usleep( (long)(time_in_s * 1000000) );
 }
 
+void Graphics_Draw_At(Graphics *self, long int x, long int y)
+{
+	mvaddch(y + LINES/2, x + COLS/2, ACS_DIAMOND);
+}
+
 void Graphics_Flush(Graphics *self)
 {
 	refresh();
