@@ -23,11 +23,11 @@ static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_w
 	int live_cell_remains = cell_alive && (count == 2 || count == 3);
 	int dead_cell_comes_alive = !cell_alive && count == 3;
 	if (live_cell_remains || dead_cell_comes_alive)
-		Cell_Initialize(new_world, x, y);
+		Cell_New(new_world, x, y);
 }
 /* Private */
 
-World *World_Initialize()
+World *World_New()
 {
 	World *self = World_Create();
 	self->cell_count = 0;
@@ -46,11 +46,11 @@ void World_Destroy(World *self)
 World* World_Create_From_File(const char file_name[])
 {
 	FILE *fp = fopen(file_name, "r");
-	World *world = World_Initialize();
+	World *world = World_New();
 	long int x, y;
 
 	while (fscanf(fp, "%ld %ld", &x, &y) != EOF)
-		Cell_Initialize(world, x, y);
+		Cell_New(world, x, y);
 
 	fclose(fp);
 
@@ -117,20 +117,20 @@ World* World_Active_Zone(const World *self)
 {
 	long int i, x, y;
 	Cell *cell;
-	World *potential_births = World_Initialize();
+	World *potential_births = World_New();
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
 		x = Cell_X(cell);
 		y = Cell_Y(cell);
-		Cell_Initialize(potential_births, x - 1, y - 1);
-		Cell_Initialize(potential_births, x - 1, y    );
-		Cell_Initialize(potential_births, x - 1, y + 1);
-		Cell_Initialize(potential_births, x    , y - 1);
-		Cell_Initialize(potential_births, x    , y + 1);
-		Cell_Initialize(potential_births, x + 1, y - 1);
-		Cell_Initialize(potential_births, x + 1, y    );
-		Cell_Initialize(potential_births, x + 1, y + 1);
+		Cell_New(potential_births, x - 1, y - 1);
+		Cell_New(potential_births, x - 1, y    );
+		Cell_New(potential_births, x - 1, y + 1);
+		Cell_New(potential_births, x    , y - 1);
+		Cell_New(potential_births, x    , y + 1);
+		Cell_New(potential_births, x + 1, y - 1);
+		Cell_New(potential_births, x + 1, y    );
+		Cell_New(potential_births, x + 1, y + 1);
 	}
 
 	return potential_births;
@@ -138,7 +138,7 @@ World* World_Active_Zone(const World *self)
 
 World* World_Tick(World *self)
 {
-	World *new_world = World_Initialize();
+	World *new_world = World_New();
 	long int i;
 
 	World *active_zone = World_Active_Zone(self);

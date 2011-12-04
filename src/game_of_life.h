@@ -18,7 +18,10 @@ struct World
 };
 
 /* Cell Methods */
-Cell* Cell_Initialize(World *world, long int x, long int y);
+Cell* Cell_Allocate();
+Cell* Cell_Initialize(Cell *emptyCell, World *world, long int x, long int y);
+
+Cell* Cell_New(World *world, long int x, long int y);
 void Cell_Destroy(Cell *self);
 
 long int Cell_X(const Cell *self);
@@ -32,7 +35,7 @@ void Cell_Dump(const Cell *self);
 /* Cell Methods */
 
 /* World Methods */
-World* World_Initialize();
+World* World_New();
 void World_Destroy(World *self);
 
 World* World_Create_From_File(const char file_name[]);

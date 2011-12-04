@@ -3,27 +3,30 @@
 
 #include "game_of_life.h"
 
-/* Private */
-static Cell* Cell_Create()
+Cell* Cell_Allocate()
 {
 	return (Cell*) (malloc( sizeof(Cell) ));
 }
-/* Private */
 
-Cell* Cell_Initialize(World *world, long int x, long int y)
+Cell* Cell_Initialize(Cell* allocatedCell, World* world, long int x, long int y)
 {
-	Cell *self;
+	Cell *alreadyPresent;
 
-	self = World_Cell_At(world, x, y);
-	if (self != '\0')
-		return self;
+	alreadyPresent = World_Cell_At(world, x, y);
+	if (alreadyPresent != '\0')
+		return alreadyPresent;
 
-	self = Cell_Create();
-	self->x = x;
-	self->y = y;
-	self->world = world;
-	World_Add_Cell(world, self);
-	return self;
+	allocatedCell->x = x;
+	allocatedCell->y = y;
+	allocatedCell->world = world;
+
+	World_Add_Cell(world, allocatedCell);
+	return allocatedCell;
+}
+
+Cell* Cell_New(World *world, long int x, long int y)
+{
+	return Cell_Initialize( Cell_Allocate(), world, x, y );
 }
 
 void Cell_Destroy(Cell *self)

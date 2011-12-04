@@ -13,21 +13,22 @@ Suite *create_game_of_life_suite(void)
 	Suite *s = suite_create("Game of Life");
 
 	TCase *tc_cell = tcase_create("Cell");
-	tcase_add_test(tc_cell, test_Cell_Is_created_at_specified_world);
-	tcase_add_test(tc_cell, test_Cell_Is_created_at_specified_location);
-	tcase_add_test(tc_cell, test_Cell_Is_not_created_if_it_already_exists_in_the_world);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north_east);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_east);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_south_east);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_south);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_south_west);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_west);
-	tcase_add_test(tc_cell, test_Cell_Knows_its_neighbour_to_north_west);
-	tcase_add_test(tc_cell, test_Cell_Knows_does_not_consider_far_away_cell_as_neighbours);
-	tcase_add_test(tc_cell, test_Cell_Is_at_location_when_its_coordinates_and_world_match);
-	tcase_add_test(tc_cell, test_Cell_Is_not_at_location_when_its_coordinates_do_not_match);
-	tcase_add_test(tc_cell, test_Cell_Is_not_at_location_when_its_world_does_not_match);
+	tcase_add_test(tc_cell, test_Cell_is_created_at_specified_world);
+	tcase_add_test(tc_cell, test_Cell_is_created_at_specified_location);
+	tcase_add_test(tc_cell, test_Cell_is_not_created_if_it_already_exists_in_the_world);
+	tcase_add_test(tc_cell, test_Cell_creation_is_allocation_followed_by_initialization);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_north);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_north_east);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_east);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_south_east);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_south);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_south_west);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_west);
+	tcase_add_test(tc_cell, test_Cell_knows_its_neighbour_to_north_west);
+	tcase_add_test(tc_cell, test_Cell_knows_does_not_consider_far_away_cell_as_neighbours);
+	tcase_add_test(tc_cell, test_Cell_is_at_location_when_its_coordinates_and_world_match);
+	tcase_add_test(tc_cell, test_Cell_is_not_at_location_when_its_coordinates_do_not_match);
+	tcase_add_test(tc_cell, test_Cell_is_not_at_location_when_its_world_does_not_match);
 	suite_add_tcase(s, tc_cell);
 
 	TCase *tc_world = tcase_create("World");
