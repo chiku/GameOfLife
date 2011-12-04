@@ -13,7 +13,8 @@ struct Graphics
 	Display *display;
 	int screen;
 	Window window;
-	GC graphical_context;
+	XColor orange, grey;
+	GC current_gc, orange_gc, grey_gc;
 };
 
 Graphics* Graphics_Initialize();

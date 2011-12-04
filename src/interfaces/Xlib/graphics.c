@@ -37,11 +37,23 @@ Graphics *Graphics_Initialize()
 	self->display = initialize_display();
 	self->screen = DefaultScreen(self->display);
 	self->window = initialize_window(self->display, self->screen);
-	self->graphical_context = DefaultGC(self->display, self->screen);
+
+	self->orange_gc = XCreateGC(self->display, self->window, self->screen, NULL);
+	self->grey_gc = XCreateGC(self->display, self->window, self->screen, NULL);
+
+	Colormap colormap_orange = DefaultColormap(self->display, self->screen);
+	Colormap colormap_grey = DefaultColormap(self->display, self->screen);
+
+	XParseColor(self->display, colormap_orange, "#FF8811", &(self->orange));
+	XParseColor(self->display, colormap_grey, "#CCCCCC", &(self->grey));
+	XAllocColor(self->display, colormap_orange, &(self->orange));
+	XAllocColor(self->display, colormap_grey, &(self->grey));
 
 	XSelectInput(self->display, self->window, ExposureMask);
 	XMapWindow(self->display, self->window);
 	XStoreName(self->display, self->window, "Conway's Game of Life");
+
+	self->current_gc = self->orange_gc;
 
 	return self;
 }
@@ -56,10 +68,10 @@ void Graphics_Draw_At(Graphics *self, long int x, long int y)
 {
 	XFillRectangle(self->display,
 		self->window,
-		self->graphical_context,
-		SCREEN / 2 + x * SQUARE,
-		SCREEN / 2 + y * SQUARE,
-		SQUARE, SQUARE);
+		self->current_gc,
+		SCREEN / 2 - x * SQUARE,
+		SCREEN / 2 - y * SQUARE,
+		SQUARE - 1, SQUARE - 1);
 }
 
 void Graphics_Flush(Graphics *self)
@@ -69,19 +81,21 @@ void Graphics_Flush(Graphics *self)
 
 void Graphics_Callback_Handler(Graphics *self, double time_in_s)
 {
-	usleep( (long)(time_in_s * 1000000) );
+	usleep( (long int)(time_in_s * 1000000L) );
 }
 
 void Graphics_Clear(Graphics *self) {}
 
 void Graphics_Set_Draw_Color(Graphics *self)
 {
-	XSetForeground(self->display, self->graphical_context, BlackPixel(self->display, self->screen));
+	self->current_gc = self->orange_gc;
+	XSetForeground(self->display, self->current_gc, self->orange.pixel);
 }
 
 void Graphics_Set_Erase_Color(Graphics *self)
 {
-	XSetForeground(self->display, self->graphical_context, WhitePixel(self->display, self->screen));
+	self->current_gc = self->grey_gc;
+	XSetForeground(self->display, self->current_gc, self->grey.pixel);
 }
 
 /* Signal handling */
