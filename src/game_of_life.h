@@ -19,7 +19,7 @@ struct World
 
 /* Cell Methods */
 Cell* Cell_Allocate();
-Cell* Cell_Initialize(Cell *emptyCell, World *world, long int x, long int y);
+Cell* Cell_Initialize(Cell *allocated_cell, World *world, long int x, long int y);
 
 Cell* Cell_New(World *world, long int x, long int y);
 void Cell_Destroy(Cell *self);
@@ -35,6 +35,9 @@ void Cell_Dump(const Cell *self);
 /* Cell Methods */
 
 /* World Methods */
+World* World_Allocate();
+World* World_Initialize(World *allocated_world);
+
 World* World_New();
 void World_Destroy(World *self);
 

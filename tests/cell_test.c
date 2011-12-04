@@ -36,18 +36,18 @@ END_TEST
 START_TEST (test_Cell_creation_is_allocation_followed_by_initialization)
 {
 	World *world = World_New();
-	Cell *allocatedCell = Cell_Allocate();
-	Cell *initializedCell = Cell_Initialize(allocatedCell, world, 10, 5);
+	Cell *allocated_cell = Cell_Allocate();
+	Cell *initialized_cell = Cell_Initialize(allocated_cell, world, 10, 5);
 	long int x_coordinate, y_coordinate;
 
-	fail_unless(allocatedCell == initializedCell, "Expected allocated cell to share after initiazation, but didn't");
+	fail_unless(allocated_cell == initialized_cell, "Expected initialized cell to have same memory location as allocated cell, but didn't");
 
-	fail_unless(Cell_World(initializedCell) == world, "Expected cell to be in same world, but didn't");
+	fail_unless(Cell_World(initialized_cell) == world, "Expected cell to be in same world, but didn't");
 
-	x_coordinate = Cell_X(initializedCell);
+	x_coordinate = Cell_X(initialized_cell);
 	fail_unless(x_coordinate == 10, "Expected x-coordinate of cell to be %ld, but was %ld", 10, x_coordinate);
 
-	y_coordinate = Cell_Y(initializedCell);
+	y_coordinate = Cell_Y(initialized_cell);
 	fail_unless(y_coordinate == 5, "Expected y-coordinate of cell to be %ld, but was %ld", 5, y_coordinate);
 	World_Destroy(world);
 }

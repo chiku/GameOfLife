@@ -33,6 +33,7 @@ Suite *create_game_of_life_suite(void)
 
 	TCase *tc_world = tcase_create("World");
 	tcase_add_test(tc_world, test_World_creation_from_file_is_proper);
+	tcase_add_test(tc_world, test_World_creation_is_allocation_followed_by_initialization);
 	tcase_add_test(tc_world, test_World_knows_its_cell_count);
 	tcase_add_test(tc_world, test_World_knows_its_cell_by_position);
 	tcase_add_test(tc_world, test_World_if_it_has_a_cell);

@@ -8,20 +8,20 @@ Cell* Cell_Allocate()
 	return (Cell*) (malloc( sizeof(Cell) ));
 }
 
-Cell* Cell_Initialize(Cell* allocatedCell, World* world, long int x, long int y)
+Cell* Cell_Initialize(Cell* allocated_cell, World* world, long int x, long int y)
 {
-	Cell *alreadyPresent;
+	Cell *already_present;
 
-	alreadyPresent = World_Cell_At(world, x, y);
-	if (alreadyPresent != '\0')
-		return alreadyPresent;
+	already_present = World_Cell_At(world, x, y);
+	if (already_present != '\0')
+		return already_present;
 
-	allocatedCell->x = x;
-	allocatedCell->y = y;
-	allocatedCell->world = world;
+	allocated_cell->x = x;
+	allocated_cell->y = y;
+	allocated_cell->world = world;
 
-	World_Add_Cell(world, allocatedCell);
-	return allocatedCell;
+	World_Add_Cell(world, allocated_cell);
+	return allocated_cell;
 }
 
 Cell* Cell_New(World *world, long int x, long int y)

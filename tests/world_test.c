@@ -12,6 +12,15 @@ START_TEST (test_World_creation_from_file_is_proper)
 }
 END_TEST
 
+START_TEST (test_World_creation_is_allocation_followed_by_initialization)
+{
+	World *allocated_world = World_Allocate();
+	World *initialized_world = World_Initialize(allocated_world);
+
+	fail_unless(initialized_world == allocated_world, "Expected initialized world to have same memory location as allocated world, but didn't");
+}
+END_TEST
+
 START_TEST (test_World_knows_its_cell_count)
 {
 	World *world = World_New();

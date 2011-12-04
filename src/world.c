@@ -6,13 +6,6 @@
 const long int MAX_WORLD_SIZE = 10000;
 
 /* Private */
-static World* World_Create()
-{
-	World *self = (World*) (malloc( sizeof(World) ));
-	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
-	return self;
-}
-
 static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
 {
 	long int x = Cell_X(cell);
@@ -27,11 +20,22 @@ static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_w
 }
 /* Private */
 
+World* World_Allocate()
+{
+	World *self = (World*) (malloc( sizeof(World) ));
+	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
+	return self;
+}
+
+World* World_Initialize(World *allocatedWorld)
+{
+	allocatedWorld->cell_count = 0;
+	return allocatedWorld;
+}
+
 World *World_New()
 {
-	World *self = World_Create();
-	self->cell_count = 0;
-	return self;
+	return World_Initialize(World_Allocate());
 }
 
 void World_Destroy(World *self)
