@@ -2,6 +2,7 @@ env = Environment(CPPPATH = ['src'])
 env.Append(CCFLAGS = '-O3 -Wall')
 
 env.StaticLibrary('lib/gol', Split(['src/cell.c', 'src/world.c']))
+env.SharedLibrary('lib/gol', Split(['src/cell.c', 'src/world.c']))
 env.StaticLibrary('lib/gol_ev', Split(['src/event_loop/event_loop.c', 'src/event_loop/validate_arguments.c', 'src/event_loop/handle_signals.c', 'src/event_loop/main.c']))
 
 env.Program('bin/test_gol', Split(['tests/test_suite.c', 'lib/libgol.a']), LIBS=['check'])
