@@ -4,9 +4,9 @@
 #define EVENT_LOOP_H
 
 typedef struct Graphics Graphics;
-typedef struct EventLoop EventLoop;
+typedef struct MainLoop MainLoop;
 
-struct EventLoop
+struct MainLoop
 {
 	World *world;
 	Graphics *graphics;
@@ -14,14 +14,14 @@ struct EventLoop
 };
 
 /* Member methods */
-EventLoop* EventLoop_Initialize(World *world, Graphics *graphics, void (*draw_cell)(long int, long int, void *));
-void EventLoop_Destroy(EventLoop *self);
+MainLoop* MainLoop_Initialize(World *world, Graphics *graphics, void (*draw_cell)(long int, long int, void *));
+void MainLoop_Destroy(MainLoop *self);
 
-void EventLoop_Begin(EventLoop *self);
+void MainLoop_Begin(MainLoop *self);
 
-void EventLoop_Draw(EventLoop *self);
-void EventLoop_Erase(EventLoop *self);
-void EventLoop_Cleanup(EventLoop *self);
+void MainLoop_Draw(MainLoop *self);
+void MainLoop_Erase(MainLoop *self);
+void MainLoop_Cleanup(MainLoop *self);
 /* Member methods */
 
 /* Interface of Graphics */

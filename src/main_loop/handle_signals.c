@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <signal.h>
 
-#include "event_loop.h"
+#include "main_loop.h"
 
 static void handle_signal_for(const char *message, int exit_status)
 {

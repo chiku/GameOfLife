@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "event_loop.h"
+#include "main_loop.h"
 
 static void usage(char *exec_file_name)
 {

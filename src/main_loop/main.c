@@ -1,5 +1,5 @@
 #include "../game_of_life.h"
-#include "event_loop.h"
+#include "main_loop.h"
 
 static void draw_cell(long int x, long int y, void *data)
 {
@@ -14,10 +14,10 @@ int main(int argc, char *argv[])
 	World *world = World_Create_From_File(file_name);
 	Graphics *graphics = Graphics_Initialize();
 
-	EventLoop *event_loop = EventLoop_Initialize(world, graphics, draw_cell);
-	EventLoop_Begin(event_loop);
+	MainLoop *main_loop = MainLoop_Initialize(world, graphics, draw_cell);
+	MainLoop_Begin(main_loop);
 
-	EventLoop_Destroy(event_loop);
+	MainLoop_Destroy(main_loop);
 	World_Destroy(world);
 	Graphics_Destroy(graphics);
 
