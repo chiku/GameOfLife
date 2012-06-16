@@ -2,11 +2,19 @@ START_TEST (test_Cell_is_created_at_specified_location)
 {
 	Cell cell = Cell_New(5, 4);
 
-	long int x_coordinate = Cell_Coordinates(cell).x;
-	fail_unless(x_coordinate == 5, "Expected x-coordinate of cell to be %ld, but was %ld", 5, x_coordinate);
+	Coordinates coordinates = Cell_Coordinates(cell);
+	fail_unless(coordinates.x == 5, "Expected x-coordinate of cell to be %ld, but was %ld", 5, coordinates.x);
+	fail_unless(coordinates.y == 4, "Expected y-coordinate of cell to be %ld, but was %ld", 4, coordinates.y);
+}
+END_TEST
 
-	long int y_coordinate = Cell_Coordinates(cell).y;
-	fail_unless(y_coordinate == 4, "Expected y-coordinate of cell to be %ld, but was %ld", 4, y_coordinate);
+START_TEST (test_Cell_is_created_from_coordinates)
+{
+	Cell cell = Cell_New_From_Coordinates(Coordinates_New(5, 4));
+
+	Coordinates coordinates = Cell_Coordinates(cell);
+	fail_unless(coordinates.x == 5, "Expected x-coordinate of cell to be %ld, but was %ld", 5, coordinates.x);
+	fail_unless(coordinates.y == 4, "Expected y-coordinate of cell to be %ld, but was %ld", 4, coordinates.y);
 }
 END_TEST
 

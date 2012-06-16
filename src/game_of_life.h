@@ -38,6 +38,7 @@ void Coordinates_Dump(Coordinates self);
 
 /* Cell Methods */
 Cell Cell_New(long int x, long int y);
+Cell Cell_New_From_Coordinates(Coordinates coordinates);
 
 Coordinates Cell_Coordinates(Cell self);
 

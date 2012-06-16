@@ -14,7 +14,7 @@ static void World_Create_Cell_In_New_World(World *self, Cell cell, World *new_wo
 	int cell_alive = World_Has_Cell_At(self, coordinates);
 
 	if (Rule_Carry_Forward_Cell(cell_alive, neighbours))
-		World_Add_Cell(new_world, Cell_New(coordinates.x, coordinates.y));
+		World_Add_Cell(new_world, Cell_New_From_Coordinates(coordinates));
 }
 /* Private */
 
@@ -107,17 +107,17 @@ int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 
 World* World_Active_Zone(const World *self)
 {
-	long int i, x, y, corner;
+	long int i, corner;
 	Cell cell;
 	World *potential_births = World_New();
+	Coordinates coordinates;
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
-		x = Cell_Coordinates(cell).x;
-		y = Cell_Coordinates(cell).y;
-		for (corner = 0; corner < MAX_NEIGHBOURS; corner++)
-			World_Add_Cell(potential_births, Cell_New(x + self->neighbour_locations[corner].x,
-			                                          y + self->neighbour_locations[corner].y));
+		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
+			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), self->neighbour_locations[corner]);
+			World_Add_Cell(potential_births, Cell_New_From_Coordinates(coordinates));
+		}
 	}
 
 	return potential_births;

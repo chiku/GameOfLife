@@ -9,6 +9,12 @@ Cell Cell_New(long int x, long int y)
 	return cell;
 }
 
+Cell Cell_New_From_Coordinates(Coordinates coordinates)
+{
+	Cell cell = {coordinates};
+	return cell;
+}
+
 Coordinates Cell_Coordinates(Cell self)
 {
 	return Coordinates_Get(self.coordinates);
