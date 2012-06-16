@@ -35,3 +35,8 @@ Coordinates Coordinates_Get(Coordinates *self)
 	Coordinates c = {self->x, self->y};
 	return c;
 }
+
+void Coordinates_Dump(const Coordinates *self)
+{
+	printf("(x=%ld, y=%ld)\n", self->x, self->y);
+}

@@ -14,8 +14,6 @@ struct Coordinates
 
 struct Cell
 {
-	long int x;
-	long int y;
 	Coordinates *coordinates;
 };
 
@@ -36,6 +34,7 @@ void Coordinates_Destroy(Coordinates *coordinates);
 Coordinates Coordinates_Get(Coordinates *coordinates);
 int Coordinates_Match(Coordinates *c1, Coordinates *c2);
 
+void Coordinates_Dump(const Coordinates *self);
 /* Coordinates Methods */
 
 

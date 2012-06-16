@@ -12,8 +12,6 @@ Cell* Cell_Allocate()
 
 Cell* Cell_Initialize(Cell* allocated_cell, long int x, long int y)
 {
-	allocated_cell->x = x;
-	allocated_cell->y = y;
 	allocated_cell->coordinates = Coordinates_New(x, y);
 	return allocated_cell;
 }
@@ -41,5 +39,5 @@ int Cell_Is_At(const Cell *self, Coordinates coordinates)
 
 void Cell_Dump(const Cell* self)
 {
-	printf("(x=%ld, y=%ld)\n", self->x, self->y);
+	Coordinates_Dump(self->coordinates);
 }
