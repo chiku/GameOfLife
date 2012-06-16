@@ -34,7 +34,7 @@ START_TEST (test_Cell_is_at_location_when_its_coordinates_match)
 	Cell *cell = Cell_New(3, 4);
 	World_Add_Cell(world, cell);
 
-	fail_unless(Cell_Is_At(cell, 3, 4), "Expected cell to be present at location (3, 4), but wasn't");
+	fail_unless(Cell_Is_At(cell, *Coordinates_New(3, 4)), "Expected cell to be present at location (%ld, %ld), but wasn't", 3, 4);
 	World_Destroy(world);
 }
 END_TEST
@@ -45,7 +45,7 @@ START_TEST (test_Cell_is_not_at_location_when_its_x_coordinates_do_not_match)
 	Cell *cell = Cell_New(3, 4);
 	World_Add_Cell(world, cell);
 
-	fail_if(Cell_Is_At(cell, 2, 4), "Expected cell to be not present at location (2, 4), but was");
+	fail_if(Cell_Is_At(cell, *Coordinates_New(2, 4)), "Expected cell to be not present at location (%ld, %ld), but was", 2, 4);
 	World_Destroy(world);
 }
 END_TEST
@@ -56,7 +56,7 @@ START_TEST (test_Cell_is_not_at_location_when_its_y_coordinates_do_not_match)
 	Cell *cell = Cell_New(3, 4);
 	World_Add_Cell(world, cell);
 
-	fail_if(Cell_Is_At(cell, 3, -4), "Expected cell to be not present at location (3, -4), but was");
+	fail_if(Cell_Is_At(cell, *Coordinates_New(3, -4)), "Expected cell to be not present at location (%ld, %ld), but was", 3, -4);
 	World_Destroy(world);
 }
 END_TEST

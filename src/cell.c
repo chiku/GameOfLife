@@ -34,9 +34,9 @@ Coordinates Cell_Coordinates(const Cell *self)
 	return Coordinates_Get(self->coordinates);
 }
 
-int Cell_Is_At(const Cell *self, long int x, long int y)
+int Cell_Is_At(const Cell *self, Coordinates coordinates)
 {
-	return (self->x == x && self->y ==y) ? 1 : 0;
+	return Coordinates_Match(self->coordinates, &coordinates);
 }
 
 void Cell_Dump(const Cell* self)

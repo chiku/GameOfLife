@@ -48,7 +48,7 @@ void Cell_Destroy(Cell *self);
 
 Coordinates Cell_Coordinates(const Cell *self);
 
-int Cell_Is_At(const Cell *self, long int x, long int y);
+int Cell_Is_At(const Cell *self, Coordinates coordinates);
 
 void Cell_Dump(const Cell *self);
 /* Cell Methods */
@@ -69,7 +69,7 @@ World* World_Create_From_File(const char file_name[]);
 long int World_Cell_Count(const World *self);
 
 void World_Add_Cell(World *self, Cell *cell);
-int World_Has_Cell_At(const World *self, long int x, long int y);
+int World_Has_Cell_At(const World *self, Coordinates coordinates);
 int World_Cell_Count_Around(const World *self, long int x, long int y);
 World* World_Active_Zone(const World *self);
 
