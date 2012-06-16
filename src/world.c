@@ -23,8 +23,13 @@ static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_w
 
 World* World_Allocate()
 {
+	int i;
+
 	World *self = (World*) (malloc( sizeof(World) ));
 	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
+	self->neighbour_locations = (int**) (malloc ( sizeof(int*) * MAX_NEIGHBOURS ));
+	for (i = 0; i < MAX_NEIGHBOURS; i++)
+		self->neighbour_locations[i] = (int*) (malloc( sizeof(int) * 2 ));
 	return self;
 }
 
@@ -54,6 +59,9 @@ void World_Destroy(World *self)
 	for (i = 0; i < self->cell_count; i++)
 		free(self->cells[i]);
 	free(self->cells);
+	for (i = 0; i < MAX_NEIGHBOURS; i++)
+		free(self->neighbour_locations[i]);
+	free(self->neighbour_locations);
 	free(self);
 }
 

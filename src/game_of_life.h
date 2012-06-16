@@ -12,7 +12,7 @@ struct Cell
 
 struct World
 {
-	int neighbour_locations[8][2];
+	int **neighbour_locations;
 	long int cell_count;
 	Cell **cells;
 };
