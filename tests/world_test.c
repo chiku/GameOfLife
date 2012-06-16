@@ -262,10 +262,10 @@ START_TEST (test_World_knows_all_cell_locations_near_all_living_cells)
 END_TEST
 
 static long int sum_x, sum_y, trace;
-static void add_up_cell_values(long int x, long int y, void *data)
+static void add_up_cell_values(Coordinates coordinates, void *data)
 {
-	sum_x += x;
-	sum_y += y;
+	sum_x += coordinates.x;
+	sum_y += coordinates.y;
 	trace = data ? *((long int*)data) : 0;
 }
 

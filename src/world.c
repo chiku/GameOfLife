@@ -138,13 +138,13 @@ World* World_Tick(World *self)
 	return new_world;
 }
 
-void World_At_Each_Cell(const World *world, void (*visitor)(long int, long int, void *), void *data)
+void World_At_Each_Cell(const World *world, void (*visitor)(Coordinates coordinates, void *), void *data)
 {
 	Cell cell;
 	long int i;
 	for (i = 0; i < world->cell_count; i++) {
 		cell = world->cells[i];
-		visitor(Cell_Coordinates(cell).x, Cell_Coordinates(cell).y, data);
+		visitor(Cell_Coordinates(cell), data);
 	}
 }
 

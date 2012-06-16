@@ -70,7 +70,7 @@ int World_Cell_Count_Around(const World *self, Coordinates coordinates);
 World* World_Active_Zone(const World *self);
 
 World* World_Tick(World *self);
-void World_At_Each_Cell(const World *world, void (*visitor)(long int, long int, void*), void *data);
+void World_At_Each_Cell(const World *world, void (*visitor)(Coordinates coordinates, void*), void *data);
 
 void World_Dump(const World *self);
 /* World Methods */

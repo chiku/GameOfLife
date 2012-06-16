@@ -4,7 +4,7 @@
 #include "../game_of_life.h"
 #include "main_loop.h"
 
-MainLoop* MainLoop_Initialize(World *world, Graphics *graphics, void (*draw_cell)(long int, long int, void *))
+MainLoop* MainLoop_Initialize(World *world, Graphics *graphics, void (*draw_cell)(Coordinates coordinates, void *))
 {
 	MainLoop *self = (MainLoop*)(malloc( sizeof(MainLoop) ));
 
