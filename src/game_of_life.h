@@ -24,6 +24,7 @@ struct World
 	Cell **cells;
 };
 
+
 /* Coordinates Methods */
 Coordinates* Coordinates_Allocate();
 Coordinates* Coordinates_Initialize(Coordinates* coordinates, long int x, long int y);
@@ -33,6 +34,7 @@ void Coordinates_Destroy(Coordinates *coordinates);
 
 Coordinates Coordinates_Get(Coordinates *coordinates);
 int Coordinates_Match(Coordinates *c1, Coordinates *c2);
+Coordinates *Coordinates_Shifted_By(Coordinates *self, long int dx, long int dy);
 
 void Coordinates_Dump(const Coordinates *self);
 /* Coordinates Methods */
@@ -52,9 +54,11 @@ int Cell_Is_At(const Cell *self, Coordinates coordinates);
 void Cell_Dump(const Cell *self);
 /* Cell Methods */
 
+
 /* Rules Methods */
 int Rule_Carry_Forward_Cell(int cell_alive, int neighbours);
 /* Rules Methods */
+
 
 /* World Methods */
 World* World_Allocate();
@@ -78,9 +82,11 @@ void World_At_Each_Cell(const World *world, void (*visitor)(long int, long int, 
 void World_Dump(const World *self);
 /* World Methods */
 
+
 /* Utility Functions */
 char *handle_command_line_arguments(int argc, char *argv[]);
 World* create_world_with_file(char *file_name);
 /* Utility Functions */
+
 
 #endif /* GAME_OF_LIFE_H */

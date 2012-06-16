@@ -10,13 +10,11 @@ const int MAX_NEIGHBOURS = 8;
 static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
 {
 	Coordinates coordinates = Cell_Coordinates(cell);
-	long int x = coordinates.x;
-	long int y = coordinates.y;
 	int neighbours = World_Cell_Count_Around(self, coordinates);
 	int cell_alive = World_Has_Cell_At(self, coordinates);
 
 	if (Rule_Carry_Forward_Cell(cell_alive, neighbours))
-		World_Add_Cell(new_world, Cell_New(x, y));
+		World_Add_Cell(new_world, Cell_New(coordinates.x, coordinates.y));
 }
 /* Private */
 
@@ -106,13 +104,11 @@ int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 	long int count = 0, i, corner;
 	Cell *cell;
 	Coordinates *c;
-	long int x = coordinates.x;
-	long int y = coordinates.y;
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
 		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
-			c = Coordinates_New(x + self->neighbour_locations[corner][0], y + self->neighbour_locations[corner][1]);
+			c = Coordinates_Shifted_By(&coordinates, self->neighbour_locations[corner][0], self->neighbour_locations[corner][1]);
 			if (Cell_Is_At(cell, *c))
 				count += 1;
 			}

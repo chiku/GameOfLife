@@ -17,7 +17,7 @@ Coordinates* Coordinates_Initialize(Coordinates* coordinates, long int x, long i
 
 Coordinates* Coordinates_New(long int x, long int y)
 {
-	return Coordinates_Initialize( Coordinates_Allocate(), x, y );
+	return Coordinates_Initialize(Coordinates_Allocate(), x, y);
 }
 
 void Coordinates_Destroy(Coordinates *self)
@@ -34,6 +34,11 @@ Coordinates Coordinates_Get(Coordinates *self)
 {
 	Coordinates c = {self->x, self->y};
 	return c;
+}
+
+Coordinates *Coordinates_Shifted_By(Coordinates *self, long int dx, long int dy)
+{
+	return Coordinates_Initialize(Coordinates_Allocate(), self->x + dx, self->y + dy);
 }
 
 void Coordinates_Dump(const Coordinates *self)

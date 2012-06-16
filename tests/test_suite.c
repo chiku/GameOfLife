@@ -16,6 +16,7 @@ Suite *create_game_of_life_suite(void)
 	TCase *tc_coordinates = tcase_create("Coordinates");
 	tcase_add_test(tc_coordinates, test_Coordinates_have_an_abscissa);
 	tcase_add_test(tc_coordinates, test_Coordinates_have_an_ordinate);
+	tcase_add_test(tc_coordinates, test_Coordinates_is_created_at_location_shifted_from_an_existing_coordinate);
 	tcase_add_test(tc_coordinates, test_Coordinates_match_when_absicca_and_ordinate_are_equal);
 	tcase_add_test(tc_coordinates, test_Coordinates_do_not_match_when_absicca_are_not_equal);
 	tcase_add_test(tc_coordinates, test_Coordinates_do_not_match_when_ordinate_are_not_equal);
