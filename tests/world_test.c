@@ -4,7 +4,7 @@ START_TEST (test_World_adds_cell)
 	Cell *cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
-	fail_unless(World_Cell_At(world, 0, 0) == cell, "Expected cell (address=%p) to be present, but wasn't", cell);
+	fail_unless(World_Has_Cell_At(world, 0, 0), "Expected cell (address=%p) to be present, but wasn't", cell);
 	World_Destroy(world);
 }
 END_TEST
@@ -53,34 +53,6 @@ START_TEST (test_World_knows_its_cell_count)
 
 	long int cell_count = World_Cell_Count(world);
 	fail_unless(cell_count == 3, "Expected cell count to be %ld, but was %ld", 3, cell_count);
-	World_Destroy(world);
-}
-END_TEST
-
-START_TEST (test_World_knows_its_cell_by_position)
-{
-	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
-	World_Add_Cell(world, cell);
-
-	fail_unless(World_Cell_At(world, 0, 0) == cell, "Excepted cell <address=%p> (0, 0) to be present in the world, but wasn't", cell);
-	fail_unless(World_Cell_At(world, 0, 1) == '\0', "Excepted cell <address=%p> (0, 1) to be not present in the world, but was", cell);
-	World_Destroy(world);
-}
-END_TEST
-
-START_TEST (test_World_if_it_has_a_cell)
-{
-	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
-	World_Add_Cell(world, cell);
-
-	World *another_world = World_New();
-	Cell *another_cell = Cell_New(0, 0);
-	World_Add_Cell(another_world, another_cell);
-
-	fail_unless(World_Has_Cell(world, cell), "Excepted cell (address=%p) to be present in the world, but wasn't", cell);
-	fail_if(World_Has_Cell(world, another_cell), "Excepted another cell (address=%p) to be not present in the world, but was", another_cell);
 	World_Destroy(world);
 }
 END_TEST

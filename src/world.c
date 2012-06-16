@@ -75,27 +75,13 @@ void World_Add_Cell(World *self, Cell *cell)
 	self->cell_count ++;
 }
 
-int World_Has_Cell(const World *self, const Cell *cell)
-{
-	long int i;
-	for (i = 0; i < self->cell_count; i++)
-		if (self->cells[i] == cell)
-			return 1;
-	return 0;
-}
-
-Cell* World_Cell_At(const World *self, long int x, long int y)
+int World_Has_Cell_At(const World *self, long int x, long int y)
 {
 	long int i;
 	for (i = 0; i < self->cell_count; i++)
 		if (Cell_Is_At(self->cells[i], x, y))
-			return self->cells[i];
-	return '\0';
-}
-
-int World_Has_Cell_At(const World *self, long int x, long int y)
-{
-	return World_Cell_At(self, x, y) == '\0' ? 0 : 1;
+			return 1;
+	return 0;
 }
 
 int World_Cell_Count_Around(const World *self, long int x, long int y)
@@ -172,10 +158,8 @@ void World_Dump(const World *self)
 {
 	int i;
 
-	printf("Pointer to world = %p\n", self);
 	printf("Total cells = %ld\n", self->cell_count);
 	for (i = 0; i < self->cell_count; i++)
 		Cell_Dump(self->cells[i]);
 	printf("\n");
 }
-

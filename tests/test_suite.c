@@ -27,8 +27,6 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_world, test_World_creation_from_file_is_proper);
 	tcase_add_test(tc_world, test_World_creation_is_allocation_followed_by_initialization);
 	tcase_add_test(tc_world, test_World_knows_its_cell_count);
-	tcase_add_test(tc_world, test_World_knows_its_cell_by_position);
-	tcase_add_test(tc_world, test_World_if_it_has_a_cell);
 	tcase_add_test(tc_world, test_World_if_it_has_a_cell_at_specified_location);
 	tcase_add_test(tc_world, test_World_does_not_have_a_cell_at_specified_location_when_cell_is_in_different_world);
 	tcase_add_test(tc_cell, test_World_knows_neighbour_to_north_of_a_cell);

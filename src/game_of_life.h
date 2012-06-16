@@ -43,8 +43,6 @@ World* World_Create_From_File(const char file_name[]);
 long int World_Cell_Count(const World *self);
 
 void World_Add_Cell(World *self, Cell *cell);
-Cell* World_Cell_At(const World *self, long int x, long int y);
-int World_Has_Cell(const World *self, const Cell* cell);
 int World_Has_Cell_At(const World *self, long int x, long int y);
 int World_Cell_Count_Around(const World *self, long int x, long int y);
 World* World_Active_Zone(const World *self);
@@ -61,4 +59,3 @@ World* create_world_with_file(char *file_name);
 /* Utility Functions */
 
 #endif /* GAME_OF_LIFE_H */
-
