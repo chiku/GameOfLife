@@ -29,7 +29,7 @@ void Graphics_Callback_Handler(Graphics *self, double time_in_s)
 
 void Graphics_Draw_At(Graphics *self, long int x, long int y)
 {
-	mvaddch(y + LINES/2, x + COLS/2, ACS_DIAMOND);
+	mvaddch(LINES/2 - y, COLS/2 + x, ACS_DIAMOND);
 }
 
 void Graphics_Flush(Graphics *self)

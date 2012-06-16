@@ -69,7 +69,7 @@ void Graphics_Draw_At(Graphics *self, long int x, long int y)
 	XFillRectangle(self->display,
 		self->window,
 		self->current_gc,
-		SCREEN / 2 - x * SQUARE,
+		SCREEN / 2 + x * SQUARE,
 		SCREEN / 2 - y * SQUARE,
 		SQUARE - 1, SQUARE - 1);
 }
