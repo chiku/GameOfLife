@@ -46,8 +46,7 @@ Cell* Cell_Initialize(Cell *allocated_cell, long int x, long int y);
 Cell* Cell_New(long int x, long int y);
 void Cell_Destroy(Cell *self);
 
-long int Cell_X(const Cell *self);
-long int Cell_Y(const Cell *self);
+Coordinates Cell_Coordinates(const Cell *self);
 
 int Cell_Is_At(const Cell *self, long int x, long int y);
 

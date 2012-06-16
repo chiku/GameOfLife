@@ -29,14 +29,9 @@ void Cell_Destroy(Cell *self)
 	free(self);
 }
 
-long int Cell_X(const Cell *self)
+Coordinates Cell_Coordinates(const Cell *self)
 {
-	return self->x;
-}
-
-long int Cell_Y(const Cell *self)
-{
-	return self->y;
+	return Coordinates_Get(self->coordinates);
 }
 
 int Cell_Is_At(const Cell *self, long int x, long int y)

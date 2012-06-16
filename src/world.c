@@ -9,8 +9,8 @@ const int MAX_NEIGHBOURS = 8;
 /* Private */
 static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
 {
-	long int x = Cell_X(cell);
-	long int y = Cell_Y(cell);
+	long int x = Cell_Coordinates(cell).x;
+	long int y = Cell_Coordinates(cell).y;
 	int neighbours = World_Cell_Count_Around(self, x, y);
 	int cell_alive = World_Has_Cell_At(self, x, y);
 
@@ -84,7 +84,7 @@ long int World_Cell_Count(const World *self)
 
 void World_Add_Cell(World *self, Cell *cell)
 {
-	if (World_Has_Cell_At(self, Cell_X(cell), Cell_Y(cell)))
+	if (World_Has_Cell_At(self, Cell_Coordinates(cell).x, Cell_Coordinates(cell).y))
 		return ;
 
 	self->cells[self->cell_count] = cell;
@@ -126,8 +126,8 @@ World* World_Active_Zone(const World *self)
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
-		x = Cell_X(cell);
-		y = Cell_Y(cell);
+		x = Cell_Coordinates(cell).x;
+		y = Cell_Coordinates(cell).y;
 		for (corner = 0; corner < MAX_NEIGHBOURS; corner++)
 			World_Add_Cell(potential_births, Cell_New(x + self->neighbour_locations[corner][0],
 			                                          y + self->neighbour_locations[corner][1]));
@@ -157,7 +157,7 @@ void World_At_Each_Cell(const World *world, void (*visitor)(long int, long int, 
 	long int i;
 	for (i = 0; i < world->cell_count; i++) {
 		cell = world->cells[i];
-		visitor(Cell_X(cell), Cell_Y(cell), data);
+		visitor(Cell_Coordinates(cell).x, Cell_Coordinates(cell).y, data);
 	}
 }
 

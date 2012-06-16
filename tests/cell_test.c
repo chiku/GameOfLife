@@ -2,10 +2,10 @@ START_TEST (test_Cell_is_created_at_specified_location)
 {
 	Cell *cell = Cell_New(5, 4);
 
-	long int x_coordinate = Cell_X(cell);
+	long int x_coordinate = Cell_Coordinates(cell).x;
 	fail_unless(x_coordinate == 5, "Expected x-coordinate of cell to be %ld, but was %ld", 5, x_coordinate);
 
-	long int y_coordinate = Cell_Y(cell);
+	long int y_coordinate = Cell_Coordinates(cell).y;
 	fail_unless(y_coordinate == 4, "Expected y-coordinate of cell to be %ld, but was %ld", 4, y_coordinate);
 	Cell_Destroy(cell);
 }
@@ -19,10 +19,10 @@ START_TEST (test_Cell_creation_is_allocation_followed_by_initialization)
 
 	fail_unless(allocated_cell == initialized_cell, "Expected initialized cell to have same memory location as allocated cell, but didn't");
 
-	x_coordinate = Cell_X(initialized_cell);
+	x_coordinate = Cell_Coordinates(initialized_cell).x;
 	fail_unless(x_coordinate == 10, "Expected x-coordinate of cell to be %ld, but was %ld", 10, x_coordinate);
 
-	y_coordinate = Cell_Y(initialized_cell);
+	y_coordinate = Cell_Coordinates(initialized_cell).y;
 	fail_unless(y_coordinate == 5, "Expected y-coordinate of cell to be %ld, but was %ld", 5, y_coordinate);
 	Cell_Destroy(allocated_cell);
 }
