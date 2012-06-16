@@ -1,34 +1,14 @@
-START_TEST (test_Cell_is_created_at_specified_world)
-{
-	World *world = World_New();
-	Cell *cell = Cell_New(world, 0, 0);
-
-	fail_unless(Cell_World(cell) == world, "Expected cell to be be in the same world but wasn't");
-	World_Destroy(world);
-}
-END_TEST
-
 START_TEST (test_Cell_is_created_at_specified_location)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(world, 5, 4);
+	Cell *cell = Cell_New2(5, 4);
+	World_Add_Cell2(world, cell);
 
 	long int x_coordinate = Cell_X(cell);
 	fail_unless(x_coordinate == 5, "Expected x-coordinate of cell to be %ld, but was %ld", 5, x_coordinate);
 
 	long int y_coordinate = Cell_Y(cell);
 	fail_unless(y_coordinate == 4, "Expected y-coordinate of cell to be %ld, but was %ld", 4, y_coordinate);
-	World_Destroy(world);
-}
-END_TEST
-
-START_TEST (test_Cell_is_not_created_if_it_already_exists_in_the_world)
-{
-	World *world = World_New();
-	Cell *original = Cell_New(world, 5, 4);
-	Cell *duplicate = Cell_New(world, 5, 4);
-
-	fail_unless(duplicate == original, "Expected duplicate cell (address=%p) to be same as original cell (address=%p), but wasn't", duplicate, original);
 	World_Destroy(world);
 }
 END_TEST
@@ -173,34 +153,35 @@ START_TEST (test_Cell_knows_does_not_consider_far_away_cell_as_neighbours)
 }
 END_TEST
 
-START_TEST (test_Cell_is_at_location_when_its_coordinates_and_world_match)
+START_TEST (test_Cell_is_at_location_when_its_coordinates_match)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(world, 3, 4);
+	Cell *cell = Cell_New2(3, 4);
+	World_Add_Cell2(world, cell);
 
-	fail_unless(Cell_Is_At(cell, world, 3, 4), "Expected cell to be present at location (3, 4), but wasn't");
+	fail_unless(Cell_Is_At2(cell, 3, 4), "Expected cell to be present at location (3, 4), but wasn't");
 	World_Destroy(world);
 }
 END_TEST
 
-START_TEST (test_Cell_is_not_at_location_when_its_coordinates_do_not_match)
+START_TEST (test_Cell_is_not_at_location_when_its_x_coordinates_do_not_match)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(world, 3, 4);
+	Cell *cell = Cell_New2(3, 4);
+	World_Add_Cell2(world, cell);
 
-	fail_if(Cell_Is_At(cell, world, 2, 4), "Expected cell to be not present at location (2, 4), but was");
-	fail_if(Cell_Is_At(cell, world, 3, -4), "Expected cell to be not present at location (3, -4), but was");
+	fail_if(Cell_Is_At2(cell, 2, 4), "Expected cell to be not present at location (2, 4), but was");
 	World_Destroy(world);
 }
 END_TEST
 
-START_TEST (test_Cell_is_not_at_location_when_its_world_does_not_match)
+START_TEST (test_Cell_is_not_at_location_when_its_y_coordinates_do_not_match)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(world, 3, 4);
+	Cell *cell = Cell_New2(3, 4);
+	World_Add_Cell2(world, cell);
 
-	fail_if(Cell_Is_At(cell, World_New(), 3, 4), "Expected cell to be present in different world, but wasn't");
+	fail_if(Cell_Is_At2(cell, 3, -4), "Expected cell to be not present at location (3, -4), but was");
 	World_Destroy(world);
 }
 END_TEST
-

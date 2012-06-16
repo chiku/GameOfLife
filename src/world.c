@@ -72,6 +72,15 @@ void World_Add_Cell(World *self, Cell *cell)
 	self->cell_count ++;
 }
 
+void World_Add_Cell2(World *self, Cell *cell)
+{
+	if (World_Has_Cell(self, cell))
+		return ;
+
+	self->cells[self->cell_count] = cell;
+	self->cell_count ++;
+}
+
 int World_Has_Cell(const World *self, const Cell *cell)
 {
 	long int i;
@@ -102,14 +111,14 @@ int World_Cell_Count_Around(const World *self, long int x, long int y)
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
-		if (Cell_Is_At(cell, self, x - 1, y - 1) ||
-		    Cell_Is_At(cell, self, x - 1, y    ) ||
-		    Cell_Is_At(cell, self, x - 1, y + 1) ||
-		    Cell_Is_At(cell, self, x    , y - 1) ||
-		    Cell_Is_At(cell, self, x    , y + 1) ||
-		    Cell_Is_At(cell, self, x + 1, y - 1) ||
-		    Cell_Is_At(cell, self, x + 1, y    ) ||
-		    Cell_Is_At(cell, self, x + 1, y + 1)) {
+		if (Cell_Is_At2(cell, x - 1, y - 1) ||
+		    Cell_Is_At2(cell, x - 1, y    ) ||
+		    Cell_Is_At2(cell, x - 1, y + 1) ||
+		    Cell_Is_At2(cell, x    , y - 1) ||
+		    Cell_Is_At2(cell, x    , y + 1) ||
+		    Cell_Is_At2(cell, x + 1, y - 1) ||
+		    Cell_Is_At2(cell, x + 1, y    ) ||
+		    Cell_Is_At2(cell, x + 1, y + 1)) {
 				count += 1;
 			}
 	}

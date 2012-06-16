@@ -19,9 +19,11 @@ struct World
 
 /* Cell Methods */
 Cell* Cell_Allocate();
-Cell* Cell_Initialize(Cell *allocated_cell, World *world, long int x, long int y);
+Cell* Cell_Initialize(Cell *allocated_cell, World *world, long int x, long int y); // deprecated
+Cell* Cell_Initialize2(Cell *allocated_cell, long int x, long int y);
 
-Cell* Cell_New(World *world, long int x, long int y);
+Cell* Cell_New(World *world, long int x, long int y);  // deprecated
+Cell* Cell_New2(long int x, long int y);
 void Cell_Destroy(Cell *self);
 
 long int Cell_X(const Cell *self);
@@ -29,7 +31,8 @@ long int Cell_Y(const Cell *self);
 World* Cell_World(const Cell *self);
 
 long int Cell_Total_Neighbours(const Cell *self);
-int Cell_Is_At(const Cell *self, const World *world, long int x, long int y);
+int Cell_Is_At(const Cell *self, const World *world, long int x, long int y); // deprecated
+int Cell_Is_At2(const Cell *self, long int x, long int y);
 
 void Cell_Dump(const Cell *self);
 /* Cell Methods */
@@ -45,7 +48,8 @@ World* World_Create_From_File(const char file_name[]);
 
 long int World_Cell_Count(const World *self);
 
-void World_Add_Cell(World *self, Cell *cell);
+void World_Add_Cell(World *self, Cell *cell); // deprecated
+void World_Add_Cell2(World *self, Cell *cell);
 Cell* World_Cell_At(const World *self, long int x, long int y);
 int World_Has_Cell(const World *self, const Cell* cell);
 int World_Has_Cell_At(const World *self, long int x, long int y);
