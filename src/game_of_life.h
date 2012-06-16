@@ -19,7 +19,7 @@ struct Cell
 
 struct World
 {
-	int **neighbour_locations;
+	Coordinates *neighbour_locations;
 	long int cell_count;
 	Cell *cells;
 };
