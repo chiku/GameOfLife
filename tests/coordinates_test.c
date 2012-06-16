@@ -40,7 +40,7 @@ END_TEST
 
 START_TEST (test_Coordinates_is_created_at_location_shifted_from_an_existing_coordinate)
 {
-	Coordinates c = Coordinates_Shifted_By(Coordinates_New(10, -20), -2, 10);
+	Coordinates c = Coordinates_Shifted_By(Coordinates_New(10, -20), Coordinates_New(-2, 10));
 	long int x = Coordinates_Get(c).x;
 	long int y = Coordinates_Get(c).y;
 	fail_unless(Coordinates_Get(c).x, "Expected x-coordinate to be %ld, but was", 8, x);

@@ -20,9 +20,9 @@ Coordinates Coordinates_Get(Coordinates self)
 	return c;
 }
 
-Coordinates Coordinates_Shifted_By(Coordinates self, long int dx, long int dy)
+Coordinates Coordinates_Shifted_By(Coordinates self, Coordinates displacement)
 {
-	return Coordinates_New(self.x + dx, self.y + dy);
+	return Coordinates_New(self.x + displacement.x, self.y + displacement.y);
 }
 
 void Coordinates_Dump(Coordinates self)

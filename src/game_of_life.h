@@ -30,7 +30,7 @@ Coordinates Coordinates_New(long int x, long int y);
 
 Coordinates Coordinates_Get(Coordinates coordinates);
 int Coordinates_Match(Coordinates c1, Coordinates c2);
-Coordinates Coordinates_Shifted_By(Coordinates self, long int dx, long int dy);
+Coordinates Coordinates_Shifted_By(Coordinates self, Coordinates displacement);
 
 void Coordinates_Dump(Coordinates self);
 /* Coordinates Methods */

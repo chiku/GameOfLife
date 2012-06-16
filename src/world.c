@@ -93,13 +93,11 @@ int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 {
 	long int count = 0, i, corner;
 	Cell cell;
-	Coordinates c;
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
 		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
-			c = Coordinates_Shifted_By(coordinates, self->neighbour_locations[corner].x, self->neighbour_locations[corner].y);
-			if (Cell_Is_At(cell, c))
+			if (Cell_Is_At(cell, Coordinates_Shifted_By(coordinates, self->neighbour_locations[corner])))
 				count += 1;
 			}
 	}
