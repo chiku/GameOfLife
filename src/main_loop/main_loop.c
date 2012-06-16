@@ -55,4 +55,3 @@ void MainLoop_Cleanup(MainLoop *self)
 	self->world = World_Tick(self->world);
 	Graphics_Clear(self->graphics);
 }
-

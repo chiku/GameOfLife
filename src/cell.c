@@ -25,7 +25,7 @@ Cell* Cell_New(long int x, long int y)
 
 void Cell_Destroy(Cell *self)
 {
-	free(self->coordinates);
+	Coordinates_Destroy(self->coordinates);
 	free(self);
 }
 

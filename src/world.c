@@ -55,7 +55,7 @@ void World_Destroy(World *self)
 {
 	int i;
 	for (i = 0; i < self->cell_count; i++)
-		free(self->cells[i]);
+		Cell_Destroy(self->cells[i]);
 	free(self->cells);
 	for (i = 0; i < MAX_NEIGHBOURS; i++)
 		free(self->neighbour_locations[i]);
