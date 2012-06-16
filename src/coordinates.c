@@ -3,45 +3,29 @@
 
 #include "game_of_life.h"
 
-Coordinates* Coordinates_Allocate()
+Coordinates Coordinates_New(long int x, long int y)
 {
-	return (Coordinates*) (malloc( sizeof(Coordinates) ));
-}
-
-Coordinates* Coordinates_Initialize(Coordinates* coordinates, long int x, long int y)
-{
-	coordinates->x = x;
-	coordinates->y = y;
+	Coordinates coordinates = {x, y};
 	return coordinates;
 }
 
-Coordinates* Coordinates_New(long int x, long int y)
+int Coordinates_Match(Coordinates c1, Coordinates c2)
 {
-	return Coordinates_Initialize(Coordinates_Allocate(), x, y);
+	return c1.x == c2.x && c1.y == c2.y;
 }
 
-void Coordinates_Destroy(Coordinates *self)
+Coordinates Coordinates_Get(Coordinates self)
 {
-	free(self);
-}
-
-int Coordinates_Match(Coordinates *c1, Coordinates *c2)
-{
-	return c1->x == c2->x && c1->y == c2->y;
-}
-
-Coordinates Coordinates_Get(Coordinates *self)
-{
-	Coordinates c = {self->x, self->y};
+	Coordinates c = {self.x, self.y};
 	return c;
 }
 
-Coordinates *Coordinates_Shifted_By(Coordinates *self, long int dx, long int dy)
+Coordinates Coordinates_Shifted_By(Coordinates self, long int dx, long int dy)
 {
-	return Coordinates_Initialize(Coordinates_Allocate(), self->x + dx, self->y + dy);
+	return Coordinates_New(self.x + dx, self.y + dy);
 }
 
-void Coordinates_Dump(const Coordinates *self)
+void Coordinates_Dump(const Coordinates self)
 {
-	printf("(x=%ld, y=%ld)\n", self->x, self->y);
+	printf("(x=%ld, y=%ld)\n", self.x, self.y);
 }

@@ -14,7 +14,7 @@ struct Coordinates
 
 struct Cell
 {
-	Coordinates *coordinates;
+	Coordinates coordinates;
 };
 
 struct World
@@ -26,17 +26,13 @@ struct World
 
 
 /* Coordinates Methods */
-Coordinates* Coordinates_Allocate();
-Coordinates* Coordinates_Initialize(Coordinates* coordinates, long int x, long int y);
+Coordinates Coordinates_New(long int x, long int y);
 
-Coordinates* Coordinates_New(long int x, long int y);
-void Coordinates_Destroy(Coordinates *coordinates);
+Coordinates Coordinates_Get(Coordinates coordinates);
+int Coordinates_Match(Coordinates c1, Coordinates c2);
+Coordinates Coordinates_Shifted_By(Coordinates self, long int dx, long int dy);
 
-Coordinates Coordinates_Get(Coordinates *coordinates);
-int Coordinates_Match(Coordinates *c1, Coordinates *c2);
-Coordinates *Coordinates_Shifted_By(Coordinates *self, long int dx, long int dy);
-
-void Coordinates_Dump(const Coordinates *self);
+void Coordinates_Dump(const Coordinates self);
 /* Coordinates Methods */
 
 

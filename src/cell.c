@@ -6,7 +6,6 @@
 Cell* Cell_Allocate()
 {
 	Cell *cell = (Cell*) (malloc( sizeof(Cell) ));
-	cell->coordinates = (Coordinates*) (malloc( sizeof(Coordinates) ));
 	return cell;
 }
 
@@ -23,7 +22,6 @@ Cell* Cell_New(long int x, long int y)
 
 void Cell_Destroy(Cell *self)
 {
-	Coordinates_Destroy(self->coordinates);
 	free(self);
 }
 
@@ -34,7 +32,7 @@ Coordinates Cell_Coordinates(const Cell *self)
 
 int Cell_Is_At(const Cell *self, Coordinates coordinates)
 {
-	return Coordinates_Match(self->coordinates, &coordinates);
+	return Coordinates_Match(self->coordinates, coordinates);
 }
 
 void Cell_Dump(const Cell* self)
