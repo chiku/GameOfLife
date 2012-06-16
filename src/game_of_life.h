@@ -21,7 +21,7 @@ struct World
 {
 	int **neighbour_locations;
 	long int cell_count;
-	Cell **cells;
+	Cell *cells;
 };
 
 
@@ -32,22 +32,18 @@ Coordinates Coordinates_Get(Coordinates coordinates);
 int Coordinates_Match(Coordinates c1, Coordinates c2);
 Coordinates Coordinates_Shifted_By(Coordinates self, long int dx, long int dy);
 
-void Coordinates_Dump(const Coordinates self);
+void Coordinates_Dump(Coordinates self);
 /* Coordinates Methods */
 
 
 /* Cell Methods */
-Cell* Cell_Allocate();
-Cell* Cell_Initialize(Cell *allocated_cell, long int x, long int y);
+Cell Cell_New(long int x, long int y);
 
-Cell* Cell_New(long int x, long int y);
-void Cell_Destroy(Cell *self);
+Coordinates Cell_Coordinates(Cell self);
 
-Coordinates Cell_Coordinates(const Cell *self);
+int Cell_Is_At(Cell self, Coordinates coordinates);
 
-int Cell_Is_At(const Cell *self, Coordinates coordinates);
-
-void Cell_Dump(const Cell *self);
+void Cell_Dump(Cell self);
 /* Cell Methods */
 
 
@@ -67,7 +63,7 @@ World* World_Create_From_File(const char file_name[]);
 
 long int World_Cell_Count(const World *self);
 
-void World_Add_Cell(World *self, Cell *cell);
+void World_Add_Cell(World *self, Cell cell);
 int World_Has_Cell_At(const World *self, Coordinates coordinates);
 int World_Cell_Count_Around(const World *self, Coordinates coordinates);
 World* World_Active_Zone(const World *self);

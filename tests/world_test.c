@@ -1,7 +1,7 @@
 START_TEST (test_World_adds_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Expected cell (address=%p) to be present, but wasn't", cell);
@@ -81,7 +81,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_north_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(0, 1)); /* neighbour */
@@ -95,7 +95,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_north_east_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(1, 1)); /* neighbour */
@@ -109,7 +109,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_east_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(1, 0)); /* neighbour */
@@ -123,7 +123,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_south_east_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(1, -1)); /* neighbour */
@@ -137,7 +137,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_south_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(0, -1)); /* neighbour */
@@ -151,7 +151,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_south_west_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(-1, -1)); /* neighbour */
@@ -165,7 +165,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_west_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(-1, 0)); /* neighbour */
@@ -179,7 +179,7 @@ END_TEST
 START_TEST (test_World_knows_neighbour_to_north_west_of_a_cell)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New(-1, 1)); /* neighbour */
@@ -193,7 +193,7 @@ END_TEST
 START_TEST (test_Cell_knows_does_not_consider_far_away_cell_as_neighbours)
 {
 	World *world = World_New();
-	Cell *cell = Cell_New(0, 0);
+	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
 	World_Add_Cell(world, Cell_New( 0,  2)); World_Add_Cell(world, Cell_New( 2,  2));

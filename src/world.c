@@ -7,7 +7,7 @@ const long int MAX_WORLD_SIZE = 10000;
 const int MAX_NEIGHBOURS = 8;
 
 /* Private */
-static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
+static void World_Create_Cell_In_New_World(World *self, Cell cell, World *new_world)
 {
 	Coordinates coordinates = Cell_Coordinates(cell);
 	int neighbours = World_Cell_Count_Around(self, coordinates);
@@ -23,7 +23,7 @@ World* World_Allocate()
 	int i;
 
 	World *self = (World*) (malloc( sizeof(World) ));
-	self->cells = (Cell**) (malloc( sizeof(Cell*) * MAX_WORLD_SIZE ));
+	self->cells = (Cell*) (malloc( sizeof(Cell) * MAX_WORLD_SIZE ));
 	self->neighbour_locations = (int**) (malloc ( sizeof(int*) * MAX_NEIGHBOURS ));
 	for (i = 0; i < MAX_NEIGHBOURS; i++)
 		self->neighbour_locations[i] = (int*) (malloc( sizeof(int) * 2 ));
@@ -53,8 +53,6 @@ World *World_New()
 void World_Destroy(World *self)
 {
 	int i;
-	for (i = 0; i < self->cell_count; i++)
-		Cell_Destroy(self->cells[i]);
 	free(self->cells);
 	for (i = 0; i < MAX_NEIGHBOURS; i++)
 		free(self->neighbour_locations[i]);
@@ -81,13 +79,13 @@ long int World_Cell_Count(const World *self)
 	return self->cell_count;
 }
 
-void World_Add_Cell(World *self, Cell *cell)
+void World_Add_Cell(World *self, Cell cell)
 {
 	if (World_Has_Cell_At(self, Cell_Coordinates(cell)))
 		return ;
 
 	self->cells[self->cell_count] = cell;
-	self->cell_count ++;
+	self->cell_count++;
 }
 
 int World_Has_Cell_At(const World *self, Coordinates coordinates)
@@ -102,7 +100,7 @@ int World_Has_Cell_At(const World *self, Coordinates coordinates)
 int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 {
 	long int count = 0, i, corner;
-	Cell *cell;
+	Cell cell;
 	Coordinates c;
 
 	for (i = 0; i < self->cell_count; i++) {
@@ -120,7 +118,7 @@ int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 World* World_Active_Zone(const World *self)
 {
 	long int i, x, y, corner;
-	Cell *cell;
+	Cell cell;
 	World *potential_births = World_New();
 
 	for (i = 0; i < self->cell_count; i++) {
@@ -152,7 +150,7 @@ World* World_Tick(World *self)
 
 void World_At_Each_Cell(const World *world, void (*visitor)(long int, long int, void *), void *data)
 {
-	Cell *cell;
+	Cell cell;
 	long int i;
 	for (i = 0; i < world->cell_count; i++) {
 		cell = world->cells[i];

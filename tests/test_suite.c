@@ -24,7 +24,6 @@ Suite *create_game_of_life_suite(void)
 
 	TCase *tc_cell = tcase_create("Cell");
 	tcase_add_test(tc_cell, test_Cell_is_created_at_specified_location);
-	tcase_add_test(tc_cell, test_Cell_creation_is_allocation_followed_by_initialization);
 	tcase_add_test(tc_cell, test_Cell_knows_does_not_consider_far_away_cell_as_neighbours);
 	tcase_add_test(tc_cell, test_Cell_is_at_location_when_its_coordinates_match);
 	tcase_add_test(tc_cell, test_Cell_is_not_at_location_when_its_x_coordinates_do_not_match);

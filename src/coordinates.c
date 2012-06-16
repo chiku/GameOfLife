@@ -25,7 +25,7 @@ Coordinates Coordinates_Shifted_By(Coordinates self, long int dx, long int dy)
 	return Coordinates_New(self.x + dx, self.y + dy);
 }
 
-void Coordinates_Dump(const Coordinates self)
+void Coordinates_Dump(Coordinates self)
 {
 	printf("(x=%ld, y=%ld)\n", self.x, self.y);
 }

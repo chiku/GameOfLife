@@ -3,39 +3,23 @@
 
 #include "game_of_life.h"
 
-Cell* Cell_Allocate()
+Cell Cell_New(long int x, long int y)
 {
-	Cell *cell = (Cell*) (malloc( sizeof(Cell) ));
+	Cell cell = {Coordinates_New(x, y)};
 	return cell;
 }
 
-Cell* Cell_Initialize(Cell* allocated_cell, long int x, long int y)
+Coordinates Cell_Coordinates(Cell self)
 {
-	allocated_cell->coordinates = Coordinates_New(x, y);
-	return allocated_cell;
+	return Coordinates_Get(self.coordinates);
 }
 
-Cell* Cell_New(long int x, long int y)
+int Cell_Is_At(Cell self, Coordinates coordinates)
 {
-	return Cell_Initialize( Cell_Allocate(), x, y );
+	return Coordinates_Match(self.coordinates, coordinates);
 }
 
-void Cell_Destroy(Cell *self)
+void Cell_Dump(Cell self)
 {
-	free(self);
-}
-
-Coordinates Cell_Coordinates(const Cell *self)
-{
-	return Coordinates_Get(self->coordinates);
-}
-
-int Cell_Is_At(const Cell *self, Coordinates coordinates)
-{
-	return Coordinates_Match(self->coordinates, coordinates);
-}
-
-void Cell_Dump(const Cell* self)
-{
-	Coordinates_Dump(self->coordinates);
+	Coordinates_Dump(self.coordinates);
 }
