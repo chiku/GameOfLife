@@ -12,7 +12,7 @@ static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_w
 	Coordinates coordinates = Cell_Coordinates(cell);
 	long int x = coordinates.x;
 	long int y = coordinates.y;
-	int neighbours = World_Cell_Count_Around(self, x, y);
+	int neighbours = World_Cell_Count_Around(self, coordinates);
 	int cell_alive = World_Has_Cell_At(self, coordinates);
 
 	if (Rule_Carry_Forward_Cell(cell_alive, neighbours))
@@ -101,11 +101,13 @@ int World_Has_Cell_At(const World *self, Coordinates coordinates)
 	return 0;
 }
 
-int World_Cell_Count_Around(const World *self, long int x, long int y)
+int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 {
 	long int count = 0, i, corner;
 	Cell *cell;
 	Coordinates *c;
+	long int x = coordinates.x;
+	long int y = coordinates.y;
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];

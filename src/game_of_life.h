@@ -69,7 +69,7 @@ long int World_Cell_Count(const World *self);
 
 void World_Add_Cell(World *self, Cell *cell);
 int World_Has_Cell_At(const World *self, Coordinates coordinates);
-int World_Cell_Count_Around(const World *self, long int x, long int y);
+int World_Cell_Count_Around(const World *self, Coordinates coordinates);
 World* World_Active_Zone(const World *self);
 
 World* World_Tick(World *self);
