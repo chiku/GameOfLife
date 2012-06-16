@@ -4,6 +4,7 @@
 
 #include <game_of_life.h>
 
+#include "coordinates_test.c"
 #include "cell_test.c"
 #include "world_test.c"
 #include "rules_test.c"
@@ -11,6 +12,14 @@
 Suite *create_game_of_life_suite(void)
 {
 	Suite *s = suite_create("Game of Life");
+
+	TCase *tc_coordinates = tcase_create("Coordinates");
+	tcase_add_test(tc_coordinates, test_Coordinates_have_an_abscissa);
+	tcase_add_test(tc_coordinates, test_Coordinates_have_an_ordinate);
+	tcase_add_test(tc_coordinates, test_Coordinates_match_when_absicca_and_ordinate_are_equal);
+	tcase_add_test(tc_coordinates, test_Coordinates_do_not_match_when_absicca_are_not_equal);
+	tcase_add_test(tc_coordinates, test_Coordinates_do_not_match_when_ordinate_are_not_equal);
+	suite_add_tcase(s, tc_coordinates);
 
 	TCase *tc_cell = tcase_create("Cell");
 	tcase_add_test(tc_cell, test_Cell_is_created_at_specified_location);

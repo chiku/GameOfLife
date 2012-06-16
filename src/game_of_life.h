@@ -1,13 +1,22 @@
 #ifndef GAME_OF_LIFE_H
 #define GAME_OF_LIFE_H
 
+typedef struct Coordinates Coordinates;
 typedef struct Cell Cell;
 typedef struct World World;
+
+
+struct Coordinates
+{
+	long int x;
+	long int y;
+};
 
 struct Cell
 {
 	long int x;
 	long int y;
+	Coordinates *coordinates;
 };
 
 struct World
@@ -16,6 +25,19 @@ struct World
 	long int cell_count;
 	Cell **cells;
 };
+
+/* Coordinates Methods */
+Coordinates* Coordinates_Allocate();
+Coordinates* Coordinates_Initialize(Coordinates* coordinates, long int x, long int y);
+
+Coordinates* Coordinates_New(long int x, long int y);
+void Coordinates_Destroy(Coordinates *coordinates);
+
+Coordinates Coordinates_Get(Coordinates *coordinates);
+int Coordinates_Match(Coordinates *c1, Coordinates *c2);
+
+/* Coordinates Methods */
+
 
 /* Cell Methods */
 Cell* Cell_Allocate();

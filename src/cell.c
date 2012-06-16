@@ -5,13 +5,16 @@
 
 Cell* Cell_Allocate()
 {
-	return (Cell*) (malloc( sizeof(Cell) ));
+	Cell *cell = (Cell*) (malloc( sizeof(Cell) ));
+	cell->coordinates = (Coordinates*) (malloc( sizeof(Coordinates) ));
+	return cell;
 }
 
 Cell* Cell_Initialize(Cell* allocated_cell, long int x, long int y)
 {
 	allocated_cell->x = x;
 	allocated_cell->y = y;
+	allocated_cell->coordinates = Coordinates_New(x, y);
 	return allocated_cell;
 }
 
@@ -22,6 +25,7 @@ Cell* Cell_New(long int x, long int y)
 
 void Cell_Destroy(Cell *self)
 {
+	free(self->coordinates);
 	free(self);
 }
 
