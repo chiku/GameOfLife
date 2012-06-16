@@ -11,12 +11,10 @@ static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_w
 {
 	long int x = Cell_X(cell);
 	long int y = Cell_Y(cell);
-	int count = World_Cell_Count_Around(self, x, y);
+	int neighbours = World_Cell_Count_Around(self, x, y);
 	int cell_alive = World_Has_Cell_At(self, x, y);
 
-	int live_cell_remains = cell_alive && (count == 2 || count == 3);
-	int dead_cell_comes_alive = !cell_alive && count == 3;
-	if (live_cell_remains || dead_cell_comes_alive)
+	if (Rule_Carry_Forward_Cell(cell_alive, neighbours))
 		World_Add_Cell(new_world, Cell_New(x, y));
 }
 /* Private */
