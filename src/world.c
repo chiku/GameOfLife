@@ -16,7 +16,7 @@ static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_w
 	int live_cell_remains = cell_alive && (count == 2 || count == 3);
 	int dead_cell_comes_alive = !cell_alive && count == 3;
 	if (live_cell_remains || dead_cell_comes_alive)
-		Cell_New(new_world, x, y);
+		World_Add_Cell(new_world, Cell_New(x, y));
 }
 /* Private */
 
@@ -54,7 +54,7 @@ World* World_Create_From_File(const char file_name[])
 	long int x, y;
 
 	while (fscanf(fp, "%ld %ld", &x, &y) != EOF)
-		Cell_New(world, x, y);
+		World_Add_Cell(world, Cell_New(x, y));
 
 	fclose(fp);
 
@@ -68,13 +68,7 @@ long int World_Cell_Count(const World *self)
 
 void World_Add_Cell(World *self, Cell *cell)
 {
-	self->cells[self->cell_count] = cell;
-	self->cell_count ++;
-}
-
-void World_Add_Cell2(World *self, Cell *cell)
-{
-	if (World_Has_Cell(self, cell))
+	if (World_Has_Cell_At(self, Cell_X(cell), Cell_Y(cell)))
 		return ;
 
 	self->cells[self->cell_count] = cell;
@@ -94,7 +88,7 @@ Cell* World_Cell_At(const World *self, long int x, long int y)
 {
 	long int i;
 	for (i = 0; i < self->cell_count; i++)
-		if (Cell_Is_At(self->cells[i], self, x, y))
+		if (Cell_Is_At(self->cells[i], x, y))
 			return self->cells[i];
 	return '\0';
 }
@@ -111,14 +105,14 @@ int World_Cell_Count_Around(const World *self, long int x, long int y)
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
-		if (Cell_Is_At2(cell, x - 1, y - 1) ||
-		    Cell_Is_At2(cell, x - 1, y    ) ||
-		    Cell_Is_At2(cell, x - 1, y + 1) ||
-		    Cell_Is_At2(cell, x    , y - 1) ||
-		    Cell_Is_At2(cell, x    , y + 1) ||
-		    Cell_Is_At2(cell, x + 1, y - 1) ||
-		    Cell_Is_At2(cell, x + 1, y    ) ||
-		    Cell_Is_At2(cell, x + 1, y + 1)) {
+		if (Cell_Is_At(cell, x - 1, y - 1) ||
+		    Cell_Is_At(cell, x - 1, y    ) ||
+		    Cell_Is_At(cell, x - 1, y + 1) ||
+		    Cell_Is_At(cell, x    , y - 1) ||
+		    Cell_Is_At(cell, x    , y + 1) ||
+		    Cell_Is_At(cell, x + 1, y - 1) ||
+		    Cell_Is_At(cell, x + 1, y    ) ||
+		    Cell_Is_At(cell, x + 1, y + 1)) {
 				count += 1;
 			}
 	}
@@ -136,14 +130,14 @@ World* World_Active_Zone(const World *self)
 		cell = self->cells[i];
 		x = Cell_X(cell);
 		y = Cell_Y(cell);
-		Cell_New(potential_births, x - 1, y - 1);
-		Cell_New(potential_births, x - 1, y    );
-		Cell_New(potential_births, x - 1, y + 1);
-		Cell_New(potential_births, x    , y - 1);
-		Cell_New(potential_births, x    , y + 1);
-		Cell_New(potential_births, x + 1, y - 1);
-		Cell_New(potential_births, x + 1, y    );
-		Cell_New(potential_births, x + 1, y + 1);
+		World_Add_Cell(potential_births, Cell_New(x - 1, y - 1));
+		World_Add_Cell(potential_births, Cell_New(x - 1, y    ));
+		World_Add_Cell(potential_births, Cell_New(x - 1, y + 1));
+		World_Add_Cell(potential_births, Cell_New(x    , y - 1));
+		World_Add_Cell(potential_births, Cell_New(x    , y + 1));
+		World_Add_Cell(potential_births, Cell_New(x + 1, y - 1));
+		World_Add_Cell(potential_births, Cell_New(x + 1, y    ));
+		World_Add_Cell(potential_births, Cell_New(x + 1, y + 1));
 	}
 
 	return potential_births;
