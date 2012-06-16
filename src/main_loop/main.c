@@ -1,9 +1,9 @@
 #include "../game_of_life.h"
 #include "main_loop.h"
 
-static void draw_cell(long int x, long int y, void *data)
+static void draw_cell(Coordinates coordinates, void *data)
 {
-	Graphics_Draw_At((Graphics*)data, x, y);
+	Graphics_Draw_At((Graphics*)data, coordinates.x, coordinates.y);
 }
 
 int main(int argc, char *argv[])
