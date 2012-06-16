@@ -76,10 +76,4 @@ void World_Dump(const World *self);
 /* World Methods */
 
 
-/* Utility Functions */
-char *handle_command_line_arguments(int argc, char *argv[]);
-World* create_world_with_file(char *file_name);
-/* Utility Functions */
-
-
 #endif /* GAME_OF_LIFE_H */
