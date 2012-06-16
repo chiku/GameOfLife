@@ -4,6 +4,7 @@
 #include "game_of_life.h"
 
 const long int MAX_WORLD_SIZE = 10000;
+const int MAX_NEIGHBOURS = 8;
 
 /* Private */
 static void World_Create_Cell_In_New_World(World *self, Cell *cell, World *new_world)
@@ -27,10 +28,19 @@ World* World_Allocate()
 	return self;
 }
 
-World* World_Initialize(World *allocatedWorld)
+World* World_Initialize(World *world)
 {
-	allocatedWorld->cell_count = 0;
-	return allocatedWorld;
+	world->cell_count = 0;
+	world->neighbour_locations[0][0] = -1; world->neighbour_locations[0][1] = -1;
+	world->neighbour_locations[1][0] = -1; world->neighbour_locations[1][1] =  0;
+	world->neighbour_locations[2][0] = -1; world->neighbour_locations[2][1] =  1;
+	world->neighbour_locations[3][0] =  0; world->neighbour_locations[3][1] = -1;
+	world->neighbour_locations[4][0] =  0; world->neighbour_locations[4][1] =  1;
+	world->neighbour_locations[5][0] =  1; world->neighbour_locations[5][1] = -1;
+	world->neighbour_locations[6][0] =  1; world->neighbour_locations[6][1] =  0;
+	world->neighbour_locations[7][0] =  1; world->neighbour_locations[7][1] =  1;
+
+	return world;
 }
 
 World *World_New()
@@ -86,19 +96,15 @@ int World_Has_Cell_At(const World *self, long int x, long int y)
 
 int World_Cell_Count_Around(const World *self, long int x, long int y)
 {
-	long int count = 0, i;
+	long int count = 0, i, corner;
 	Cell *cell;
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
-		if (Cell_Is_At(cell, x - 1, y - 1) ||
-		    Cell_Is_At(cell, x - 1, y    ) ||
-		    Cell_Is_At(cell, x - 1, y + 1) ||
-		    Cell_Is_At(cell, x    , y - 1) ||
-		    Cell_Is_At(cell, x    , y + 1) ||
-		    Cell_Is_At(cell, x + 1, y - 1) ||
-		    Cell_Is_At(cell, x + 1, y    ) ||
-		    Cell_Is_At(cell, x + 1, y + 1)) {
+		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
+			if (Cell_Is_At(cell,
+				           x + self->neighbour_locations[corner][0],
+				           y + self->neighbour_locations[corner][1]))
 				count += 1;
 			}
 	}
@@ -108,7 +114,7 @@ int World_Cell_Count_Around(const World *self, long int x, long int y)
 
 World* World_Active_Zone(const World *self)
 {
-	long int i, x, y;
+	long int i, x, y, corner;
 	Cell *cell;
 	World *potential_births = World_New();
 
@@ -116,14 +122,9 @@ World* World_Active_Zone(const World *self)
 		cell = self->cells[i];
 		x = Cell_X(cell);
 		y = Cell_Y(cell);
-		World_Add_Cell(potential_births, Cell_New(x - 1, y - 1));
-		World_Add_Cell(potential_births, Cell_New(x - 1, y    ));
-		World_Add_Cell(potential_births, Cell_New(x - 1, y + 1));
-		World_Add_Cell(potential_births, Cell_New(x    , y - 1));
-		World_Add_Cell(potential_births, Cell_New(x    , y + 1));
-		World_Add_Cell(potential_births, Cell_New(x + 1, y - 1));
-		World_Add_Cell(potential_births, Cell_New(x + 1, y    ));
-		World_Add_Cell(potential_births, Cell_New(x + 1, y + 1));
+		for (corner = 0; corner < MAX_NEIGHBOURS; corner++)
+			World_Add_Cell(potential_births, Cell_New(x + self->neighbour_locations[corner][0],
+			                                          y + self->neighbour_locations[corner][1]));
 	}
 
 	return potential_births;
