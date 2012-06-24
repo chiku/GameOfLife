@@ -20,7 +20,6 @@ struct Cell
 
 struct CellCollection
 {
-	Coordinates *neighbour_locations;
 	long int cell_count;
 	Cell *cells;
 };
@@ -28,9 +27,7 @@ struct CellCollection
 struct World
 {
 	Coordinates *neighbour_locations;
-	long int cell_count;
 	CellCollection *cell_collection;
-	Cell *cells;
 };
 
 
@@ -74,6 +71,8 @@ long int CellCollection_Cell_Count(const CellCollection *self);
 void CellCollection_Add_Cell(CellCollection *self, Cell cell);
 int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinates);
 int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates);
+
+void CellCollection_Dump(const CellCollection *self);
 /* CellCollection Methods */
 
 

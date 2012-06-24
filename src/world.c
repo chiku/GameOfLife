@@ -21,15 +21,13 @@ static void World_Create_Cell_In_New_World(World *self, Cell cell, World *new_wo
 World* World_Allocate()
 {
 	World *self = (World*) (malloc( sizeof(World) ));
-	self->cells = (Cell*) (malloc( sizeof(Cell) * MAX_WORLD_SIZE ));
 	self->neighbour_locations = (Coordinates*) (malloc ( sizeof(Coordinates) * MAX_NEIGHBOURS ));
-	self->cell_collection = CellCollection_New();
+	self->cell_collection = CellCollection_Allocate();
 	return self;
 }
 
 World* World_Initialize(World *world)
 {
-	world->cell_count = 0;
 	world->neighbour_locations[0] = Coordinates_New(-1, -1);
 	world->neighbour_locations[1] = Coordinates_New(-1,  0);
 	world->neighbour_locations[2] = Coordinates_New(-1, +1);
@@ -38,6 +36,7 @@ World* World_Initialize(World *world)
 	world->neighbour_locations[5] = Coordinates_New(+1, -1);
 	world->neighbour_locations[6] = Coordinates_New(+1,  0);
 	world->neighbour_locations[7] = Coordinates_New(+1, +1);
+	CellCollection_Initialize(world->cell_collection);
 	return world;
 }
 
@@ -48,7 +47,6 @@ World *World_New()
 
 void World_Destroy(World *self)
 {
-	free(self->cells);
 	free(self->neighbour_locations);
 	CellCollection_Destroy(self->cell_collection);
 	free(self);
@@ -85,7 +83,18 @@ int World_Has_Cell_At(const World *self, Coordinates coordinates)
 
 int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 {
-	return CellCollection_Cell_Count_Around(self->cell_collection, coordinates);
+	long int count = 0, i, corner;
+	Cell cell;
+
+	for (i = 0; i < World_Cell_Count(self); i++) {
+		cell = self->cell_collection->cells[i];
+		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
+			if (Cell_Is_At(cell, Coordinates_Shifted_By(coordinates, self->neighbour_locations[corner])))
+				count += 1;
+			}
+	}
+
+	return count;
 }
 
 CellCollection* World_Active_Zone(const World *self)
@@ -98,7 +107,7 @@ CellCollection* World_Active_Zone(const World *self)
 	for (i = 0; i < World_Cell_Count(self); i++) {
 		cell = self->cell_collection->cells[i];
 		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
-			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), self->cell_collection->neighbour_locations[corner]);
+			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), self->neighbour_locations[corner]);
 			CellCollection_Add_Cell(potential_births, Cell_New_From_Coordinates(coordinates));
 		}
 	}
@@ -133,10 +142,5 @@ void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinat
 
 void World_Dump(const World *self)
 {
-	int i;
-
-	printf("Total cells = %ld\n", self->cell_count);
-	for (i = 0; i < self->cell_count; i++)
-		Cell_Dump(self->cells[i]);
-	printf("\n");
+	CellCollection_Dump(self->cell_collection);
 }

@@ -4,28 +4,17 @@
 #include "game_of_life.h"
 
 const long int MAX_CELL_COLLECTION_SIZE = 10000;
-const int MAX_NEIGHBOURS_FOR_CELL = 8;
 
 CellCollection* CellCollection_Allocate()
 {
 	CellCollection *self = (CellCollection*) (malloc( sizeof(CellCollection) ));
 	self->cells = (Cell*) (malloc( sizeof(Cell) * MAX_CELL_COLLECTION_SIZE ));
-	self->neighbour_locations = (Coordinates*) (malloc ( sizeof(Coordinates) * MAX_NEIGHBOURS_FOR_CELL ));
 	return self;
 }
 
 CellCollection* CellCollection_Initialize(CellCollection *cell_collection)
 {
 	cell_collection->cell_count = 0;
-	cell_collection->neighbour_locations[0] = Coordinates_New(-1, -1);
-	cell_collection->neighbour_locations[1] = Coordinates_New(-1,  0);
-	cell_collection->neighbour_locations[2] = Coordinates_New(-1, +1);
-	cell_collection->neighbour_locations[3] = Coordinates_New( 0, -1);
-	cell_collection->neighbour_locations[4] = Coordinates_New( 0, +1);
-	cell_collection->neighbour_locations[5] = Coordinates_New(+1, -1);
-	cell_collection->neighbour_locations[6] = Coordinates_New(+1,  0);
-	cell_collection->neighbour_locations[7] = Coordinates_New(+1, +1);
-
 	return cell_collection;
 }
 
@@ -36,7 +25,6 @@ CellCollection *CellCollection_New()
 
 void CellCollection_Destroy(CellCollection *self)
 {
-	free(self->neighbour_locations);
 	free(self->cells);
 	free(self);
 }
@@ -63,18 +51,12 @@ int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinat
 	return 0;
 }
 
-int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates)
+void CellCollection_Dump(const CellCollection *self)
 {
-	long int count = 0, i, corner;
-	Cell cell;
+	int i;
 
-	for (i = 0; i < self->cell_count; i++) {
-		cell = self->cells[i];
-		for (corner = 0; corner < MAX_NEIGHBOURS_FOR_CELL; corner++) {
-			if (Cell_Is_At(cell, Coordinates_Shifted_By(coordinates, self->neighbour_locations[corner])))
-				count += 1;
-			}
-	}
-
-	return count;
+	printf("Total cells = %ld\n", self->cell_count);
+	for (i = 0; i < self->cell_count; i++)
+		Cell_Dump(self->cells[i]);
+	printf("\n");
 }
