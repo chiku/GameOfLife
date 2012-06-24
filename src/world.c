@@ -10,7 +10,7 @@ static void World_Create_Cell_In_New_World(World *self, Cell cell, World *new_wo
 {
 	Coordinates coordinates = Cell_Coordinates(cell);
 	int neighbours = World_Cell_Count_Around(self, coordinates);
-	int cell_alive = World_Has_Cell_At(self, coordinates);
+	int cell_alive = CellCollection_Has_Cell_At(self->cell_collection, coordinates);
 
 	if (Rule_Carry_Forward_Cell(cell_alive, neighbours))
 		World_Add_Cell(new_world, Cell_New_From_Coordinates(coordinates));
