@@ -51,6 +51,51 @@ int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinat
 	return 0;
 }
 
+int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates, Coordinates *neighbour_locations)
+{
+	long int count = 0, i, corner;
+	Cell cell;
+
+	for (i = 0; i < CellCollection_Cell_Count(self); i++) {
+		cell = self->cells[i];
+		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
+			if (Cell_Is_At(cell, Coordinates_Shifted_By(coordinates, neighbour_locations[corner])))
+				count += 1;
+			}
+	}
+
+	return count;
+}
+
+CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self, Coordinates *neighbour_locations)
+{
+	long int i, corner;
+	Cell cell;
+	CellCollection *potential_births = CellCollection_New();
+	Coordinates coordinates;
+
+	for (i = 0; i < CellCollection_Cell_Count(self); i++) {
+		cell = self->cells[i];
+		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
+			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), neighbour_locations[corner]);
+			CellCollection_Add_Cell(potential_births, Cell_New_From_Coordinates(coordinates));
+		}
+	}
+
+	return potential_births;
+}
+
+void CellCollection_At_Each_Cell(const CellCollection *self, void (*visitor)(Coordinates coordinates, void *), void *data)
+{
+	Cell cell;
+	long int i;
+	for (i = 0; i < self->cell_count; i++) {
+		cell = self->cells[i];
+		visitor(Cell_Coordinates(cell), data);
+	}
+}
+
+
 void CellCollection_Dump(const CellCollection *self)
 {
 	int i;

@@ -30,6 +30,8 @@ struct World
 	CellCollection *cell_collection;
 };
 
+static const int MAX_NEIGHBOURS = 8;
+
 
 /* Coordinates Methods */
 Coordinates Coordinates_New(long int x, long int y);
@@ -70,7 +72,10 @@ long int CellCollection_Cell_Count(const CellCollection *self);
 
 void CellCollection_Add_Cell(CellCollection *self, Cell cell);
 int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinates);
-int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates);
+int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates, Coordinates *neighbour_locations);
+CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self, Coordinates *neighbour_locations);
+
+void CellCollection_At_Each_Cell(const CellCollection *self, void (*visitor)(Coordinates coordinates, void *), void *data);
 
 void CellCollection_Dump(const CellCollection *self);
 /* CellCollection Methods */

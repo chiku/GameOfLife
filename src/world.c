@@ -4,7 +4,6 @@
 #include "game_of_life.h"
 
 const long int MAX_WORLD_SIZE = 10000;
-const int MAX_NEIGHBOURS = 8;
 
 /* Private */
 static void World_Create_Cell_In_New_World(World *self, Cell cell, World *new_world)
@@ -83,36 +82,12 @@ int World_Has_Cell_At(const World *self, Coordinates coordinates)
 
 int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 {
-	long int count = 0, i, corner;
-	Cell cell;
-
-	for (i = 0; i < World_Cell_Count(self); i++) {
-		cell = self->cell_collection->cells[i];
-		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
-			if (Cell_Is_At(cell, Coordinates_Shifted_By(coordinates, self->neighbour_locations[corner])))
-				count += 1;
-			}
-	}
-
-	return count;
+	return CellCollection_Cell_Count_Around(self->cell_collection, coordinates, self->neighbour_locations);
 }
 
 CellCollection* World_Active_Zone(const World *self)
 {
-	long int i, corner;
-	Cell cell;
-	CellCollection *potential_births = CellCollection_New();
-	Coordinates coordinates;
-
-	for (i = 0; i < World_Cell_Count(self); i++) {
-		cell = self->cell_collection->cells[i];
-		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
-			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), self->neighbour_locations[corner]);
-			CellCollection_Add_Cell(potential_births, Cell_New_From_Coordinates(coordinates));
-		}
-	}
-
-	return potential_births;
+	return CellCollection_All_Neighbours_For_Set(self->cell_collection, self->neighbour_locations);
 }
 
 World* World_Tick(World *self)
@@ -132,12 +107,7 @@ World* World_Tick(World *self)
 
 void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinates, void *), void *data)
 {
-	Cell cell;
-	long int i;
-	for (i = 0; i < World_Cell_Count(self); i++) {
-		cell = self->cell_collection->cells[i];
-		visitor(Cell_Coordinates(cell), data);
-	}
+	CellCollection_At_Each_Cell(self->cell_collection, visitor, data);
 }
 
 void World_Dump(const World *self)
