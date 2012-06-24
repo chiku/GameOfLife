@@ -82,12 +82,12 @@ int World_Has_Cell_At(const World *self, Coordinates coordinates)
 
 int World_Cell_Count_Around(const World *self, Coordinates coordinates)
 {
-	return CellCollection_Cell_Count_Around(self->cell_collection, coordinates, self->neighbour_locations);
+	return CellCollection_Cell_Count_Around(self->cell_collection, coordinates, self->neighbour_locations, MAX_NEIGHBOURS);
 }
 
 CellCollection* World_Active_Zone(const World *self)
 {
-	return CellCollection_All_Neighbours_For_Set(self->cell_collection, self->neighbour_locations);
+	return CellCollection_All_Neighbours_For_Set(self->cell_collection, self->neighbour_locations, MAX_NEIGHBOURS);
 }
 
 World* World_Tick(World *self)

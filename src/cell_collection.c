@@ -51,14 +51,14 @@ int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinat
 	return 0;
 }
 
-int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates, Coordinates *locations)
+int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates, Coordinates *locations, int location_size)
 {
 	long int count = 0, i, corner;
 	Cell cell;
 
 	for (i = 0; i < CellCollection_Cell_Count(self); i++) {
 		cell = self->cells[i];
-		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
+		for (corner = 0; corner < location_size; corner++) {
 			if (Cell_Is_At(cell, Coordinates_Shifted_By(coordinates, locations[corner])))
 				count += 1;
 			}
@@ -67,7 +67,7 @@ int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coo
 	return count;
 }
 
-CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self, Coordinates *locations)
+CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self, Coordinates *locations, int location_size)
 {
 	long int i, corner;
 	Cell cell;
@@ -76,7 +76,7 @@ CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self
 
 	for (i = 0; i < CellCollection_Cell_Count(self); i++) {
 		cell = self->cells[i];
-		for (corner = 0; corner < MAX_NEIGHBOURS; corner++) {
+		for (corner = 0; corner < location_size; corner++) {
 			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), locations[corner]);
 			CellCollection_Add_Cell(neighbours, Cell_New_From_Coordinates(coordinates));
 		}
