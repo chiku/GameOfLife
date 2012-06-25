@@ -56,7 +56,7 @@ int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coo
 	long int count = 0, i, corner;
 	Cell cell;
 
-	for (i = 0; i < CellCollection_Cell_Count(self); i++) {
+	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
 		for (corner = 0; corner < location_size; corner++) {
 			if (Cell_Is_At(cell, Coordinates_Shifted_By(coordinates, locations[corner])))
@@ -74,7 +74,7 @@ CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self
 	CellCollection *neighbours = CellCollection_New();
 	Coordinates coordinates;
 
-	for (i = 0; i < CellCollection_Cell_Count(self); i++) {
+	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
 		for (corner = 0; corner < location_size; corner++) {
 			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), locations[corner]);
