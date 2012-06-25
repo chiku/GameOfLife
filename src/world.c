@@ -65,19 +65,9 @@ World* World_Create_From_File(const char file_name[])
 	return world;
 }
 
-long int World_Cell_Count(const World *self)
-{
-	return CellCollection_Cell_Count(self->cell_collection);
-}
-
 void World_Add_Cell(World *self, Cell cell)
 {
 	CellCollection_Add_Cell(self->cell_collection, cell);
-}
-
-int World_Has_Cell_At(const World *self, Coordinates coordinates)
-{
-	return CellCollection_Has_Cell_At(self->cell_collection, coordinates);
 }
 
 int World_Cell_Count_Around(const World *self, Coordinates coordinates)

@@ -95,7 +95,6 @@ void CellCollection_At_Each_Cell(const CellCollection *self, void (*visitor)(Coo
 	}
 }
 
-
 void CellCollection_Dump(const CellCollection *self)
 {
 	int i;

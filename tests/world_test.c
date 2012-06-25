@@ -4,19 +4,7 @@ START_TEST (test_World_adds_cell)
 	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
-	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Expected cell (address=%p) to be present, but wasn't", cell);
-	World_Destroy(world);
-}
-END_TEST
-
-START_TEST (test_World_does_not_add_cell_if_cell_already_exists_in_the_world)
-{
-	World *world = World_New();
-	World_Add_Cell(world, Cell_New(5, 4));
-	World_Add_Cell(world, Cell_New(5, 4));
-
-	long cell_count = World_Cell_Count(world);
-	fail_unless(World_Cell_Count(world) == 1, "Expected world to contain %ld cell, but contained %ld", 1, cell_count);
+	fail_unless(CellCollection_Has_Cell_At(world->cell_collection, Coordinates_New(0, 0)), "Expected cell (address=%p) to be present, but wasn't", cell);
 	World_Destroy(world);
 }
 END_TEST
@@ -25,12 +13,13 @@ START_TEST (test_World_creation_from_file_is_proper)
 {
 	const char file_name[] = "data/oscillator.lif";
 	World* world = World_Create_From_File(file_name);
+	CellCollection* cell_collection = world->cell_collection;
 
-	long int cell_count = World_Cell_Count(world);
+	long int cell_count = CellCollection_Cell_Count(cell_collection);
 	fail_unless(cell_count == 3, "Expected cell count to be %ld, but was %ld", 3, cell_count);
-	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
-	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 1)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
-	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 2)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(CellCollection_Has_Cell_At(cell_collection, Coordinates_New(0, 0)), "Expected cell collection to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(CellCollection_Has_Cell_At(cell_collection, Coordinates_New(0, 1)), "Expected cell collection to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(CellCollection_Has_Cell_At(cell_collection, Coordinates_New(0, 2)), "Expected cell collection to contain cell (%d, %d) but didn't'", 0, 0);
 	World_Destroy(world);
 }
 END_TEST
@@ -41,40 +30,6 @@ START_TEST (test_World_creation_is_allocation_followed_by_initialization)
 	World *initialized_world = World_Initialize(allocated_world);
 
 	fail_unless(initialized_world == allocated_world, "Expected initialized world to have same memory location as allocated world, but didn't");
-}
-END_TEST
-
-START_TEST (test_World_knows_its_cell_count)
-{
-	World *world = World_New();
-	World_Add_Cell(world, Cell_New(0, 0));
-	World_Add_Cell(world, Cell_New(1, 4));
-	World_Add_Cell(world, Cell_New(2, 4));
-
-	long int cell_count = World_Cell_Count(world);
-	fail_unless(cell_count == 3, "Expected cell count to be %ld, but was %ld", 3, cell_count);
-	World_Destroy(world);
-}
-END_TEST
-
-START_TEST (test_World_if_it_has_a_cell_at_specified_location)
-{
-	World *world = World_New();
-	World_Add_Cell(world, Cell_New(0, 0));
-
-	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Excepted cell (x=%d, y=%d) to be present in the world, but wasn't", 0, 0);
-	fail_if(World_Has_Cell_At(world, Coordinates_New(1, 0)), "Excepted cell (x=%d, y=%d) to be not present in the world, but was", 1, 0);
-	World_Destroy(world);
-}
-END_TEST
-
-START_TEST (test_World_does_not_have_a_cell_at_specified_location_when_cell_is_in_different_world)
-{
-	World *world = World_New();
-	World_Add_Cell(World_New(), Cell_New(0, 0)); /* cell in another world */
-
-	fail_if(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Excepted cell (x=%d, y=%d) to be not present in the world, but was", 0, 0);
-	World_Destroy(world);
 }
 END_TEST
 

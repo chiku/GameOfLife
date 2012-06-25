@@ -90,10 +90,7 @@ void World_Destroy(World *self);
 
 World* World_Create_From_File(const char file_name[]);
 
-long int World_Cell_Count(const World *self);
-
 void World_Add_Cell(World *self, Cell cell);
-int World_Has_Cell_At(const World *self, Coordinates coordinates);
 int World_Cell_Count_Around(const World *self, Coordinates coordinates);
 CellCollection* World_Active_Zone(const World *self);
 
