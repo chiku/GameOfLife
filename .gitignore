@@ -1,7 +1,5 @@
 *.o
 *.os
 *.so
-bin
-lib
+build
 .sconsign.dblite
-tests/game_of_life_tests

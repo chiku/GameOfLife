@@ -5,11 +5,11 @@ env = Environment(CPPPATH = ['src/include'])
 env.Replace(CC= 'clang')
 env.Append(CCFLAGS = '-O3 -Wall')
 
-env.StaticLibrary('lib/gol', Split(core_files))
-env.SharedLibrary('lib/gol', Split(core_files))
-env.StaticLibrary('lib/gol_ev', Split(main_files))
+env.StaticLibrary('build/lib/gol', Split(core_files))
+env.SharedLibrary('build/lib/gol', Split(core_files))
+env.StaticLibrary('build/lib/gol_m', Split(main_files))
 
-env.Program('bin/test_gol', Split(['tests/test_suite.c', 'lib/libgol.a']), LIBS=['check'])
+env.Program('build/bin/test_gol', Split(['tests/test_suite.c', 'build/lib/libgol.a']), LIBS=['check'])
 
-env.Program('bin/golc', ['src/interfaces/curses.c', 'lib/libgol_ev.a', 'lib/libgol.a'], LIBS=['ncurses'])
-env.Program('bin/golX', ['src/interfaces/Xlib.c', 'lib/libgol_ev.a', 'lib/libgol.a'], LIBS=['X11'])
+env.Program('build/bin/golc', ['src/interfaces/curses.c', 'build/lib/libgol_m.a', 'build/lib/libgol.a'], LIBS=['ncurses'])
+env.Program('build/bin/golX', ['src/interfaces/Xlib.c', 'build/lib/libgol_m.a', 'build/lib/libgol.a'], LIBS=['X11'])
