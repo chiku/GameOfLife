@@ -1,8 +1,13 @@
+import os
+
 core_files = ['src/coordinates.c', 'src/cell.c', 'src/world.c', 'src/rules.c', 'src/game.c']
 main_files = ['src/main_loop/main_loop.c', 'src/main_loop/validate_arguments.c', 'src/main_loop/handle_signals.c', 'src/main_loop/main.c']
 
 env = Environment(CPPPATH = ['src/include'])
-env.Replace(CC= 'clang')
+
+if 'CC' in os.environ:
+  env.Replace(CC = os.environ['CC'])
+
 env.Append(CCFLAGS = '-O3 -Wall')
 
 env.StaticLibrary('build/lib/gol', Split(core_files))
