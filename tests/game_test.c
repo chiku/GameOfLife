@@ -216,12 +216,12 @@ START_TEST (test_Game_knows_all_cell_locations_near_all_living_cells)
 }
 END_TEST
 
-static long int sum_x, sum_y, trace;
+static long int g_sum_x, g_sum_y, g_trace;
 static void add_up_cell_values(Coordinates coordinates, void *data)
 {
-	sum_x += coordinates.x;
-	sum_y += coordinates.y;
-	trace = data ? *((long int*)data) : 0;
+	g_sum_x += coordinates.x;
+	g_sum_y += coordinates.y;
+	g_trace = data ? *((long int*)data) : 0;
 }
 
 START_TEST (test_Game_at_cells_is_visitable)
@@ -232,8 +232,8 @@ START_TEST (test_Game_at_cells_is_visitable)
 
 	Game_At_Each_Cell(game, add_up_cell_values, NULL);
 
-	fail_unless(sum_x == 1, "Expected sum of x's to be %ld, but was %ld", 1, sum_x);
-	fail_unless(sum_y == 4, "Expected sum of x's to be %ld, but was %ld", 4, sum_y);
+	fail_unless(g_sum_x == 1, "Expected sum of x's to be %ld, but was %ld", 1, g_sum_x);
+	fail_unless(g_sum_y == 4, "Expected sum of x's to be %ld, but was %ld", 4, g_sum_y);
 	Game_Destroy(game);
 }
 END_TEST
@@ -248,7 +248,7 @@ START_TEST (test_Game_visits_accept_custom_data)
 
 	Game_At_Each_Cell(game, add_up_cell_values, expected_trace);
 
-	fail_unless(trace == 100, "Expected trace %ld, but was %ld", *expected_trace, trace);
+	fail_unless(g_trace == 100, "Expected trace %ld, but was %ld", *expected_trace, g_trace);
 	free(expected_trace);
 	Game_Destroy(game);
 }

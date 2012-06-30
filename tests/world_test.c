@@ -123,12 +123,12 @@ START_TEST (test_World_knows_all_cell_locations_near_a_set)
 }
 END_TEST
 
-static long int sum_x, sum_y, trace;
-static void cc_add_up_cell_values(Coordinates coordinates, void *data)
+static long int w_sum_x, w_sum_y, w_trace;
+static void w_add_up_cell_values(Coordinates coordinates, void *data)
 {
-	sum_x += coordinates.x;
-	sum_y += coordinates.y;
-	trace = data ? *((long int*)data) : 0;
+	w_sum_x += coordinates.x;
+	w_sum_y += coordinates.y;
+	w_trace = data ? *((long int*)data) : 0;
 }
 
 START_TEST (test_World_at_cells_is_visitable)
@@ -137,10 +137,10 @@ START_TEST (test_World_at_cells_is_visitable)
 	World_Add_Cell(world, Cell_New(0, -1));
 	World_Add_Cell(world, Cell_New(1, 5));
 
-	World_At_Each_Cell(world, cc_add_up_cell_values, NULL);
+	World_At_Each_Cell(world, w_add_up_cell_values, NULL);
 
-	fail_unless(sum_x == 1, "Expected sum of x's to be %ld, but was %ld", 1, sum_x);
-	fail_unless(sum_y == 4, "Expected sum of x's to be %ld, but was %ld", 4, sum_y);
+	fail_unless(w_sum_x == 1, "Expected sum of x's to be %ld, but was %ld", 1, w_sum_x);
+	fail_unless(w_sum_y == 4, "Expected sum of x's to be %ld, but was %ld", 4, w_sum_y);
 	World_Destroy(world);
 }
 END_TEST
@@ -153,9 +153,9 @@ START_TEST (test_World_visits_accept_custom_data)
 	long int *expected_trace = (long int*)(malloc( sizeof(long int) ));
 	*expected_trace = 100;
 
-	World_At_Each_Cell(world, cc_add_up_cell_values, expected_trace);
+	World_At_Each_Cell(world, w_add_up_cell_values, expected_trace);
 
-	fail_unless(trace == 100, "Expected trace %ld, but was %ld", *expected_trace, trace);
+	fail_unless(w_trace == 100, "Expected trace %ld, but was %ld", *expected_trace, w_trace);
 	free(expected_trace);
 	World_Destroy(world);
 }
