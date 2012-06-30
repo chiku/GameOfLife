@@ -9,10 +9,9 @@
 
 typedef struct Game Game;
 
-
 struct Game
 {
-	struct Coordinates *neighbour_locations;
+	Coordinates *neighbour_locations;
 	World *world;
 };
 
@@ -29,11 +28,11 @@ void Game_Destroy(Game *self);
 Game* Game_Create_From_File(const char file_name[]);
 
 void Game_Add_Cell(Game *self, Cell cell);
-int Game_Cell_Count_Around(const Game *self, struct Coordinates coordinates);
+int Game_Cell_Count_Around(const Game *self, Coordinates coordinates);
 World* Game_Active_Zone(const Game *self);
 
 Game* Game_Tick(Game *self);
-void Game_At_Each_Cell(const Game *self, void (*visitor)(struct Coordinates coordinates, void*), void *data);
+void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void*), void *data);
 
 void Game_Dump(const Game *self);
 /* Game Methods */
