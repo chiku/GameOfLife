@@ -8,13 +8,13 @@ typedef struct MainLoop MainLoop;
 
 struct MainLoop
 {
-	World *world;
+	Game *game;
 	Graphics *graphics;
 	void (*draw_cell)(Coordinates coordinates, void *);
 };
 
 /* Member methods */
-MainLoop* MainLoop_Initialize(World *world, Graphics *graphics, void (*draw_cell)(Coordinates coordinates, void *));
+MainLoop* MainLoop_Initialize(Game *game, Graphics *graphics, void (*draw_cell)(Coordinates coordinates, void *));
 void MainLoop_Destroy(MainLoop *self);
 
 void MainLoop_Begin(MainLoop *self);

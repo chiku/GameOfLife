@@ -4,7 +4,7 @@
 typedef struct Coordinates Coordinates;
 typedef struct Cell Cell;
 typedef struct CellCollection CellCollection;
-typedef struct World World;
+typedef struct Game Game;
 
 
 struct Coordinates
@@ -24,7 +24,7 @@ struct CellCollection
 	Cell *cells;
 };
 
-struct World
+struct Game
 {
 	Coordinates *neighbour_locations;
 	CellCollection *cell_collection;
@@ -81,24 +81,24 @@ void CellCollection_Dump(const CellCollection *self);
 /* CellCollection Methods */
 
 
-/* World Methods */
-World* World_Allocate();
-World* World_Initialize(World *allocated_world);
+/* Game Methods */
+Game* Game_Allocate();
+Game* Game_Initialize(Game *allocated_game);
 
-World* World_New();
-void World_Destroy(World *self);
+Game* Game_New();
+void Game_Destroy(Game *self);
 
-World* World_Create_From_File(const char file_name[]);
+Game* Game_Create_From_File(const char file_name[]);
 
-void World_Add_Cell(World *self, Cell cell);
-int World_Cell_Count_Around(const World *self, Coordinates coordinates);
-CellCollection* World_Active_Zone(const World *self);
+void Game_Add_Cell(Game *self, Cell cell);
+int Game_Cell_Count_Around(const Game *self, Coordinates coordinates);
+CellCollection* Game_Active_Zone(const Game *self);
 
-World* World_Tick(World *self);
-void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinates, void*), void *data);
+Game* Game_Tick(Game *self);
+void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void*), void *data);
 
-void World_Dump(const World *self);
-/* World Methods */
+void Game_Dump(const Game *self);
+/* Game Methods */
 
 
 #endif /* GAME_OF_LIFE_H */

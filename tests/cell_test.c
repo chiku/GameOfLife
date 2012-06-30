@@ -20,33 +20,33 @@ END_TEST
 
 START_TEST (test_Cell_is_at_location_when_its_coordinates_match)
 {
-	World *world = World_New();
+	Game *game = Game_New();
 	Cell cell = Cell_New(3, 4);
-	World_Add_Cell(world, cell);
+	Game_Add_Cell(game, cell);
 
 	fail_unless(Cell_Is_At(cell, Coordinates_New(3, 4)), "Expected cell to be present at location (%ld, %ld), but wasn't", 3, 4);
-	World_Destroy(world);
+	Game_Destroy(game);
 }
 END_TEST
 
 START_TEST (test_Cell_is_not_at_location_when_its_x_coordinates_do_not_match)
 {
-	World *world = World_New();
+	Game *game = Game_New();
 	Cell cell = Cell_New(3, 4);
-	World_Add_Cell(world, cell);
+	Game_Add_Cell(game, cell);
 
 	fail_if(Cell_Is_At(cell, Coordinates_New(2, 4)), "Expected cell to be not present at location (%ld, %ld), but was", 2, 4);
-	World_Destroy(world);
+	Game_Destroy(game);
 }
 END_TEST
 
 START_TEST (test_Cell_is_not_at_location_when_its_y_coordinates_do_not_match)
 {
-	World *world = World_New();
+	Game *game = Game_New();
 	Cell cell = Cell_New(3, 4);
-	World_Add_Cell(world, cell);
+	Game_Add_Cell(game, cell);
 
 	fail_if(Cell_Is_At(cell, Coordinates_New(3, -4)), "Expected cell to be not present at location (%ld, %ld), but was", 3, -4);
-	World_Destroy(world);
+	Game_Destroy(game);
 }
 END_TEST

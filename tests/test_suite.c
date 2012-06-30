@@ -7,7 +7,7 @@
 #include "coordinates_test.c"
 #include "cell_test.c"
 #include "cell_collection_test.c"
-#include "world_test.c"
+#include "game_test.c"
 #include "rules_test.c"
 
 Suite *create_game_of_life_suite(void)
@@ -32,24 +32,24 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_cell, test_Cell_is_not_at_location_when_its_y_coordinates_do_not_match);
 	suite_add_tcase(s, tc_cell);
 
-	TCase *tc_world = tcase_create("World");
-	tcase_add_test(tc_world, test_World_adds_cell);
-	tcase_add_test(tc_world, test_World_creation_from_file_is_proper);
-	tcase_add_test(tc_world, test_World_creation_is_allocation_followed_by_initialization);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_north_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_north_east_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_east_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_south_east_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_south_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_south_west_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_west_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_neighbour_to_north_west_of_a_cell);
-	tcase_add_test(tc_world, test_World_knows_living_cell_count_around_an_occupied_location);
-	tcase_add_test(tc_world, test_World_knows_living_cell_count_around_an_unoccupied_location);
-	tcase_add_test(tc_world, test_World_knows_all_cell_locations_near_all_living_cells);
-	tcase_add_test(tc_world, test_World_at_cells_is_visitable);
-	tcase_add_test(tc_world, test_World_visits_accept_custom_data);
-	suite_add_tcase(s, tc_world);
+	TCase *tc_game = tcase_create("Game");
+	tcase_add_test(tc_game, test_Game_adds_cell);
+	tcase_add_test(tc_game, test_Game_creation_from_file_is_proper);
+	tcase_add_test(tc_game, test_Game_creation_is_allocation_followed_by_initialization);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_north_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_north_east_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_east_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_south_east_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_south_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_south_west_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_west_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_neighbour_to_north_west_of_a_cell);
+	tcase_add_test(tc_game, test_Game_knows_living_cell_count_around_an_occupied_location);
+	tcase_add_test(tc_game, test_Game_knows_living_cell_count_around_an_unoccupied_location);
+	tcase_add_test(tc_game, test_Game_knows_all_cell_locations_near_all_living_cells);
+	tcase_add_test(tc_game, test_Game_at_cells_is_visitable);
+	tcase_add_test(tc_game, test_Game_visits_accept_custom_data);
+	suite_add_tcase(s, tc_game);
 
 	TCase *tc_cell_collection = tcase_create("CellCollection");
 	tcase_add_test(tc_cell_collection, test_CellCollection_adds_cell);
