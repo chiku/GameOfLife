@@ -1,7 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-#include "include/game_of_life.h"
+#include "coordinates.h"
 
 Coordinates Coordinates_New(long int x, long int y)
 {

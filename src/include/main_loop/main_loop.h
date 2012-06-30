@@ -1,4 +1,4 @@
-#include "../game_of_life.h"
+#include "game_of_life.h"
 
 #ifndef GOL_MAIN_LOOP_H
 #define GOL_MAIN_LOOP_H

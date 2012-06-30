@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "coordinates.h"
 #include "game_of_life.h"
 #include "main_loop/main_loop.h"
 

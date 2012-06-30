@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "include/game_of_life.h"
+#include "coordinates.h"
+#include "cell.h"
+#include "world.h"
 
 const long int MAX_CELL_COLLECTION_SIZE = 10000;
 
