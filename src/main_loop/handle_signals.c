@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <signal.h>
 
-#include "main_loop.h"
+#include "main_loop/main_loop.h"
 
 static void catch_sigint(int sig_num)
 {

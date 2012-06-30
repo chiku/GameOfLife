@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "game_of_life.h"
+#include "include/game_of_life.h"
 
 Cell Cell_New(long int x, long int y)
 {

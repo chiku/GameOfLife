@@ -1,4 +1,4 @@
-#include "game_of_life.h"
+#include "include/game_of_life.h"
 
 int Rule_Carry_Forward_Alive_Cell(neighbours)
 {

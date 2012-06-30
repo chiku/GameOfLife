@@ -1,5 +1,5 @@
-#include "../game_of_life.h"
-#include "main_loop.h"
+#include "game_of_life.h"
+#include "main_loop/main_loop.h"
 
 static void draw_cell(Coordinates coordinates, void *data)
 {
