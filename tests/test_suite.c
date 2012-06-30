@@ -2,7 +2,11 @@
 #include <stdlib.h>
 #include <check.h>
 
-#include <game_of_life.h>
+#include <coordinates.h>
+#include <cell.h>
+#include <world.h>
+#include <rules.h>
+#include <game.h>
 
 #include "coordinates_test.c"
 #include "cell_test.c"

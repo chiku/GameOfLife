@@ -1,7 +1,7 @@
-#include "game_of_life.h"
-
 #ifndef GOL_MAIN_LOOP_H
 #define GOL_MAIN_LOOP_H
+
+#include "game_of_life.h"
 
 typedef struct Graphics Graphics;
 typedef struct MainLoop MainLoop;
