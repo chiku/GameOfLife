@@ -1,5 +1,5 @@
-#ifndef CURSES_GRAPHICS_H
-#define CURSES_GRAPHICS_H
+#ifndef GOL_CURSES_GRAPHICS_H
+#define GOL_CURSES_GRAPHICS_H
 
 typedef struct Graphics Graphics;
 

@@ -1,7 +1,7 @@
 #include "../game_of_life.h"
 
-#ifndef EVENT_LOOP_H
-#define EVENT_LOOP_H
+#ifndef GOL_MAIN_LOOP_H
+#define GOL_MAIN_LOOP_H
 
 typedef struct Graphics Graphics;
 typedef struct MainLoop MainLoop;
@@ -44,4 +44,3 @@ char *handle_command_line_arguments(int argc, char *argv[]);
 /* Interface of signal handling and main */
 
 #endif
-

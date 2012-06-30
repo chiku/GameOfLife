@@ -1,7 +1,7 @@
 #include <X11/Xlib.h>
 
-#ifndef XLIB_GRAPHICS_H
-#define XLIB_GRAPHICS_H
+#ifndef GOL_XLIB_GRAPHICS_H
+#define GOL_XLIB_GRAPHICS_H
 
 #define SCREEN 800
 #define SQUARE 5

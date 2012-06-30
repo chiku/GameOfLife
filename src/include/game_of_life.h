@@ -1,5 +1,5 @@
-#ifndef GAME_OF_LIFE_H
-#define GAME_OF_LIFE_H
+#ifndef GOL_GAME_OF_LIFE_H
+#define GOL_GAME_OF_LIFE_H
 
 typedef struct Coordinates Coordinates;
 typedef struct Cell Cell;
