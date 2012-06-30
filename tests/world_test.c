@@ -4,7 +4,7 @@ START_TEST (test_World_adds_cell)
 	Cell cell = Cell_New(0, 0);
 	World_Add_Cell(world, cell);
 
-	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Expected cell (address=%p) to be present, but wasn't", cell);
+	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Expected cell to be present at (%ld, %ld) to be present, but wasn't", 0, 0);
 	World_Destroy(world);
 }
 END_TEST
@@ -16,7 +16,7 @@ START_TEST (test_World_does_not_add_cell_if_cell_already_exists_in_the_world)
 	World_Add_Cell(world, Cell_New(5, 4));
 
 	long cell_count = World_Cell_Count(world);
-	fail_unless(World_Cell_Count(world) == 1, "Expected world to contain %ld cell, but contained %ld", 1, cell_count);
+	fail_unless(World_Cell_Count(world) == 1, "Expected world to contain %ld cells, but contained %ld", 1, cell_count);
 	World_Destroy(world);
 }
 END_TEST
@@ -115,10 +115,10 @@ START_TEST (test_World_knows_all_cell_locations_near_a_set)
 	long int cell_count = World_Cell_Count(zone);
 	fail_unless(cell_count == 4, "Expected cell count to be %ld, but was %ld", 4, cell_count);
 
-	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 1,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  2);
-	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 2,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  2,  2);
-	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 1,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  1);
-	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 0,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0,  1);
+	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 1,  2)), "Expected cell (x=%d,y=%d) to be present, but wasn't",  1,  2);
+	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 2,  2)), "Expected cell (x=%d,y=%d) to be present, but wasn't",  2,  2);
+	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 1,  1)), "Expected cell (x=%d,y=%d) to be present, but wasn't",  1,  1);
+	fail_unless(World_Has_Cell_At(zone, Coordinates_New( 0,  1)), "Expected cell (x=%d,y=%d) to be present, but wasn't",  0,  1);
 	World_Destroy(world);
 }
 END_TEST
