@@ -1,4 +1,4 @@
-core_files = ['src/coordinates.c', 'src/cell.c', 'src/cell_collection.c', 'src/rules.c', 'src/game.c']
+core_files = ['src/coordinates.c', 'src/cell.c', 'src/world.c', 'src/rules.c', 'src/game.c']
 main_files = ['src/main_loop/main_loop.c', 'src/main_loop/validate_arguments.c', 'src/main_loop/handle_signals.c', 'src/main_loop/main.c']
 
 env = Environment(CPPPATH = ['src'])

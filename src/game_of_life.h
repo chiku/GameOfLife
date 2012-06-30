@@ -3,7 +3,7 @@
 
 typedef struct Coordinates Coordinates;
 typedef struct Cell Cell;
-typedef struct CellCollection CellCollection;
+typedef struct World World;
 typedef struct Game Game;
 
 
@@ -18,7 +18,7 @@ struct Cell
 	Coordinates coordinates;
 };
 
-struct CellCollection
+struct World
 {
 	long int cell_count;
 	Cell *cells;
@@ -27,7 +27,7 @@ struct CellCollection
 struct Game
 {
 	Coordinates *neighbour_locations;
-	CellCollection *cell_collection;
+	World *world;
 };
 
 static const int MAX_NEIGHBOURS = 8;
@@ -61,24 +61,24 @@ int Rule_Carry_Forward_Cell(int cell_alive, int neighbours);
 /* Rules Methods */
 
 
-/* CellCollection Methods */
-CellCollection* CellCollection_Allocate();
-CellCollection* CellCollection_Initialize(CellCollection *allocated_cell_collection);
+/* World Methods */
+World* World_Allocate();
+World* World_Initialize(World *allocated_world);
 
-CellCollection* CellCollection_New();
-void CellCollection_Destroy(CellCollection *self);
+World* World_New();
+void World_Destroy(World *self);
 
-long int CellCollection_Cell_Count(const CellCollection *self);
+long int World_Cell_Count(const World *self);
 
-void CellCollection_Add_Cell(CellCollection *self, Cell cell);
-int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinates);
-int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates, Coordinates *neighbour_locations, int location_size);
-CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self, Coordinates *neighbour_locations, int location_size);
+void World_Add_Cell(World *self, Cell cell);
+int World_Has_Cell_At(const World *self, Coordinates coordinates);
+int World_Cell_Count_Around(const World *self, Coordinates coordinates, Coordinates *neighbour_locations, int location_size);
+World* World_All_Neighbours_For_Set(const World *self, Coordinates *neighbour_locations, int location_size);
 
-void CellCollection_At_Each_Cell(const CellCollection *self, void (*visitor)(Coordinates coordinates, void *), void *data);
+void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinates, void *), void *data);
 
-void CellCollection_Dump(const CellCollection *self);
-/* CellCollection Methods */
+void World_Dump(const World *self);
+/* World Methods */
 
 
 /* Game Methods */
@@ -92,7 +92,7 @@ Game* Game_Create_From_File(const char file_name[]);
 
 void Game_Add_Cell(Game *self, Cell cell);
 int Game_Cell_Count_Around(const Game *self, Coordinates coordinates);
-CellCollection* Game_Active_Zone(const Game *self);
+World* Game_Active_Zone(const Game *self);
 
 Game* Game_Tick(Game *self);
 void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void*), void *data);

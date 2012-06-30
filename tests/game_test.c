@@ -4,7 +4,7 @@ START_TEST (test_Game_adds_cell)
 	Cell cell = Cell_New(0, 0);
 	Game_Add_Cell(game, cell);
 
-	fail_unless(CellCollection_Has_Cell_At(game->cell_collection, Coordinates_New(0, 0)), "Expected cell (address=%p) to be present, but wasn't", cell);
+	fail_unless(World_Has_Cell_At(game->world, Coordinates_New(0, 0)), "Expected cell (address=%p) to be present, but wasn't", cell);
 	Game_Destroy(game);
 }
 END_TEST
@@ -13,13 +13,13 @@ START_TEST (test_Game_creation_from_file_is_proper)
 {
 	const char file_name[] = "data/oscillator.lif";
 	Game* game = Game_Create_From_File(file_name);
-	CellCollection* cell_collection = game->cell_collection;
+	World* world = game->world;
 
-	long int cell_count = CellCollection_Cell_Count(cell_collection);
+	long int cell_count = World_Cell_Count(world);
 	fail_unless(cell_count == 3, "Expected cell count to be %ld, but was %ld", 3, cell_count);
-	fail_unless(CellCollection_Has_Cell_At(cell_collection, Coordinates_New(0, 0)), "Expected cell collection to contain cell (%d, %d) but didn't'", 0, 0);
-	fail_unless(CellCollection_Has_Cell_At(cell_collection, Coordinates_New(0, 1)), "Expected cell collection to contain cell (%d, %d) but didn't'", 0, 0);
-	fail_unless(CellCollection_Has_Cell_At(cell_collection, Coordinates_New(0, 2)), "Expected cell collection to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 1)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 2)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
 	Game_Destroy(game);
 }
 END_TEST
@@ -194,24 +194,24 @@ START_TEST (test_Game_knows_all_cell_locations_near_all_living_cells)
 	Game_Add_Cell(game, Cell_New(0, 0));
 	Game_Add_Cell(game, Cell_New(1, 1));
 
-	CellCollection *active_zone = Game_Active_Zone(game);
-	long int cell_count = CellCollection_Cell_Count(active_zone);
+	World *active_zone = Game_Active_Zone(game);
+	long int cell_count = World_Cell_Count(active_zone);
 	fail_unless(cell_count == 14, "Expected cell count to be %ld, but was %ld", 14, cell_count);
 
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 0,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0,  2);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 1,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  2);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 2,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  2,  2);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New(-1,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", -1,  1);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 1,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  1);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 0,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0,  1);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 2,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  2,  1);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New(-1,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", -1,  0);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 0,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0,  0);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 1,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  0);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 2,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  2,  0);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New(-1, -1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", -1, -1);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 0, -1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0, -1);
-	fail_unless(CellCollection_Has_Cell_At(active_zone, Coordinates_New( 1, -1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1, -1);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 0,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0,  2);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 1,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  2);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 2,  2)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  2,  2);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New(-1,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", -1,  1);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 1,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  1);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 0,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0,  1);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 2,  1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  2,  1);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New(-1,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", -1,  0);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 0,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0,  0);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 1,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1,  0);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 2,  0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  2,  0);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New(-1, -1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", -1, -1);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 0, -1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  0, -1);
+	fail_unless(World_Has_Cell_At(active_zone, Coordinates_New( 1, -1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't",  1, -1);
 	Game_Destroy(game);
 }
 END_TEST

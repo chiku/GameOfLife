@@ -5,44 +5,44 @@
 
 const long int MAX_CELL_COLLECTION_SIZE = 10000;
 
-CellCollection* CellCollection_Allocate()
+World* World_Allocate()
 {
-	CellCollection *self = (CellCollection*) (malloc( sizeof(CellCollection) ));
+	World *self = (World*) (malloc( sizeof(World) ));
 	self->cells = (Cell*) (malloc( sizeof(Cell) * MAX_CELL_COLLECTION_SIZE ));
 	return self;
 }
 
-CellCollection* CellCollection_Initialize(CellCollection *cell_collection)
+World* World_Initialize(World *world)
 {
-	cell_collection->cell_count = 0;
-	return cell_collection;
+	world->cell_count = 0;
+	return world;
 }
 
-CellCollection *CellCollection_New()
+World *World_New()
 {
-	return CellCollection_Initialize(CellCollection_Allocate());
+	return World_Initialize(World_Allocate());
 }
 
-void CellCollection_Destroy(CellCollection *self)
+void World_Destroy(World *self)
 {
 	free(self->cells);
 	free(self);
 }
 
-long int CellCollection_Cell_Count(const CellCollection *self){
+long int World_Cell_Count(const World *self){
 	return self->cell_count;
 }
 
-void CellCollection_Add_Cell(CellCollection *self, Cell cell)
+void World_Add_Cell(World *self, Cell cell)
 {
-	if (CellCollection_Has_Cell_At(self, Cell_Coordinates(cell)))
+	if (World_Has_Cell_At(self, Cell_Coordinates(cell)))
 		return ;
 
 	self->cells[self->cell_count] = cell;
 	self->cell_count++;
 }
 
-int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinates)
+int World_Has_Cell_At(const World *self, Coordinates coordinates)
 {
 	long int i;
 	for (i = 0; i < self->cell_count; i++)
@@ -51,7 +51,7 @@ int CellCollection_Has_Cell_At(const CellCollection *self, Coordinates coordinat
 	return 0;
 }
 
-int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coordinates, Coordinates *locations, int location_size)
+int World_Cell_Count_Around(const World *self, Coordinates coordinates, Coordinates *locations, int location_size)
 {
 	long int count = 0, i, corner;
 	Cell cell;
@@ -67,25 +67,25 @@ int CellCollection_Cell_Count_Around(const CellCollection *self, Coordinates coo
 	return count;
 }
 
-CellCollection* CellCollection_All_Neighbours_For_Set(const CellCollection *self, Coordinates *locations, int location_size)
+World* World_All_Neighbours_For_Set(const World *self, Coordinates *locations, int location_size)
 {
 	long int i, corner;
 	Cell cell;
-	CellCollection *neighbours = CellCollection_New();
+	World *neighbours = World_New();
 	Coordinates coordinates;
 
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
 		for (corner = 0; corner < location_size; corner++) {
 			coordinates = Coordinates_Shifted_By(Cell_Coordinates(cell), locations[corner]);
-			CellCollection_Add_Cell(neighbours, Cell_New_From_Coordinates(coordinates));
+			World_Add_Cell(neighbours, Cell_New_From_Coordinates(coordinates));
 		}
 	}
 
 	return neighbours;
 }
 
-void CellCollection_At_Each_Cell(const CellCollection *self, void (*visitor)(Coordinates coordinates, void *), void *data)
+void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinates, void *), void *data)
 {
 	Cell cell;
 	long int i;
@@ -95,7 +95,7 @@ void CellCollection_At_Each_Cell(const CellCollection *self, void (*visitor)(Coo
 	}
 }
 
-void CellCollection_Dump(const CellCollection *self)
+void World_Dump(const World *self)
 {
 	int i;
 
