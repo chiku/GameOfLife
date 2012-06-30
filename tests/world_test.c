@@ -82,7 +82,7 @@ START_TEST (test_World_knows_count_of_neighbours_around_locations)
 }
 END_TEST
 
-START_TEST (test_Cell_knows_does_not_count_cell_not_present_in_pool)
+START_TEST (test_World_knows_does_not_count_cell_not_present_in_pool)
 {
 	World *world = World_New();
 	Cell cell = Cell_New(0, 0);
