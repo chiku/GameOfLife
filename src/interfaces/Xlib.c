@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <X11/Xlib.h>
 
-#include "interfaces/Xlib/graphics.h"
+#include "interfaces/Xlib.h"
 
 /* Private */
 static Display *initialize_display(void)

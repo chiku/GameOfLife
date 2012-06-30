@@ -2,7 +2,7 @@
 #include <ncurses.h>
 #include <unistd.h>
 
-#include "interfaces/curses/graphics.h"
+#include "interfaces/curses.h"
 
 Graphics* Graphics_Initialize()
 {

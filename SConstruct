@@ -11,5 +11,5 @@ env.StaticLibrary('lib/gol_ev', Split(main_files))
 
 env.Program('bin/test_gol', Split(['tests/test_suite.c', 'lib/libgol.a']), LIBS=['check'])
 
-env.Program('bin/golc', ['src/interfaces/curses/graphics.c', 'lib/libgol_ev.a', 'lib/libgol.a'], LIBS=['ncurses'])
-env.Program('bin/golX', ['src/interfaces/Xlib/graphics.c', 'lib/libgol_ev.a', 'lib/libgol.a'], LIBS=['X11'])
+env.Program('bin/golc', ['src/interfaces/curses.c', 'lib/libgol_ev.a', 'lib/libgol.a'], LIBS=['ncurses'])
+env.Program('bin/golX', ['src/interfaces/Xlib.c', 'lib/libgol_ev.a', 'lib/libgol.a'], LIBS=['X11'])
