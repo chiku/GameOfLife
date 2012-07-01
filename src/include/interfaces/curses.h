@@ -5,6 +5,7 @@
 
 struct Graphics
 {
+	char prevent_empty_struct;
 };
 
 #endif
