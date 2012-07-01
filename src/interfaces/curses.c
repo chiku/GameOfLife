@@ -1,6 +1,8 @@
+#define _POSIX_C_SOURCE 199506L
+
 #include <stdlib.h>
+#include <time.h>
 #include <ncurses.h>
-#include <unistd.h>
 
 #include "interfaces/curses.h"
 
@@ -24,7 +26,10 @@ void Graphics_Destroy(Graphics *self)
 
 void Graphics_Callback_Handler(Graphics *self, double time_in_s)
 {
-	usleep( (long)(time_in_s * 1000000) );
+	struct timespec tim;
+	tim.tv_sec = 0;
+	tim.tv_nsec = time_in_s * 1000000000L;
+	nanosleep(&tim, NULL);
 }
 
 void Graphics_Draw_At(Graphics *self, long int x, long int y)
