@@ -1,10 +1,9 @@
 START_TEST (test_Game_adds_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
+	Game_Add_Cell_At(game, 0, 0);
 
-	fail_unless(World_Has_Cell_At(game->world, Coordinates_New(0, 0)), "Expected cell (address=%p) to be present, but wasn't", cell);
+	fail_unless(World_Has_Cell_At(game->world, Coordinates_New(0, 0)), "Expected cell (%ld, %ld) to be present, but wasn't", 0, 0);
 	Game_Destroy(game);
 }
 END_TEST
@@ -36,10 +35,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_north_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(0, 1)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, 0, 1); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -50,10 +47,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_north_east_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(1, 1)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, 1, 1); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -64,10 +59,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_east_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(1, 0)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, 1, 0); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -78,10 +71,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_south_east_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(1, -1)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, 1, -1); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -92,10 +83,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_south_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(0, -1)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, 0, -1); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -106,10 +95,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_south_west_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(-1, -1)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, -1, -1); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -120,10 +107,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_west_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(-1, 0)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, -1, 0); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -134,10 +119,8 @@ END_TEST
 START_TEST (test_Game_knows_neighbour_to_north_west_of_a_cell)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New(-1, 1)); /* neighbour */
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, -1, 1); /* neighbour */
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 1, "Expected neighbour count to be %ld, but was %ld", 1, count);
@@ -148,13 +131,11 @@ END_TEST
 START_TEST (test_Cell_knows_does_not_consider_far_away_cell_as_neighbours)
 {
 	Game *game = Game_New();
-	Cell cell = Cell_New(0, 0);
-	Game_Add_Cell(game, cell);
-
-	Game_Add_Cell(game, Cell_New( 0,  2)); Game_Add_Cell(game, Cell_New( 2,  2));
-	Game_Add_Cell(game, Cell_New( 2,  0)); Game_Add_Cell(game, Cell_New( 2, -2));
-	Game_Add_Cell(game, Cell_New( 0, -2)); Game_Add_Cell(game, Cell_New(-2, -2));
-	Game_Add_Cell(game, Cell_New(-2,  0)); Game_Add_Cell(game, Cell_New(-2,  2));
+	Game_Add_Cell_At(game,  0,  0);
+	Game_Add_Cell_At(game,  0,  2); Game_Add_Cell_At(game,  2,  2);
+	Game_Add_Cell_At(game,  2,  0); Game_Add_Cell_At(game,  2, -2);
+	Game_Add_Cell_At(game,  0, -2); Game_Add_Cell_At(game, -2, -2);
+	Game_Add_Cell_At(game, -2,  0); Game_Add_Cell_At(game, -2,  2);
 
 	long int count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(count == 0, "Expected neighbour count to be %ld, but was %ld", 0, count);
@@ -165,9 +146,9 @@ END_TEST
 START_TEST (test_Game_knows_living_cell_count_around_an_occupied_location)
 {
 	Game *game = Game_New();
-	Game_Add_Cell(game, Cell_New(0, 0));
-	Game_Add_Cell(game, Cell_New(1, 1));
-	Game_Add_Cell(game, Cell_New(-1, 0));
+	Game_Add_Cell_At(game,  0, 0);
+	Game_Add_Cell_At(game,  1, 1);
+	Game_Add_Cell_At(game, -1, 0);
 
 	long int cell_count = Game_Cell_Count_Around(game, Coordinates_New(0, 0));
 	fail_unless(cell_count == 2, "Expected cell count to be %ld, but was %ld", 2, cell_count);
@@ -178,9 +159,9 @@ END_TEST
 START_TEST (test_Game_knows_living_cell_count_around_an_unoccupied_location)
 {
 	Game *game = Game_New();
-	Game_Add_Cell(game, Cell_New(0, 0));
-	Game_Add_Cell(game, Cell_New(1, 1));
-	Game_Add_Cell(game, Cell_New(-1, 0));
+	Game_Add_Cell_At(game,  0, 0);
+	Game_Add_Cell_At(game,  1, 1);
+	Game_Add_Cell_At(game, -1, 0);
 
 	long int cell_count = Game_Cell_Count_Around(game, Coordinates_New(-2, -1));
 	fail_unless(cell_count == 1, "Expected cell count to be %ld, but was %ld", 1, cell_count);
@@ -191,8 +172,8 @@ END_TEST
 START_TEST (test_Game_knows_all_cell_locations_near_all_living_cells)
 {
 	Game *game = Game_New();
-	Game_Add_Cell(game, Cell_New(0, 0));
-	Game_Add_Cell(game, Cell_New(1, 1));
+	Game_Add_Cell_At(game, 0, 0);
+	Game_Add_Cell_At(game, 1, 1);
 
 	World *active_zone = Game_Active_Zone(game);
 	long int cell_count = World_Cell_Count(active_zone);
@@ -227,8 +208,8 @@ static void add_up_cell_values(Coordinates coordinates, void *data)
 START_TEST (test_Game_at_cells_is_visitable)
 {
 	Game *game = Game_New();
-	Game_Add_Cell(game, Cell_New(0, -1));
-	Game_Add_Cell(game, Cell_New(1, 5));
+	Game_Add_Cell_At(game, 0, -1);
+	Game_Add_Cell_At(game, 1,  5);
 
 	Game_At_Each_Cell(game, add_up_cell_values, NULL);
 
@@ -241,7 +222,7 @@ END_TEST
 START_TEST (test_Game_visits_accept_custom_data)
 {
 	Game *game = Game_New();
-	Game_Add_Cell(game, Cell_New(0, -1));
+	Game_Add_Cell_At(game, 0, -1);
 
 	long int *expected_trace = (long int*)(malloc( sizeof(long int) ));
 	*expected_trace = 100;

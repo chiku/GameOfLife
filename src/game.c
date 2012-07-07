@@ -24,6 +24,7 @@ static void Game_Create_Cell_In_Next_World(Game *self, Cell cell)
 Game* Game_Allocate()
 {
 	Game *self = (Game*) (malloc( sizeof(Game) ));
+
 	self->neighbour_locations = (Coordinates*) (malloc ( sizeof(Coordinates) * MAX_NEIGHBOURS ));
 	self->world = World_Allocate();
 	self->next_world = World_Allocate();
@@ -80,11 +81,6 @@ long int Game_Cell_Count(Game *self)
 int Game_Has_Cell_At(Game *self, long int x, long int y)
 {
 	return World_Has_Cell_At(self->world, Coordinates_New(x, y));
-}
-
-void Game_Add_Cell(Game *self, Cell cell)
-{
-	World_Add_Cell(self->world, cell);
 }
 
 void Game_Add_Cell_At(Game *self, long int x, long int y)

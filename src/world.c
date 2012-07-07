@@ -91,6 +91,7 @@ void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinat
 {
 	Cell cell;
 	long int i;
+
 	for (i = 0; i < self->cell_count; i++) {
 		cell = self->cells[i];
 		visitor(Cell_Coordinates(cell), data);
