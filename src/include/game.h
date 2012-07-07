@@ -13,6 +13,7 @@ struct Game
 {
 	Coordinates *neighbour_locations;
 	World *world;
+	World *next_world;
 };
 
 static const int MAX_NEIGHBOURS = 8;

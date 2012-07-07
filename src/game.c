@@ -10,14 +10,14 @@
 const long int MAX_WORLD_SIZE = 10000;
 
 /* Private */
-static void Game_Create_Cell_In_New_Game(Game *self, Cell cell, Game *new_game)
+static void Game_Create_Cell_In_Next_World(Game *self, Cell cell)
 {
 	Coordinates coordinates = Cell_Coordinates(cell);
 	int neighbours = Game_Cell_Count_Around(self, coordinates);
 	int cell_alive = World_Has_Cell_At(self->world, coordinates);
 
 	if (Rule_Carry_Forward_Cell(cell_alive, neighbours))
-		Game_Add_Cell(new_game, Cell_New_From_Coordinates(coordinates));
+		World_Add_Cell(self->next_world, Cell_New_From_Coordinates(coordinates));
 }
 /* Private */
 
@@ -26,6 +26,7 @@ Game* Game_Allocate()
 	Game *self = (Game*) (malloc( sizeof(Game) ));
 	self->neighbour_locations = (Coordinates*) (malloc ( sizeof(Coordinates) * MAX_NEIGHBOURS ));
 	self->world = World_Allocate();
+	self->next_world = World_Allocate();
 	return self;
 }
 
@@ -40,6 +41,7 @@ Game* Game_Initialize(Game *game)
 	game->neighbour_locations[6] = Coordinates_New(+1,  0);
 	game->neighbour_locations[7] = Coordinates_New(+1, +1);
 	World_Initialize(game->world);
+	World_Initialize(game->next_world);
 	return game;
 }
 
@@ -52,6 +54,7 @@ void Game_Destroy(Game *self)
 {
 	free(self->neighbour_locations);
 	World_Destroy(self->world);
+	World_Destroy(self->next_world);
 	free(self);
 }
 
@@ -86,17 +89,19 @@ World* Game_Active_Zone(const Game *self)
 
 Game* Game_Tick(Game *self)
 {
-	Game *new_game = Game_New();
 	long int i;
 
 	World *active_zone = Game_Active_Zone(self);
 	for (i = 0; i < active_zone->cell_count; i++)
-		Game_Create_Cell_In_New_Game(self, active_zone->cells[i], new_game);
+		Game_Create_Cell_In_Next_World(self, active_zone->cells[i]);
 
-	Game_Destroy(self);
 	World_Destroy(active_zone);
+	World_Destroy(self->world);
 
-	return new_game;
+	self->world = self->next_world;
+	self->next_world = World_New();
+
+	return self;
 }
 
 void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void *), void *data)
