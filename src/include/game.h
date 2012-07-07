@@ -28,7 +28,10 @@ void Game_Destroy(Game *self);
 
 Game* Game_Create_From_File(const char file_name[]);
 
+long int Game_Cell_Count(Game *self);
+int Game_Has_Cell_At(Game *self, long int x, long int y);
 void Game_Add_Cell(Game *self, Cell cell);
+void Game_Add_Cell_At(Game *self, long int x, long int y);
 int Game_Cell_Count_Around(const Game *self, Coordinates coordinates);
 World* Game_Active_Zone(const Game *self);
 

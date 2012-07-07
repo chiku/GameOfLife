@@ -65,16 +65,31 @@ Game* Game_Create_From_File(const char file_name[])
 	long int x, y;
 
 	while (fscanf(fp, "%ld %ld", &x, &y) != EOF)
-		Game_Add_Cell(game, Cell_New(x, y));
+		Game_Add_Cell_At(game, x, y);
 
 	fclose(fp);
 
 	return game;
 }
 
+long int Game_Cell_Count(Game *self)
+{
+	return World_Cell_Count(self->world);
+}
+
+int Game_Has_Cell_At(Game *self, long int x, long int y)
+{
+	return World_Has_Cell_At(self->world, Coordinates_New(x, y));
+}
+
 void Game_Add_Cell(Game *self, Cell cell)
 {
 	World_Add_Cell(self->world, cell);
+}
+
+void Game_Add_Cell_At(Game *self, long int x, long int y)
+{
+	World_Add_Cell(self->world, Cell_New(x, y));
 }
 
 int Game_Cell_Count_Around(const Game *self, Coordinates coordinates)
