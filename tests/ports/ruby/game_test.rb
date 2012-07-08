@@ -77,5 +77,16 @@ module Gol
         blinker.tick!
       end
     end
+
+    it "can be visited at each cell" do
+      pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5)
+      xs, ys = [], []
+      pattern.each_cell do |x, y|
+        xs << x
+        ys << y
+      end
+      xs.must_equal [-1, 0, 1, 5]
+      ys.must_equal [ 0,-1, 0, 5]
+    end
   end
 end
