@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 
-require File.expand_path(File.join('..', '..', '..', 'src', 'ports', 'ruby', 'game_of_life'))
+require File.expand_path(File.join('..', '..', '..', 'src', 'ports', 'ruby', 'lib', 'game'))
 
 module Gol
   describe Game do
@@ -78,10 +78,21 @@ module Gol
       end
     end
 
-    it "can be visited at each cell" do
+    it "can be visited at each cell of current generation" do
       pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5)
       xs, ys = [], []
       pattern.each_cell do |x, y|
+        xs << x
+        ys << y
+      end
+      xs.must_equal [-1, 0, 1, 5]
+      ys.must_equal [ 0,-1, 0, 5]
+    end
+
+    it "can be visited at each cell of older generation" do
+      pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
+      xs, ys = [], []
+      pattern.each_previous_cell do |x, y|
         xs << x
         ys << y
       end
