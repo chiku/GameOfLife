@@ -17,6 +17,18 @@ static void Game_Create_Cell_In_Next_World(Game *self, Cell cell)
 	if (Rule_Carry_Forward_Cell(cell_alive, neighbours))
 		World_Add_Cell(self->next_world, Cell_New_From_Coordinates(coordinates));
 }
+
+static void Game_Initialize_Neighbours(Coordinates *neighbour_locations)
+{
+	neighbour_locations[0] = Coordinates_New(-1, -1);
+	neighbour_locations[1] = Coordinates_New(-1,  0);
+	neighbour_locations[2] = Coordinates_New(-1, +1);
+	neighbour_locations[3] = Coordinates_New( 0, -1);
+	neighbour_locations[4] = Coordinates_New( 0, +1);
+	neighbour_locations[5] = Coordinates_New(+1, -1);
+	neighbour_locations[6] = Coordinates_New(+1,  0);
+	neighbour_locations[7] = Coordinates_New(+1, +1);
+}
 /* Private */
 
 Game* Game_Allocate()
@@ -26,21 +38,16 @@ Game* Game_Allocate()
 	self->neighbour_locations = (Coordinates*) (malloc ( sizeof(Coordinates) * MAX_NEIGHBOURS ));
 	self->world = World_Allocate();
 	self->next_world = World_Allocate();
+	self->old_world = World_Allocate();
 	return self;
 }
 
 Game* Game_Initialize(Game *game)
 {
-	game->neighbour_locations[0] = Coordinates_New(-1, -1);
-	game->neighbour_locations[1] = Coordinates_New(-1,  0);
-	game->neighbour_locations[2] = Coordinates_New(-1, +1);
-	game->neighbour_locations[3] = Coordinates_New( 0, -1);
-	game->neighbour_locations[4] = Coordinates_New( 0, +1);
-	game->neighbour_locations[5] = Coordinates_New(+1, -1);
-	game->neighbour_locations[6] = Coordinates_New(+1,  0);
-	game->neighbour_locations[7] = Coordinates_New(+1, +1);
+	Game_Initialize_Neighbours(game->neighbour_locations);
 	World_Initialize(game->world);
 	World_Initialize(game->next_world);
+	World_Initialize(game->old_world);
 	return game;
 }
 
@@ -54,6 +61,7 @@ void Game_Destroy(Game *self)
 	free(self->neighbour_locations);
 	World_Destroy(self->world);
 	World_Destroy(self->next_world);
+	World_Destroy(self->old_world);
 	free(self);
 }
 
@@ -105,8 +113,9 @@ Game* Game_Tick(Game *self)
 		Game_Create_Cell_In_Next_World(self, active_zone->cells[i]);
 
 	World_Destroy(active_zone);
-	World_Destroy(self->world);
+	World_Destroy(self->old_world);
 
+	self->old_world = self->world;
 	self->world = self->next_world;
 	self->next_world = World_New();
 
@@ -116,6 +125,11 @@ Game* Game_Tick(Game *self)
 void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void *), void *data)
 {
 	World_At_Each_Cell(self->world, visitor, data);
+}
+
+void Game_At_Each_Old_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void *), void *data)
+{
+	World_At_Each_Cell(self->old_world, visitor, data);
 }
 
 void Game_Dump(const Game *self)

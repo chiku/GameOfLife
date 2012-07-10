@@ -205,7 +205,7 @@ static void add_up_cell_values(Coordinates coordinates, void *data)
 	g_trace = data ? *((long int*)data) : 0;
 }
 
-START_TEST (test_Game_at_cells_is_visitable)
+START_TEST (test_Game_is_visitable_for_each_cell_of_current_generation)
 {
 	Game *game = Game_New();
 	Game_Add_Cell_At(game, 0, -1);
@@ -231,6 +231,39 @@ START_TEST (test_Game_visits_accept_custom_data)
 
 	fail_unless(g_trace == 100, "Expected trace %ld, but was %ld", *expected_trace, g_trace);
 	free(expected_trace);
+	Game_Destroy(game);
+}
+END_TEST
+
+START_TEST (test_Game_is_visitable_for_each_cell_of_previous_generation)
+{
+	Game *game = Game_New();
+	Game_Add_Cell_At(game, 1, 0);
+	Game_Add_Cell_At(game, 0, 5);
+	Game_Add_Cell_At(game, 1, 1);
+	Game_Tick(game);
+
+	Game_At_Each_Old_Cell(game, add_up_cell_values, NULL);
+
+	fail_unless(g_sum_x == 2, "Expected sum of x's to be %ld, but was %ld", 2, g_sum_x);
+	fail_unless(g_sum_y == 6, "Expected sum of x's to be %ld, but was %ld", 6, g_sum_y);
+	Game_Destroy(game);
+}
+END_TEST
+
+START_TEST (test_Game_tick_preserves_previous_generation)
+{
+	Game *game = Game_New();
+	Game_Add_Cell_At(game, 1, 0);
+	Game_Add_Cell_At(game, 0, 5);
+	Game_Add_Cell_At(game, 1, 1);
+	Game_Tick(game);
+
+	long int count = World_Cell_Count(game->old_world);
+	fail_unless(count == 3, "Expected older cell count to be %ld, but was %ld", 3, count);
+	fail_unless(World_Has_Cell_At(game->old_world, Coordinates_New(1, 0)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", 1, 0);
+	fail_unless(World_Has_Cell_At(game->old_world, Coordinates_New(0, 5)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", 0, 5);
+	fail_unless(World_Has_Cell_At(game->old_world, Coordinates_New(1, 1)), "Expected cell (x=%d,y=%d) count to be present, but wasn't", 1, 1);
 	Game_Destroy(game);
 }
 END_TEST

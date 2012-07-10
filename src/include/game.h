@@ -14,6 +14,7 @@ struct Game
 	Coordinates *neighbour_locations;
 	World *world;
 	World *next_world;
+	World *old_world;
 };
 
 static const int MAX_NEIGHBOURS = 8;
@@ -36,6 +37,7 @@ World* Game_Active_Zone(const Game *self);
 
 Game* Game_Tick(Game *self);
 void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void*), void *data);
+void Game_At_Each_Old_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void*), void *data);
 
 void Game_Dump(const Game *self);
 /* Game Methods */

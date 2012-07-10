@@ -75,8 +75,10 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_game, test_Game_knows_living_cell_count_around_an_occupied_location);
 	tcase_add_test(tc_game, test_Game_knows_living_cell_count_around_an_unoccupied_location);
 	tcase_add_test(tc_game, test_Game_knows_all_cell_locations_near_all_living_cells);
-	tcase_add_test(tc_game, test_Game_at_cells_is_visitable);
+	tcase_add_test(tc_game, test_Game_is_visitable_for_each_cell_of_current_generation);
 	tcase_add_test(tc_game, test_Game_visits_accept_custom_data);
+	tcase_add_test(tc_game, test_Game_is_visitable_for_each_cell_of_previous_generation);
+	tcase_add_test(tc_game, test_Game_tick_preserves_previous_generation);
 	suite_add_tcase(s, tc_game);
 
 	suite_add_tcase(s, tc_rules);
