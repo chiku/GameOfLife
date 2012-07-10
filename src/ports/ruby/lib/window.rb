@@ -33,9 +33,12 @@ module GameOfLife
       @container ||= Gtk::DrawingArea.new
     end
 
-    def mark_cell
+    def context
       @context ||= container.window.create_cairo_context
-      @mark_cell ||= MarkCell.new context: @context, width: width, height: height
+    end
+
+    def mark_cell
+      @mark_cell ||= MarkCell.new context: context, width: width, height: height
     end
 
     def init_ui
@@ -48,14 +51,8 @@ module GameOfLife
 
     def on_expose_draw
       Gtk.timeout_add @time_interval do
-        render
+        @game.render_generation_with mark_cell
       end
-    end
-
-    def render
-      @game.each_previous_cell { |x, y| mark_cell.dead_at x, y }
-      @game.each_cell { |x, y| mark_cell.alive_at x, y }
-      @game.tick!
     end
   end
 end
