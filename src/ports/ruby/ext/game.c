@@ -75,7 +75,7 @@ rb_game_yield_at_each_previous_cell(VALUE self)
 
 void Init_game_of_life()
 {
-	rb_gol = rb_define_module("Gol");
+	rb_gol = rb_define_module("GameOfLife");
 	rb_game = rb_define_class_under(rb_gol, "Game", rb_cObject);
 
 	rb_define_alloc_func(rb_game, rb_game_allocate);

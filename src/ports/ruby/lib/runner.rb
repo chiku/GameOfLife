@@ -6,14 +6,14 @@ module GameOfLife
   class Runner
     def start
       Gtk.init
-      game = Gol::Game.new
-                      .add_cell_at(0, 0)
-                      .add_cell_at(1, -1)
-                      .add_cell_at(2, -1)
-                      .add_cell_at(3, -1)
-                      .add_cell_at(-3, -1)
-                      .add_cell_at(-2, -1)
-                      .add_cell_at(-2, 1)
+      game = Game.new
+                 .add_cell_at(0, 0)
+                 .add_cell_at(1, -1)
+                 .add_cell_at(2, -1)
+                 .add_cell_at(3, -1)
+                 .add_cell_at(-3, -1)
+                 .add_cell_at(-2, -1)
+                 .add_cell_at(-2, 1)
       Window.new(game)
       Gtk.main
     end

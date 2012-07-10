@@ -3,7 +3,7 @@ require 'minitest/spec'
 
 require File.expand_path(File.join('..', '..', '..', 'src', 'ports', 'ruby', 'lib', 'game'))
 
-module Gol
+module GameOfLife
   describe Game do
     describe "when empty" do
       let :empty_game do
