@@ -1,3 +1,3 @@
 require_relative 'lib/runner'
 
-GameOfLife::GTK.new.run
+GameOfLife::Runner.new.start

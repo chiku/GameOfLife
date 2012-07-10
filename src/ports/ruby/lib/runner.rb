@@ -3,8 +3,8 @@ require_relative 'game'
 require_relative 'window'
 
 module GameOfLife
-  class GTK
-    def run
+  class Runner
+    def start
       Gtk.init
       game = Gol::Game.new
                       .add_cell_at(0, 0)
