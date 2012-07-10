@@ -1,1 +1,3 @@
-require_relative 'ext/game_of_life'
+require_relative 'lib/runner'
+
+GameOfLife::GTK.new.run
