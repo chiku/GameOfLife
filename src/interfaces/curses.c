@@ -57,4 +57,3 @@ void cleanup_on_signal()
 	curs_set(1);
 	endwin();
 }
-

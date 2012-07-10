@@ -105,4 +105,3 @@ void Graphics_Set_Erase_Color(Graphics *self)
 
 /* Signal handling */
 void cleanup_on_signal() {}
-

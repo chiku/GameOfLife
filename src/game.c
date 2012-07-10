@@ -7,8 +7,6 @@
 #include "rules.h"
 #include "game.h"
 
-const long int MAX_WORLD_SIZE = 10000;
-
 /* Private */
 static void Game_Create_Cell_In_Next_World(Game *self, Cell cell)
 {
