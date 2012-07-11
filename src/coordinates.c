@@ -13,10 +13,14 @@ int Coordinates_Match(Coordinates c1, Coordinates c2)
 	return c1.x == c2.x && c1.y == c2.y;
 }
 
-Coordinates Coordinates_Get(Coordinates self)
+long int Coordinates_X(Coordinates self)
 {
-	Coordinates c = {self.x, self.y};
-	return c;
+	return self.x;
+}
+
+long int Coordinates_Y(Coordinates self)
+{
+	return self.y;
 }
 
 Coordinates Coordinates_Shifted_By(Coordinates self, Coordinates displacement)

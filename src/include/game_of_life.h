@@ -11,6 +11,8 @@ struct Coordinates
 	long int y;
 };
 
+extern long int Coordinates_X(Coordinates coordinates);
+extern long int Coordinates_Y(Coordinates coordinates);
 struct Game
 {
 	struct Coordinates *neighbour_locations;

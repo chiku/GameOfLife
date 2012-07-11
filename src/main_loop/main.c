@@ -3,7 +3,7 @@
 
 static void draw_cell(Coordinates coordinates, void *data)
 {
-	Graphics_Draw_At((Graphics*)data, coordinates.x, coordinates.y);
+	Graphics_Draw_At((Graphics*)data, Coordinates_X(coordinates), Coordinates_Y(coordinates));
 }
 
 int main(int argc, char *argv[])

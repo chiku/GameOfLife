@@ -12,7 +12,8 @@ struct Coordinates
 /* Coordinates Methods */
 Coordinates Coordinates_New(long int x, long int y);
 
-Coordinates Coordinates_Get(Coordinates coordinates);
+long int Coordinates_X(Coordinates coordinates);
+long int Coordinates_Y(Coordinates coordinates);
 int Coordinates_Match(Coordinates c1, Coordinates c2);
 Coordinates Coordinates_Shifted_By(Coordinates self, Coordinates displacement);
 
