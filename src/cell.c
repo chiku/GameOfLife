@@ -15,7 +15,7 @@ Cell Cell_New_From_Coordinates(Coordinates coordinates)
 
 Coordinates Cell_Coordinates(Cell self)
 {
-	return Coordinates_Get(self.coordinates);
+	return self.coordinates;
 }
 
 int Cell_Is_At(Cell self, Coordinates coordinates)
