@@ -1,3 +1,6 @@
-require_relative 'lib/runner'
+require_relative 'gtk/runner'
 
-GameOfLife::Runner.new.start
+runner = Hash.new(GameOfLife::Gtk::Runner)
+runner['gtk'] = GameOfLife::Gtk::Runner
+
+runner[ARGV.first].start
