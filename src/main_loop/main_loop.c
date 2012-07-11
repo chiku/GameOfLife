@@ -25,13 +25,13 @@ void MainLoop_Begin(MainLoop *self)
 	Graphics_Callback_Handler(self->graphics, 0.0);
 
 	for(;;) {
-		MainLoop_Draw(self);
-		Graphics_Callback_Handler(self->graphics, 0.5);
-
 		MainLoop_Erase(self);
 		Graphics_Callback_Handler(self->graphics, 0.0);
 
-		MainLoop_Cleanup(self);
+		MainLoop_Draw(self);
+		Graphics_Callback_Handler(self->graphics, 0.005);
+
+		MainLoop_Tick(self);
 		Graphics_Callback_Handler(self->graphics, 0.0);
 	}
 }
@@ -46,12 +46,10 @@ void MainLoop_Draw(MainLoop *self)
 void MainLoop_Erase(MainLoop *self)
 {
 	Graphics_Set_Erase_Color(self->graphics);
-	Game_At_Each_Cell(self->game, self->draw_cell, self->graphics);
-	Graphics_Flush(self->graphics);
+	Game_At_Each_Old_Cell(self->game, self->draw_cell, self->graphics);
 }
 
-void MainLoop_Cleanup(MainLoop *self)
+void MainLoop_Tick(MainLoop *self)
 {
 	self->game = Game_Tick(self->game);
-	Graphics_Clear(self->graphics);
 }

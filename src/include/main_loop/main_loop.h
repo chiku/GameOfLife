@@ -21,7 +21,7 @@ void MainLoop_Begin(MainLoop *self);
 
 void MainLoop_Draw(MainLoop *self);
 void MainLoop_Erase(MainLoop *self);
-void MainLoop_Cleanup(MainLoop *self);
+void MainLoop_Tick(MainLoop *self);
 /* Member methods */
 
 /* Interface of Graphics */

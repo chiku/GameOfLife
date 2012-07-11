@@ -66,6 +66,14 @@ void Graphics_Destroy(Graphics *self)
 	free(self);
 }
 
+void Graphics_Callback_Handler(Graphics *self, double time_in_s)
+{
+	struct timespec tim;
+	tim.tv_sec = 0;
+	tim.tv_nsec = time_in_s * 1000000000L;
+	nanosleep(&tim, NULL);
+}
+
 void Graphics_Draw_At(Graphics *self, long int x, long int y)
 {
 	XFillRectangle(self->display,
@@ -80,16 +88,6 @@ void Graphics_Flush(Graphics *self)
 {
 	XFlush(self->display);
 }
-
-void Graphics_Callback_Handler(Graphics *self, double time_in_s)
-{
-	struct timespec tim;
-	tim.tv_sec = 0;
-	tim.tv_nsec = time_in_s * 1000000000L;
-	nanosleep(&tim, NULL);
-}
-
-void Graphics_Clear(Graphics *self) {}
 
 void Graphics_Set_Draw_Color(Graphics *self)
 {
