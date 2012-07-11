@@ -1,6 +1,6 @@
 module GameOfLife
   class MarkCell
-    SIZE = 5
+    SIZE = 4
     ALIVE_COLOUR = [0.8, 0.2, 0.4]
     DEAD_COLOUR = [0.9, 1, 0.8]
 
@@ -25,7 +25,7 @@ module GameOfLife
       y1 = y * SIZE + height / 2 - SIZE / 2
 
       context.set_source_rgb *colour
-      context.rectangle x1, y1, SIZE, SIZE
+      context.rectangle x1, y1, SIZE - 1, SIZE - 1
       context.fill
     end
   end
