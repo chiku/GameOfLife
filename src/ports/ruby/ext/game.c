@@ -1,18 +1,18 @@
 #include <ruby.h>
 #include <game_of_life.h>
 
-static VALUE rb_gol;
-static VALUE rb_game;
+static VALUE gol_gol;
+static VALUE gol_game;
 
 static VALUE
-rb_game_allocate(VALUE klass)
+gol_game_allocate(VALUE klass)
 {
 	Game *game = Game_New();
 	return Data_Wrap_Struct(klass, 0, 0, game);
 }
 
 static VALUE
-rb_game_cell_count(VALUE self)
+gol_game_cell_count(VALUE self)
 {
 	Game *game;
 	Data_Get_Struct(self, Game, game);
@@ -20,7 +20,7 @@ rb_game_cell_count(VALUE self)
 }
 
 static VALUE
-rb_game_has_cell_at(VALUE self, VALUE x, VALUE y)
+gol_game_has_cell_at(VALUE self, VALUE x, VALUE y)
 {
 	Game *game;
 	Data_Get_Struct(self, Game, game);
@@ -28,7 +28,7 @@ rb_game_has_cell_at(VALUE self, VALUE x, VALUE y)
 }
 
 static VALUE
-rb_game_add_cell_at(VALUE self, VALUE x, VALUE y)
+gol_game_add_cell_at(VALUE self, VALUE x, VALUE y)
 {
 	Game *game;
 	Data_Get_Struct(self, Game, game);
@@ -37,12 +37,12 @@ rb_game_add_cell_at(VALUE self, VALUE x, VALUE y)
 }
 
 static VALUE
-rb_game_tick(VALUE self)
+gol_game_tick(VALUE self)
 {
 	Game *game;
 	Data_Get_Struct(self, Game, game);
 	Game_Tick(game);
-	self = Data_Wrap_Struct(rb_game, 0, 0, game);
+	self = Data_Wrap_Struct(gol_game, 0, 0, game);
 	return self;
 }
 
@@ -56,7 +56,7 @@ yield_visitor(Coordinates coordinates, void *data)
 }
 
 static VALUE
-rb_game_yield_at_each_cell(VALUE self)
+gol_game_yield_at_each_cell(VALUE self)
 {
 	Game *game;
 	Data_Get_Struct(self, Game, game);
@@ -65,7 +65,7 @@ rb_game_yield_at_each_cell(VALUE self)
 }
 
 static VALUE
-rb_game_yield_at_each_previous_cell(VALUE self)
+gol_game_yield_at_each_previous_cell(VALUE self)
 {
 	Game *game;
 	Data_Get_Struct(self, Game, game);
@@ -75,14 +75,14 @@ rb_game_yield_at_each_previous_cell(VALUE self)
 
 void Init_game_of_life()
 {
-	rb_gol = rb_define_module("GameOfLife");
-	rb_game = rb_define_class_under(rb_gol, "Game", rb_cObject);
+	gol_gol = rb_define_module("GameOfLife");
+	gol_game = rb_define_class_under(gol_gol, "Game", rb_cObject);
 
-	rb_define_alloc_func(rb_game, rb_game_allocate);
-	rb_define_method(rb_game, "cell_count", rb_game_cell_count, 0);
-	rb_define_method(rb_game, "has_cell_at?", rb_game_has_cell_at, 2);
-	rb_define_method(rb_game, "add_cell_at", rb_game_add_cell_at, 2);
-	rb_define_method(rb_game, "tick!", rb_game_tick, 0);
-	rb_define_method(rb_game, "each_cell", rb_game_yield_at_each_cell, 0);
-	rb_define_method(rb_game, "each_previous_cell", rb_game_yield_at_each_previous_cell, 0);
+	rb_define_alloc_func(gol_game, gol_game_allocate);
+	rb_define_method(gol_game, "cell_count", gol_game_cell_count, 0);
+	rb_define_method(gol_game, "has_cell_at?", gol_game_has_cell_at, 2);
+	rb_define_method(gol_game, "add_cell_at", gol_game_add_cell_at, 2);
+	rb_define_method(gol_game, "tick!", gol_game_tick, 0);
+	rb_define_method(gol_game, "each_cell", gol_game_yield_at_each_cell, 0);
+	rb_define_method(gol_game, "each_previous_cell", gol_game_yield_at_each_previous_cell, 0);
 }
