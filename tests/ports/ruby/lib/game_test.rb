@@ -78,26 +78,66 @@ module GameOfLife
       end
     end
 
-    it "can be visited at each cell of current generation" do
-      pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5)
-      xs, ys = [], []
-      pattern.each_cell do |x, y|
-        xs << x
-        ys << y
+    describe "current generation cells" do
+      it "can be visited" do
+        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5)
+        xs, ys = [], []
+        pattern.each_cell do |x, y|
+          xs << x
+          ys << y
+        end
+        xs.must_equal [-1, 0, 1, 5]
+        ys.must_equal [ 0,-1, 0, 5]
       end
-      xs.must_equal [-1, 0, 1, 5]
-      ys.must_equal [ 0,-1, 0, 5]
+
+      it "can be collected" do
+        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0)
+        pattern.current_generation.must_equal [[-1, 0], [0, -1], [1, 0]]
+      end
+
+      it "is not cached" do
+        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0).tick!
+        pattern.current_generation.must_equal [[-2, -1], [-2, 0], [-2, 1]]
+      end
     end
 
-    it "can be visited at each cell of older generation" do
-      pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
-      xs, ys = [], []
-      pattern.each_previous_cell do |x, y|
-        xs << x
-        ys << y
+    describe "previous generation cells" do
+      it "can be visited" do
+        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
+        xs, ys = [], []
+        pattern.each_previous_cell do |x, y|
+          xs << x
+          ys << y
+        end
+        xs.must_equal [-1, 0, 1, 5]
+        ys.must_equal [ 0,-1, 0, 5]
       end
-      xs.must_equal [-1, 0, 1, 5]
-      ys.must_equal [ 0,-1, 0, 5]
+
+      it "can be collected" do
+        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
+        pattern.previous_generation.must_equal [[-1, 0], [0, -1], [1, 0], [5, 5]]
+      end
+
+      it "is not cached" do
+        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0).tick!.tick!
+        pattern.previous_generation.must_equal [[-2, -1], [-2, 0], [-2, 1]]
+      end
+    end
+
+    describe "cells to erase" do
+      it "are the cells that exist in previous generation but not in current" do
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
+        game.tick!
+        game.cells_to_erase.must_equal [[-1, 0], [1, 0]]
+      end
+    end
+
+    describe "cells to draw" do
+      it "are the cells that exist in current generation but not in previous" do
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
+        game.tick!
+        game.cells_to_keep.must_equal [[0, -1], [0, 1]]
+      end
     end
   end
 end
