@@ -3,6 +3,7 @@ require_relative '../ext/game_of_life'
 module GameOfLife
   class Game
     alias_method :old_tick!, :tick!
+    private :old_tick!
 
     def initialize
       @cache_current = false
@@ -15,10 +16,8 @@ module GameOfLife
       old_tick!
     end
 
-    private :old_tick!
-
     def current_generation
-      return @current_generation if @expire_current_cache
+      return @current_generation if @cache_current
 
       @cache_current = true
       @current_generation = []
@@ -27,9 +26,9 @@ module GameOfLife
     end
 
     def previous_generation
-      return @previous_generation if @expire_current_cache
+      return @previous_generation if @cache_previous
 
-      @cache_previous = false
+      @cache_previous = true
       @previous_generation = []
       each_previous_cell { |x, y| @previous_generation << [x, y] }
       @previous_generation
