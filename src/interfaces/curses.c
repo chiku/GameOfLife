@@ -6,6 +6,9 @@
 
 #include "interfaces/curses.h"
 
+const int DRAW = 1;
+const int ERASE = 2;
+
 Graphics* Graphics_Initialize()
 {
 	Graphics *self = (Graphics*)(malloc( sizeof(Graphics) ));
@@ -13,8 +16,9 @@ Graphics* Graphics_Initialize()
 	initscr();
 	start_color();
 	curs_set(0);
-	init_pair(1, COLOR_RED, COLOR_BLACK);
-	attron(COLOR_PAIR(1));
+	init_pair(DRAW, COLOR_RED, COLOR_BLACK);
+	init_pair(ERASE, COLOR_BLACK, COLOR_BLACK);
+	attron(COLOR_PAIR(DRAW));
 
 	return self;
 }
@@ -42,14 +46,15 @@ void Graphics_Flush(Graphics *self)
 	refresh();
 }
 
-void Graphics_Clear(Graphics *self)
+void Graphics_Set_Draw_Color(Graphics *self)
 {
-	erase();
+	attron(COLOR_PAIR(DRAW));
 }
 
-void Graphics_Set_Draw_Color(Graphics *self) { }
-
-void Graphics_Set_Erase_Color(Graphics *self) { }
+void Graphics_Set_Erase_Color(Graphics *self)
+{
+	attron(COLOR_PAIR(ERASE));
+}
 
 /* Signal handing */
 void cleanup_on_signal()
