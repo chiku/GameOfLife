@@ -12,8 +12,10 @@ game = GameOfLife::Game.new
                        .add_cell_at(-2, 1)
 
 gtk = GameOfLife::Gtk::Runner
+fox = GameOfLife::Fox::Runner
 
 runner = Hash.new gtk
 runner['gtk'] = gtk
+runner['fox'] = fox
 
 runner[ARGV.first].start game
