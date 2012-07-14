@@ -34,17 +34,17 @@ module GameOfLife
       @previous_generation
     end
 
-    def cells_to_erase
+    def cells_to_remove
       previous_generation - current_generation
     end
 
-    def cells_to_keep
+    def cells_to_add
       current_generation - previous_generation
     end
 
     def render_generation_with mark_cell
-      cells_to_erase.each { |x, y| mark_cell.dead_at x, y }
-      cells_to_keep.each { |x, y| mark_cell.alive_at x, y }
+      cells_to_remove.each { |x, y| mark_cell.dead_at x, y }
+      cells_to_add.each { |x, y| mark_cell.alive_at x, y }
       tick!
     end
   end

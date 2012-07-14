@@ -124,19 +124,19 @@ module GameOfLife
       end
     end
 
-    describe "cells to erase" do
+    describe "cells to remove" do
       it "are the cells that exist in previous generation but not in current" do
         game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
         game.tick!
-        game.cells_to_erase.must_equal [[-1, 0], [1, 0]]
+        game.cells_to_remove.must_equal [[-1, 0], [1, 0]]
       end
     end
 
-    describe "cells to draw" do
+    describe "cells to add" do
       it "are the cells that exist in current generation but not in previous" do
         game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
         game.tick!
-        game.cells_to_keep.must_equal [[0, -1], [0, 1]]
+        game.cells_to_add.must_equal [[0, -1], [0, 1]]
       end
     end
   end
