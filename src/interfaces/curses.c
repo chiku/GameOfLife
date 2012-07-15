@@ -9,10 +9,13 @@
 const int DRAW = 1;
 const int ERASE = 2;
 
-Graphics* Graphics_New()
+Graphics* Graphics_Allocate()
 {
-	Graphics *self = (Graphics*)(malloc( sizeof(Graphics) ));
+	return (Graphics*)(malloc( sizeof(Graphics) ));
+}
 
+Graphics* Graphics_Initialize(Graphics *self)
+{
 	initscr();
 	start_color();
 	curs_set(0);
@@ -21,6 +24,11 @@ Graphics* Graphics_New()
 	attron(COLOR_PAIR(DRAW));
 
 	return self;
+}
+
+Graphics* Graphics_New()
+{
+	return Graphics_Initialize(Graphics_Allocate());
 }
 
 void Graphics_Destroy(Graphics *self)

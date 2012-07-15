@@ -3,8 +3,11 @@
 
 typedef struct Graphics Graphics;
 
+Graphics* Graphics_Allocate();
+Graphics* Graphics_Initialize();
 Graphics* Graphics_New();
 void Graphics_Destroy(Graphics *self);
+
 void Graphics_Cleanup_On_Signal(Graphics *self);
 
 void Graphics_Draw_At(Graphics *self, long int x, long int y);

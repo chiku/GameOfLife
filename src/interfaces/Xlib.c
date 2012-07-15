@@ -33,7 +33,7 @@ static Graphics *Graphics_Create()
 }
 /* Private */
 
-Graphics *Graphics_New()
+Graphics *Graphics_Allocate()
 {
 	Graphics *self = Graphics_Create();
 	self->display = Display_Initialize();
@@ -43,6 +43,11 @@ Graphics *Graphics_New()
 	self->draw_gc = XCreateGC(self->display, self->window, self->screen, NULL);
 	self->erase_gc = XCreateGC(self->display, self->window, self->screen, NULL);
 
+	return self;
+}
+
+Graphics *Graphics_Initialize(Graphics *self)
+{
 	Colormap colormap_alive = DefaultColormap(self->display, self->screen);
 	Colormap colormap_dead = DefaultColormap(self->display, self->screen);
 
@@ -58,6 +63,11 @@ Graphics *Graphics_New()
 	self->current_gc = self->draw_gc;
 
 	return self;
+}
+
+Graphics *Graphics_New()
+{
+	return Graphics_Initialize(Graphics_Allocate());
 }
 
 void Graphics_Destroy(Graphics *self)
