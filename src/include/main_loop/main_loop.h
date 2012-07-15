@@ -14,7 +14,7 @@ struct MainLoop
 };
 
 /* Member methods */
-MainLoop* MainLoop_Initialize(Game *game, Graphics *graphics, void (*draw_cell)(Coordinates coordinates, void *));
+MainLoop* MainLoop_New(Game *game, Graphics *graphics, void (*draw_cell)(Coordinates coordinates, void *));
 void MainLoop_Destroy(MainLoop *self);
 
 void MainLoop_Begin(MainLoop *self);
@@ -26,7 +26,7 @@ void MainLoop_Delay(double time_in_s);
 /* Member methods */
 
 /* Interface of Graphics */
-extern Graphics* Graphics_Initialize();
+extern Graphics* Graphics_New();
 extern void Graphics_Destroy(Graphics *self);
 
 extern void Graphics_Draw_At(Graphics *self, long int x, long int y);

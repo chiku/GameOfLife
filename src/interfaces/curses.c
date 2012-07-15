@@ -9,7 +9,7 @@
 const int DRAW = 1;
 const int ERASE = 2;
 
-Graphics* Graphics_Initialize()
+Graphics* Graphics_New()
 {
 	Graphics *self = (Graphics*)(malloc( sizeof(Graphics) ));
 

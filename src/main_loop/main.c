@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
 
 	char *file_name = handle_command_line_arguments(argc, argv);
 	Game *game = Game_Create_From_File(file_name);
-	Graphics *graphics = Graphics_Initialize();
+	Graphics *graphics = Graphics_New();
 
-	MainLoop *main_loop = MainLoop_Initialize(game, graphics, draw_cell);
+	MainLoop *main_loop = MainLoop_New(game, graphics, draw_cell);
 	MainLoop_Begin(main_loop);
 
 	MainLoop_Destroy(main_loop);

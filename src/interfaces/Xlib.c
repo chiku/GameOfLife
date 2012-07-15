@@ -8,7 +8,7 @@
 #include "interfaces/Xlib.h"
 
 /* Private */
-static Display *initialize_display(void)
+static Display *Display_Initialize(void)
 {
 	Display *display = XOpenDisplay(NULL);
 	if (display == NULL) {
@@ -18,7 +18,7 @@ static Display *initialize_display(void)
 	return display;
 }
 
-static Window initialize_window(Display *display, int screen)
+static Window Window_Initialize(Display *display, int screen)
 {
 	return XCreateSimpleWindow(display,
 		RootWindow(display, screen),
@@ -33,12 +33,12 @@ static Graphics *Graphics_Create()
 }
 /* Private */
 
-Graphics *Graphics_Initialize()
+Graphics *Graphics_New()
 {
 	Graphics *self = Graphics_Create();
-	self->display = initialize_display();
+	self->display = Display_Initialize();
 	self->screen = DefaultScreen(self->display);
-	self->window = initialize_window(self->display, self->screen);
+	self->window = Window_Initialize(self->display, self->screen);
 
 	self->draw_gc = XCreateGC(self->display, self->window, self->screen, NULL);
 	self->erase_gc = XCreateGC(self->display, self->window, self->screen, NULL);
