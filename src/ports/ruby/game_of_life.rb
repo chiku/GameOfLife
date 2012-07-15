@@ -1,7 +1,5 @@
+require_relative 'interfaces/interfaces'
 require_relative 'lib/game'
-require_relative 'gtk/runner'
-require_relative 'fox/runner'
-require_relative 'sinatra/runner'
 
 game = GameOfLife::Game.new
                        .add_cell_at(0, 0)
@@ -12,9 +10,9 @@ game = GameOfLife::Game.new
                        .add_cell_at(-2, -1)
                        .add_cell_at(-2, 1)
 
-gtk = GameOfLife::Gtk::Runner
-fox = GameOfLife::Fox::Runner
-sinatra = GameOfLife::Sinatra::Runner
+gtk = GameOfLife::Interfaces::Gtk::Runner
+fox = GameOfLife::Interfaces::Fox::Runner
+sinatra = GameOfLife::Interfaces::Sinatra::Runner
 
 runner = Hash.new gtk
 runner['gtk'] = gtk
