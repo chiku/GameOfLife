@@ -6,9 +6,6 @@
 
 #include "interfaces/curses.h"
 
-const int DRAW = 1;
-const int ERASE = 2;
-
 Graphics* Graphics_Allocate()
 {
 	return (Graphics*)(malloc( sizeof(Graphics) ));
@@ -16,18 +13,23 @@ Graphics* Graphics_Allocate()
 
 Graphics* Graphics_Initialize(Graphics *self)
 {
-	self->draw_colour_palate = 1;
-	self->erase_colour_palate = 2;
+	const int DRAW_PAIR = 1;
+	const int ERASE_PAIR = 2;
 
 	initscr();
 	start_color();
 	curs_set(0);
-	init_pair(DRAW, COLOR_RED, COLOR_BLACK);
-	init_pair(ERASE, COLOR_BLACK, COLOR_BLACK);
 
-	self->draw_colour_palate = COLOR_PAIR(DRAW);
-	self->erase_colour_palate = COLOR_PAIR(ERASE);
+	self->draw_colour_palate = 1;
+	self->erase_colour_palate = 2;
+	self->draw_colour_palate = COLOR_PAIR(DRAW_PAIR);
+	self->erase_colour_palate = COLOR_PAIR(ERASE_PAIR);
 	self->drawing_symbol = ACS_DIAMOND;
+
+	init_color(COLOR_RED, 900, 100, 200);
+	init_color(COLOR_GREEN, 100, 200, 100);
+	init_pair(DRAW_PAIR, COLOR_RED, COLOR_BLACK);
+	init_pair(ERASE_PAIR, COLOR_GREEN, COLOR_BLACK);
 
 	attron(self->draw_colour_palate);
 	return self;
@@ -50,8 +52,6 @@ void Graphics_Draw_At(Graphics *self, long int x, long int y)
 
 void Graphics_Flush(Graphics *self)
 {
-	attroff(self->draw_colour_palate);
-	attroff(self->erase_colour_palate);
 	refresh();
 }
 
