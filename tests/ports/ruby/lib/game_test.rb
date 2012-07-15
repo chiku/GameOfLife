@@ -132,6 +132,12 @@ module GameOfLife
         game.tick!
         game.cells_to_remove.must_equal [[-1, 0], [1, 0]]
       end
+
+      it "don't include unchanged cell" do
+        game = Game.new.add_cell_at(0, 0).add_cell_at(1, 0).add_cell_at(0, 1).add_cell_at(1, 1)
+        game.tick!
+        game.cells_to_remove.must_equal []
+      end
     end
 
     describe "cells to add" do
@@ -140,30 +146,38 @@ module GameOfLife
         game.tick!
         game.cells_to_add.must_equal [[0, -1], [0, 1]]
       end
+      it "don't include unchanged cell" do
+        game = Game.new.add_cell_at(0, 0).add_cell_at(1, 0).add_cell_at(0, 1).add_cell_at(1, 1)
+        game.tick!
+        game.cells_to_remove.must_equal []
+      end
     end
 
     describe "on serialization to JSON" do
-      it "produces a JSON string representation of the current generation" do
-        game = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0)
-        json = game.to_json
-
-        deserialized = JSON.parse(json)['world']['current']
-        deserialized.count.must_equal 3
-        deserialized.include?([-1, 0]).must_equal true
-        deserialized.include?([-2, 0]).must_equal true
-        deserialized.include?([-3, 0]).must_equal true
-      end
-
-      it "produces a JSON string representation of the previous generation" do
-        game = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0)
+      let :deserialized do
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
         game.tick!
         json = game.to_json
 
-        deserialized = JSON.parse(json)['world']['previous']
-        deserialized.count.must_equal 3
-        deserialized.include?([-1, 0]).must_equal true
-        deserialized.include?([-2, 0]).must_equal true
-        deserialized.include?([-3, 0]).must_equal true
+        JSON.parse(json)['world']
+      end
+
+      it "produces a JSON string representation of the current generation" do
+        current = deserialized['current']
+
+        current.count.must_equal 3
+        current.include?([0, -1]).must_equal true
+        current.include?([0, 0]).must_equal true
+        current.include?([0, 1]).must_equal true
+      end
+
+      it "produces a JSON string representation of the previous generation" do
+        previous = deserialized['previous']
+
+        previous.count.must_equal 3
+        previous.include?([-1, 0]).must_equal true
+        previous.include?([0, 0]).must_equal true
+        previous.include?([1, 0]).must_equal true
       end
     end
   end
