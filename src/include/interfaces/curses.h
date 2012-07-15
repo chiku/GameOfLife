@@ -5,7 +5,9 @@
 
 struct Graphics
 {
-	char prevent_empty_struct;
+	int drawing_symbol;
+	int alive_colour, dead_colour;
+	int draw_colour_palate, erase_colour_palate;
 };
 
 #endif
