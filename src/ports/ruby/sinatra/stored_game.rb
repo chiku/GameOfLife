@@ -2,8 +2,6 @@ module GameOfLife
   module Sinatra
     class StoredGame
       class << self
-        attr_reader :response
-
         def put game
           @game = game
         end

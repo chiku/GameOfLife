@@ -2,17 +2,11 @@ require 'sinatra/base'
 
 require_relative 'stored_game'
 
+Dir.chdir File.dirname(__FILE__)
+
 module GameOfLife
   module Sinatra
     class Server < ::Sinatra::Base
-      class << self
-        def run! game
-          Dir.chdir File.dirname(__FILE__)
-          StoredGame.put game
-          super()
-        end
-      end
-
       get '/' do
         File.read File.join('public', 'index.html')
       end

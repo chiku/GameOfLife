@@ -5,7 +5,8 @@ module GameOfLife
     class Runner
       class << self
         def start game
-          Server.run! game
+          StoredGame.put game
+          Server.run!
         end
       end
     end
