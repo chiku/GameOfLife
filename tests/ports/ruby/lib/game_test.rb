@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 
+require 'json'
+
 require File.expand_path(File.join('..', '..', '..', 'src', 'ports', 'ruby', 'lib', 'game'))
 
 module GameOfLife
@@ -137,6 +139,19 @@ module GameOfLife
         game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
         game.tick!
         game.cells_to_add.must_equal [[0, -1], [0, 1]]
+      end
+    end
+
+    describe "on serialization to JSON" do
+      it "produces a JSON string representation of the current generation" do
+        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0)
+        json = pattern.to_json
+
+        deserialized = JSON.parse(json)['world']
+        deserialized.count.must_equal 3
+        deserialized.include?([-1, 0]).must_equal true
+        deserialized.include?([-2, 0]).must_equal true
+        deserialized.include?([-3, 0]).must_equal true
       end
     end
   end

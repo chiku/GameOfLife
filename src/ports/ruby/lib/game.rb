@@ -1,3 +1,5 @@
+require 'json'
+
 require_relative '../ext/game_of_life'
 
 module GameOfLife
@@ -46,6 +48,10 @@ module GameOfLife
       cells_to_remove.each { |x, y| mark_cell.dead_at x, y }
       cells_to_add.each { |x, y| mark_cell.alive_at x, y }
       tick!
+    end
+
+    def to_json
+      {world: current_generation}.to_json
     end
   end
 end
