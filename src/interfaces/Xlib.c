@@ -40,22 +40,22 @@ Graphics *Graphics_Initialize()
 	self->screen = DefaultScreen(self->display);
 	self->window = initialize_window(self->display, self->screen);
 
-	self->orange_gc = XCreateGC(self->display, self->window, self->screen, NULL);
-	self->grey_gc = XCreateGC(self->display, self->window, self->screen, NULL);
+	self->draw_gc = XCreateGC(self->display, self->window, self->screen, NULL);
+	self->erase_gc = XCreateGC(self->display, self->window, self->screen, NULL);
 
-	Colormap colormap_orange = DefaultColormap(self->display, self->screen);
-	Colormap colormap_grey = DefaultColormap(self->display, self->screen);
+	Colormap colormap_alive = DefaultColormap(self->display, self->screen);
+	Colormap colormap_dead = DefaultColormap(self->display, self->screen);
 
-	XParseColor(self->display, colormap_orange, "#FF8811", &(self->orange));
-	XParseColor(self->display, colormap_grey, "#CCCCCC", &(self->grey));
-	XAllocColor(self->display, colormap_orange, &(self->orange));
-	XAllocColor(self->display, colormap_grey, &(self->grey));
+	XParseColor(self->display, colormap_alive, "#FF8811", &(self->alive));
+	XParseColor(self->display, colormap_dead, "#CCCCCC", &(self->dead));
+	XAllocColor(self->display, colormap_alive, &(self->alive));
+	XAllocColor(self->display, colormap_dead, &(self->dead));
 
 	XSelectInput(self->display, self->window, ExposureMask);
 	XMapWindow(self->display, self->window);
 	XStoreName(self->display, self->window, "Conway's Game of Life");
 
-	self->current_gc = self->orange_gc;
+	self->current_gc = self->draw_gc;
 
 	return self;
 }
@@ -64,14 +64,6 @@ void Graphics_Destroy(Graphics *self)
 {
 	XCloseDisplay(self->display);
 	free(self);
-}
-
-void Graphics_Callback_Handler(Graphics *self, double time_in_s)
-{
-	struct timespec tim;
-	tim.tv_sec = 0;
-	tim.tv_nsec = time_in_s * 1000000000L;
-	nanosleep(&tim, NULL);
 }
 
 void Graphics_Draw_At(Graphics *self, long int x, long int y)
@@ -91,14 +83,14 @@ void Graphics_Flush(Graphics *self)
 
 void Graphics_Set_Draw_Color(Graphics *self)
 {
-	self->current_gc = self->orange_gc;
-	XSetForeground(self->display, self->current_gc, self->orange.pixel);
+	self->current_gc = self->draw_gc;
+	XSetForeground(self->display, self->current_gc, self->alive.pixel);
 }
 
 void Graphics_Set_Erase_Color(Graphics *self)
 {
-	self->current_gc = self->grey_gc;
-	XSetForeground(self->display, self->current_gc, self->grey.pixel);
+	self->current_gc = self->erase_gc;
+	XSetForeground(self->display, self->current_gc, self->dead.pixel);
 }
 
 /* Signal handling */

@@ -12,8 +12,8 @@ struct Graphics
 	Display *display;
 	int screen;
 	Window window;
-	XColor orange, grey;
-	GC current_gc, orange_gc, grey_gc;
+	XColor alive, dead;
+	GC current_gc, draw_gc, erase_gc;
 };
 
 #endif
