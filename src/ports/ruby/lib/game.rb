@@ -51,7 +51,13 @@ module GameOfLife
     end
 
     def to_json
-      {world: current_generation}.to_json
+      {
+        world:
+        {
+          current: current_generation,
+          previous: previous_generation
+        }
+      }.to_json
     end
   end
 end

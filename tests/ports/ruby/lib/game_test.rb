@@ -144,10 +144,22 @@ module GameOfLife
 
     describe "on serialization to JSON" do
       it "produces a JSON string representation of the current generation" do
-        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0)
-        json = pattern.to_json
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0)
+        json = game.to_json
 
-        deserialized = JSON.parse(json)['world']
+        deserialized = JSON.parse(json)['world']['current']
+        deserialized.count.must_equal 3
+        deserialized.include?([-1, 0]).must_equal true
+        deserialized.include?([-2, 0]).must_equal true
+        deserialized.include?([-3, 0]).must_equal true
+      end
+
+      it "produces a JSON string representation of the previous generation" do
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0)
+        game.tick!
+        json = game.to_json
+
+        deserialized = JSON.parse(json)['world']['previous']
         deserialized.count.must_equal 3
         deserialized.include?([-1, 0]).must_equal true
         deserialized.include?([-2, 0]).must_equal true
