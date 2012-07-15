@@ -5,7 +5,7 @@ module GameOfLife
     class MarkCell
       SIZE = 4
       ALIVE_COLOUR = ::Fox::FXRGB(204, 51, 102)
-      DEAD_COLOUR = ::Fox::FXRGB(26, 0, 51)
+      DEAD_COLOUR = ::Fox::FXRGB(172, 200, 172)
 
       attr_reader :context, :width, :height
 

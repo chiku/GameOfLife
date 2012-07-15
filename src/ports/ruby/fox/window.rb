@@ -56,14 +56,15 @@ module GameOfLife
 
       def hook_events
         @app.addTimeout 200 do
-          ::Fox::FXDCWindow.new @canvas do |dc|
-            dc.fillRectangle 0, 0, width, height
+          ::Fox::FXDCWindow.new @canvas do |context|
+            context.setForeground ::Fox::FXRGB(172, 172, 172)
+            context.fillRectangle 0, 0, width, height
           end
         end
 
         @app.addTimeout @time_interval, repeat: true do
-          ::Fox::FXDCWindow.new @canvas do |dc|
-            @game.render_generation_with mark_cell(dc)
+          ::Fox::FXDCWindow.new @canvas do |context|
+            @game.render_generation_with mark_cell(context)
           end
         end
       end
