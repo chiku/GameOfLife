@@ -1,5 +1,8 @@
+#define _POSIX_C_SOURCE 199506L
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "game_of_life.h"
 #include "main_loop/main_loop.h"
@@ -22,17 +25,15 @@ void MainLoop_Destroy(MainLoop *self)
 
 void MainLoop_Begin(MainLoop *self)
 {
-	Graphics_Callback_Handler(self->graphics, 0.0);
-
-	for(;;) {
+	while(1) {
 		MainLoop_Erase(self);
-		Graphics_Callback_Handler(self->graphics, 0.0);
+		MainLoop_Delay(0.0);
 
 		MainLoop_Draw(self);
-		Graphics_Callback_Handler(self->graphics, 0.005);
+		MainLoop_Delay(0.005);
 
 		MainLoop_Tick(self);
-		Graphics_Callback_Handler(self->graphics, 0.0);
+		MainLoop_Delay(0.0);
 	}
 }
 
@@ -52,4 +53,12 @@ void MainLoop_Erase(MainLoop *self)
 void MainLoop_Tick(MainLoop *self)
 {
 	self->game = Game_Tick(self->game);
+}
+
+void MainLoop_Delay(double time_in_s)
+{
+	struct timespec tim;
+	tim.tv_sec = 0;
+	tim.tv_nsec = time_in_s * 1000000000L;
+	nanosleep(&tim, NULL);
 }

@@ -22,13 +22,12 @@ void MainLoop_Begin(MainLoop *self);
 void MainLoop_Draw(MainLoop *self);
 void MainLoop_Erase(MainLoop *self);
 void MainLoop_Tick(MainLoop *self);
+void MainLoop_Delay(double time_in_s);
 /* Member methods */
 
 /* Interface of Graphics */
 extern Graphics* Graphics_Initialize();
 extern void Graphics_Destroy(Graphics *self);
-
-extern void Graphics_Callback_Handler(Graphics *self, double time_in_ms);
 
 extern void Graphics_Draw_At(Graphics *self, long int x, long int y);
 extern void Graphics_Flush(Graphics *self);
