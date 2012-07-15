@@ -8,7 +8,7 @@
 #include "interfaces/Xlib.h"
 
 /* Private */
-static Display *Display_Initialize(void)
+static Display *Display_New(void)
 {
 	Display *display = XOpenDisplay(NULL);
 	if (display == NULL) {
@@ -18,7 +18,7 @@ static Display *Display_Initialize(void)
 	return display;
 }
 
-static Window Window_Initialize(Display *display, int screen)
+static Window Window_New(Display *display, int screen)
 {
 	return XCreateSimpleWindow(display,
 		RootWindow(display, screen),
@@ -27,35 +27,36 @@ static Window Window_Initialize(Display *display, int screen)
 		WhitePixel(display, screen));
 }
 
-static Graphics *Graphics_Create()
+static void Graphics_Colour_Initialize(Graphics *self)
 {
-	return (Graphics*) (malloc( sizeof(Graphics) ));
+	Colormap colormap_alive = DefaultColormap(self->display, self->screen);
+	Colormap colormap_dead = DefaultColormap(self->display, self->screen);
+
+	XParseColor(self->display, colormap_alive, "#FF8811", &(self->alive));
+	XAllocColor(self->display, colormap_alive, &(self->alive));
+
+	XParseColor(self->display, colormap_dead, "#CCCCCC", &(self->dead));
+	XAllocColor(self->display, colormap_dead, &(self->dead));
+
+	self->draw_gc = XCreateGC(self->display, self->window, self->screen, NULL);
+	self->erase_gc = XCreateGC(self->display, self->window, self->screen, NULL);
 }
 /* Private */
 
 Graphics *Graphics_Allocate()
 {
-	Graphics *self = Graphics_Create();
-	self->display = Display_Initialize();
+	Graphics *self = (Graphics*) (malloc( sizeof(Graphics) ));
+	self->display = Display_New();
 	self->screen = DefaultScreen(self->display);
-	self->window = Window_Initialize(self->display, self->screen);
+	self->window = Window_New(self->display, self->screen);
 
-	self->draw_gc = XCreateGC(self->display, self->window, self->screen, NULL);
-	self->erase_gc = XCreateGC(self->display, self->window, self->screen, NULL);
+	Graphics_Colour_Initialize(self);
 
 	return self;
 }
 
 Graphics *Graphics_Initialize(Graphics *self)
 {
-	Colormap colormap_alive = DefaultColormap(self->display, self->screen);
-	Colormap colormap_dead = DefaultColormap(self->display, self->screen);
-
-	XParseColor(self->display, colormap_alive, "#FF8811", &(self->alive));
-	XParseColor(self->display, colormap_dead, "#CCCCCC", &(self->dead));
-	XAllocColor(self->display, colormap_alive, &(self->alive));
-	XAllocColor(self->display, colormap_dead, &(self->dead));
-
 	XSelectInput(self->display, self->window, ExposureMask);
 	XMapWindow(self->display, self->window);
 	XStoreName(self->display, self->window, "Conway's Game of Life");
