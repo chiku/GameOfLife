@@ -26,20 +26,24 @@
             };
     };
 
-    var Game = function (options) {
-        var selectors = options.selectors,
+    var Game = function (window, document, options) {
+        var WIDTH = 1280,
+            HEIGHT = 800,
+            TIME_INTERVAL = 1000,
+            window = window,
+            document = document,
+            selectors = options.selectors,
             urls = options.urls,
             displayUrl = urls.display,
             tickUrl = urls.tick,
-            markCell = undefined,
+            markCell,
 
-            WIDTH = 1280,
-            HEIGHT = 800,
-            TIME_INTERVAL = 1000,
-
-            initialize = function () {
+            initialize = function (options) {
                 var canvas = document.getElementById(selectors.world)
                     context = canvas.getContext('2d');
+
+                displayUrl = urls.display;
+                tickUrl = urls.tick;
                 markCell = new MarkCell({
                     context: context,
                     width: WIDTH,
@@ -73,11 +77,11 @@
 
         window.onload = function () {
             initialize();
-            setInterval(render, TIME_INTERVAL);
+            window.setInterval(render, TIME_INTERVAL);
         };
     };
 
-    Game({
+    var options = {
         selectors: {
             world: 'world'
         },
@@ -85,5 +89,7 @@
             display: '/world',
             tick: '/world/tick'
         }
-    });
-}());
+    };
+
+    Game(window, document, options);
+} ());
