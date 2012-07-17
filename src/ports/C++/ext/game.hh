@@ -1,4 +1,5 @@
-#include <vector>
+#include <set>
+#include <algorithm>
 #include <utility>
 
 extern "C" {
@@ -12,20 +13,32 @@ namespace GameOfLife
 	{
 		private:
 			::Game *game;
-			std::vector <std::pair <long int, long int> > *currentCoordinates;
-			std::vector <std::pair <long int, long int> > *previousCoordinates;
+			std::set <std::pair <long int, long int> > *currentCoordinates;
+			std::set <std::pair <long int, long int> > *previousCoordinates;
+
+			bool currentCoordinatesCached;
+			bool previousCoordinatesCached;
+
+			void burstCache()
+			{
+				currentCoordinatesCached = false;
+				previousCoordinatesCached = false;
+			}
+
+			static void yield_visitor(::Coordinates coordinates_, void* data_)
+			{
+				std::set< std::pair <long int, long int> > *allCoordinates = (std::set< std::pair <long int, long int> >*)(data_);
+				std::pair <long int, long int>coordinates = std::make_pair(Coordinates_X(coordinates_), Coordinates_Y(coordinates_));
+				allCoordinates->insert(coordinates);
+			}
 
 		public:
 			Game()
 			{
+				burstCache();
 				game = Game_New();
-				currentCoordinates = new std::vector <std::pair <long int, long int> >;
-				previousCoordinates = new std::vector <std::pair <long int, long int> >;
-			}
-
-			~Game()
-			{
-				// Game_Destroy(game);
+				currentCoordinates = new std::set <std::pair <long int, long int> >;
+				previousCoordinates = new std::set <std::pair <long int, long int> >;
 			}
 
 			long int cellCount()
@@ -46,31 +59,53 @@ namespace GameOfLife
 
 			Game tick()
 			{
+				burstCache();
 				Game_Tick(game);
 				return *this;
 			}
 
-			std::vector <std::pair <long int, long int> > currentGeneration()
+			std::set <std::pair <long int, long int> > currentGeneration()
 			{
-				currentCoordinates->clear();
-				Game_At_Each_Cell(game, yield_visitor, (void*)currentCoordinates);
+				if (!currentCoordinatesCached) {
+					currentCoordinates->clear();
+					Game_At_Each_Cell(game, yield_visitor, (void*)currentCoordinates);
+					currentCoordinatesCached = true;
+				}
+
 				return *currentCoordinates;
 			}
 
-			std::vector <std::pair <long int, long int> > previousGeneration()
+			std::set <std::pair <long int, long int> > previousGeneration()
 			{
-				previousCoordinates->clear();
-				Game_At_Each_Old_Cell(game, yield_visitor, (void*)previousCoordinates);
+				if (!previousCoordinatesCached) {
+					previousCoordinates->clear();
+					Game_At_Each_Old_Cell(game, yield_visitor, (void*)previousCoordinates);
+					previousCoordinatesCached = true;
+				}
+
 				return *previousCoordinates;
 			}
 
-		private:
-			static void yield_visitor(::Coordinates coordinates_, void* data_)
+			std::set< std::pair<long int, long int> > cellsToRemove()
 			{
-				std::vector< std::pair <long int, long int> > *allCoordinates = (std::vector< std::pair <long int, long int> >*)(data_);
-				std::pair <long int, long int>coordinates = std::make_pair(Coordinates_X(coordinates_), Coordinates_Y(coordinates_));
+				std::set< std::pair <long int, long int> > result;
+				currentGeneration();
+				previousGeneration();
+				std::set_difference(previousCoordinates->begin(), previousCoordinates->end(),
+				                    currentCoordinates->begin(), currentCoordinates->end(),
+				                    std::inserter(result, result.end()));
+				return result;
+			}
 
-				allCoordinates->push_back(coordinates);
+			std::set< std::pair<long int, long int> > cellsToAdd()
+			{
+				std::set< std::pair <long int, long int> > result;
+				currentGeneration();
+				previousGeneration();
+				std::set_difference(currentCoordinates->begin(), currentCoordinates->end(),
+									previousCoordinates->begin(), previousCoordinates->end(),
+				                    std::inserter(result, result.end()));
+				return result;
 			}
 	};
 }
