@@ -10,6 +10,8 @@ struct Coordinates
 	long int y;
 };
 
+extern Coordinates Coordinates_New(long int x, long int y);
+extern Coordinates Coordinates_Equal(Coordinates self, Coordinates other);
 extern long int Coordinates_X(Coordinates coordinates);
 extern long int Coordinates_Y(Coordinates coordinates);
 
