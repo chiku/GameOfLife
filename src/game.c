@@ -79,12 +79,12 @@ Game* Game_Create_From_File(const char file_name[])
 	return game;
 }
 
-long int Game_Cell_Count(Game *self)
+long int Game_Cell_Count(const Game *self)
 {
 	return World_Cell_Count(self->world);
 }
 
-int Game_Has_Cell_At(Game *self, long int x, long int y)
+int Game_Has_Cell_At(const Game *self, long int x, long int y)
 {
 	return World_Has_Cell_At(self->world, Coordinates_New(x, y));
 }
@@ -94,7 +94,7 @@ void Game_Add_Cell_At(Game *self, long int x, long int y)
 	World_Add_Cell(self->world, Cell_New(x, y));
 }
 
-int Game_Cell_Count_Around(const Game *self, Coordinates coordinates)
+int Game_Cell_Count_Around(const const Game *self, Coordinates coordinates)
 {
 	return World_Cell_Count_Around(self->world, coordinates, self->neighbour_locations, MAX_NEIGHBOURS);
 }

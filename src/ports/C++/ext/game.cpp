@@ -8,14 +8,6 @@ extern "C" {
 
 #include "include/game.h"
 
-void GameOfLife::Game::syncGenerations()
-{
-	currentCoordinates->clear();
-	previousCoordinates->clear();
-	Game_At_Each_Cell(game, accumulationVisitor, (void*)currentCoordinates);
-	Game_At_Each_Old_Cell(game, accumulationVisitor, (void*)previousCoordinates);
-}
-
 void GameOfLife::Game::accumulationVisitor(::Coordinates coordinates_, void* data_)
 {
 	Cors *allCoordinates = (Cors*)(data_);
@@ -23,13 +15,21 @@ void GameOfLife::Game::accumulationVisitor(::Coordinates coordinates_, void* dat
 	allCoordinates->insert(coordinates);
 }
 
-Cors GameOfLife::Game::differencesBetween(Cors *first, Cors *second)
+Cors GameOfLife::Game::differencesBetween(const Cors *first, const Cors *second)
 {
 	Cors result;
 	std::set_difference(first->begin(), first->end(),
 	                    second->begin(), second->end(),
 	                    std::inserter(result, result.end()));
 	return result;
+}
+
+void GameOfLife::Game::syncGenerations()
+{
+	currentCoordinates->clear();
+	previousCoordinates->clear();
+	Game_At_Each_Cell(game, accumulationVisitor, (void*)currentCoordinates);
+	Game_At_Each_Old_Cell(game, accumulationVisitor, (void*)previousCoordinates);
 }
 
 GameOfLife::Game::Game()
@@ -39,7 +39,7 @@ GameOfLife::Game::Game()
 	previousCoordinates = new Cors();
 }
 
-long int GameOfLife::Game::cellCount()
+long int GameOfLife::Game::cellCount() const
 {
 	return Game_Cell_Count(game);
 }
@@ -51,7 +51,7 @@ GameOfLife::Game GameOfLife::Game::addCellAt(long int x, long int y)
 	return *this;
 }
 
-bool GameOfLife::Game::hasCellAt(long int x, long int y)
+bool GameOfLife::Game::hasCellAt(long int x, long int y) const
 {
 	return Game_Has_Cell_At(game, x, y) == 1 ? true : false;
 }
@@ -63,22 +63,22 @@ GameOfLife::Game GameOfLife::Game::tick()
 	return *this;
 }
 
-Cors GameOfLife::Game::currentGeneration()
+Cors GameOfLife::Game::currentGeneration() const
 {
 	return *currentCoordinates;
 }
 
-Cors GameOfLife::Game::previousGeneration()
+Cors GameOfLife::Game::previousGeneration() const
 {
 	return *previousCoordinates;
 }
 
-Cors GameOfLife::Game::cellsToRemove()
+Cors GameOfLife::Game::cellsToRemove() const
 {
 	return differencesBetween(previousCoordinates, currentCoordinates);
 }
 
-Cors GameOfLife::Game::cellsToAdd()
+Cors GameOfLife::Game::cellsToAdd() const
 {
 	return differencesBetween(currentCoordinates, previousCoordinates);
 }

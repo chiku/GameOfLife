@@ -21,19 +21,19 @@ namespace GameOfLife
 
 		void syncGenerations();
 		static void accumulationVisitor(::Coordinates coordinates_, void* data_);
-		Cors differencesBetween(Cors *first, Cors *second);
+		static Cors differencesBetween(const Cors *first, const Cors *second);
 
 	public:
 		Game();
 
-		long int cellCount();
+		long int cellCount() const;
 		Game addCellAt(long int x, long int y);
-		bool hasCellAt(long int x, long int y);
+		bool hasCellAt(long int x, long int y) const;
 		Game tick();
-		Cors currentGeneration();
-		Cors previousGeneration();
-		Cors cellsToRemove();
-		Cors cellsToAdd();
+		Cors currentGeneration() const;
+		Cors previousGeneration() const;
+		Cors cellsToRemove() const;
+		Cors cellsToAdd() const;
 	};
 }
 

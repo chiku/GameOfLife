@@ -77,7 +77,7 @@ void Graphics_Destroy(Graphics *self)
 	free(self);
 }
 
-void Graphics_Draw_At(Graphics *self, long int x, long int y)
+void Graphics_Draw_At(const Graphics *self, long int x, long int y)
 {
 	XFillRectangle(self->display,
 		self->window,
@@ -87,7 +87,7 @@ void Graphics_Draw_At(Graphics *self, long int x, long int y)
 		SQUARE - 1, SQUARE - 1);
 }
 
-void Graphics_Flush(Graphics *self)
+void Graphics_Flush(const Graphics *self)
 {
 	XFlush(self->display);
 }

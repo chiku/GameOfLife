@@ -37,14 +37,14 @@ void MainLoop_Begin(MainLoop *self)
 	}
 }
 
-void MainLoop_Draw(MainLoop *self)
+void MainLoop_Draw(const MainLoop *self)
 {
 	Graphics_Set_Draw_Color(self->graphics);
 	Game_At_Each_Cell(self->game, self->draw_cell, self->graphics);
 	Graphics_Flush(self->graphics);
 }
 
-void MainLoop_Erase(MainLoop *self)
+void MainLoop_Erase(const MainLoop *self)
 {
 	Graphics_Set_Erase_Color(self->graphics);
 	Game_At_Each_Old_Cell(self->game, self->draw_cell, self->graphics);

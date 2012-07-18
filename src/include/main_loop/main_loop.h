@@ -19,8 +19,8 @@ void MainLoop_Destroy(MainLoop *self);
 
 void MainLoop_Begin(MainLoop *self);
 
-void MainLoop_Draw(MainLoop *self);
-void MainLoop_Erase(MainLoop *self);
+void MainLoop_Draw(const MainLoop *self);
+void MainLoop_Erase(const MainLoop *self);
 void MainLoop_Tick(MainLoop *self);
 void MainLoop_Delay(double time_in_s);
 /* Member methods */
@@ -29,11 +29,11 @@ void MainLoop_Delay(double time_in_s);
 extern Graphics* Graphics_New();
 extern void Graphics_Destroy(Graphics *self);
 
-extern void Graphics_Draw_At(Graphics *self, long int x, long int y);
-extern void Graphics_Flush(Graphics *self);
-extern void Graphics_Clear(Graphics *self);
-extern void Graphics_Set_Draw_Color(Graphics *self);
-extern void Graphics_Set_Erase_Color(Graphics *self);
+extern void Graphics_Draw_At(const Graphics *self, long int x, long int y);
+extern void Graphics_Flush(const Graphics *self);
+extern void Graphics_Clear(const Graphics *self);
+extern void Graphics_Set_Draw_Color(const Graphics *self);
+extern void Graphics_Set_Erase_Color(const Graphics *self);
 /* Interface of Graphics */
 
 /* Interface of signal handling and main */
