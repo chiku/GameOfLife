@@ -10,9 +10,6 @@ struct Coordinates
 	long int y;
 };
 
-extern long int Coordinates_X(Coordinates coordinates);
-extern long int Coordinates_Y(Coordinates coordinates);
-
 extern Game* Game_New();
 extern void Game_Destroy(Game *self);
 

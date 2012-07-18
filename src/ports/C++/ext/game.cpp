@@ -11,8 +11,7 @@ extern "C" {
 void GameOfLife::Game::accumulationVisitor(::Coordinates coordinates_, void* data_)
 {
 	Cors *allCoordinates = (Cors*)(data_);
-	std::pair <long int, long int>coordinates = std::make_pair(Coordinates_X(coordinates_), Coordinates_Y(coordinates_));
-	allCoordinates->insert(coordinates);
+	allCoordinates->insert(std::make_pair(coordinates_.x, coordinates_.y));
 }
 
 Cors GameOfLife::Game::differencesBetween(const Cors *first, const Cors *second)
