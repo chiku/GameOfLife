@@ -52,8 +52,10 @@ if 'CXX' in os.environ:
 port_cpp.Append(CXXFLAGS = '--std=c++11 -O3 -Wall')
 
 port_cpp_test_gol = port_cpp.Program('build/bin/test-gol-cxx', Split(port_cpp_test_files), LIBS=[gol_lib_static, 'fltk'])
+golFLTK = port_cpp.Program('build/bin/golFLTK', Split(port_cpp_fltk_files), LIBS=[gol_lib_static, 'fltk'])
 
 port_cpp.Alias('install', port_cpp.Install(install_prefix_bin, port_cpp_test_gol))
+port_cpp.Alias('install', port_cpp.Install(install_prefix_bin, golFLTK))
 
 
 # Ruby port and interfaces
