@@ -2,7 +2,7 @@
 #include <utility>
 #include <igloo/igloo_alt.h>
 
-#include "../../../src/ports/C++/ext/include/game.h"
+#include "game.hh"
 
 using namespace igloo;
 

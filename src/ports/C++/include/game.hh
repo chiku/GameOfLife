@@ -8,20 +8,21 @@ extern "C" {
 #ifndef __GAME_OF_LIFE_CXX__
 #define __GAME_OF_LIFE_CXX__
 
-typedef std::set< std::pair<long int, long int> > Cors;
 
 namespace GameOfLife
 {
+	typedef std::set< std::pair<long int, long int> > Coors;
+
 	class Game
 	{
 	private:
 		::Game *game;
-		Cors *currentCoordinates;
-		Cors *previousCoordinates;
+		Coors *currentCoordinates;
+		Coors *previousCoordinates;
 
 		void syncGenerations();
 		static void accumulationVisitor(::Coordinates coordinates_, void* data_);
-		static Cors differencesBetween(const Cors *first, const Cors *second);
+		static Coors differencesBetween(const Coors *first, const Coors *second);
 
 	public:
 		Game();
@@ -30,10 +31,10 @@ namespace GameOfLife
 		Game addCellAt(long int x, long int y);
 		bool hasCellAt(long int x, long int y) const;
 		Game tick();
-		Cors currentGeneration() const;
-		Cors previousGeneration() const;
-		Cors cellsToRemove() const;
-		Cors cellsToAdd() const;
+		Coors currentGeneration() const;
+		Coors previousGeneration() const;
+		Coors cellsToRemove() const;
+		Coors cellsToAdd() const;
 	};
 }
 

@@ -6,17 +6,17 @@ extern "C" {
 	#include <game_of_life.h>
 }
 
-#include "include/game.h"
+#include "game.hh"
 
 void GameOfLife::Game::accumulationVisitor(::Coordinates coordinates_, void* data_)
 {
-	Cors *allCoordinates = (Cors*)(data_);
+	GameOfLife::Coors *allCoordinates = (GameOfLife::Coors*)(data_);
 	allCoordinates->insert(std::make_pair(coordinates_.x, coordinates_.y));
 }
 
-Cors GameOfLife::Game::differencesBetween(const Cors *first, const Cors *second)
+GameOfLife::Coors GameOfLife::Game::differencesBetween(const GameOfLife::Coors *first, const GameOfLife::Coors *second)
 {
-	Cors result;
+	GameOfLife::Coors result;
 	std::set_difference(first->begin(), first->end(),
 	                    second->begin(), second->end(),
 	                    std::inserter(result, result.end()));
@@ -34,8 +34,8 @@ void GameOfLife::Game::syncGenerations()
 GameOfLife::Game::Game()
 {
 	game = Game_New();
-	currentCoordinates = new Cors();
-	previousCoordinates = new Cors();
+	currentCoordinates = new GameOfLife::Coors();
+	previousCoordinates = new GameOfLife::Coors();
 }
 
 long int GameOfLife::Game::cellCount() const
@@ -62,22 +62,22 @@ GameOfLife::Game GameOfLife::Game::tick()
 	return *this;
 }
 
-Cors GameOfLife::Game::currentGeneration() const
+GameOfLife::Coors GameOfLife::Game::currentGeneration() const
 {
 	return *currentCoordinates;
 }
 
-Cors GameOfLife::Game::previousGeneration() const
+GameOfLife::Coors GameOfLife::Game::previousGeneration() const
 {
 	return *previousCoordinates;
 }
 
-Cors GameOfLife::Game::cellsToRemove() const
+GameOfLife::Coors GameOfLife::Game::cellsToRemove() const
 {
 	return differencesBetween(previousCoordinates, currentCoordinates);
 }
 
-Cors GameOfLife::Game::cellsToAdd() const
+GameOfLife::Coors GameOfLife::Game::cellsToAdd() const
 {
 	return differencesBetween(currentCoordinates, previousCoordinates);
 }
