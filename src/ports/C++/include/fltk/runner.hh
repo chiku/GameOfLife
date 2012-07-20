@@ -1,5 +1,4 @@
 #include <FL/Fl.H>
-#include <FL/Fl_Box.H>
 
 #include "game.hh"
 
@@ -8,7 +7,7 @@
 
 namespace GameOfLife
 {
-	class Runner : public Fl_Box
+	class Runner : public Fl_Widget
 	{
 	private:
 		const Fl_Color ALIVE_COLOUR = FL_RED;

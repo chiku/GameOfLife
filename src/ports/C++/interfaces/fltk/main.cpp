@@ -22,5 +22,5 @@ int main()
 	window.add(runner);
 	window.show();
 
-	return(Fl::run());
+	return Fl::run();
 }

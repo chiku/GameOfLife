@@ -1,3 +1,4 @@
+#include <FL/Fl.H>
 #include <FL/fl_draw.H>
 
 #include "game.hh"
@@ -25,7 +26,6 @@ void GameOfLife::Runner::draw()
 	}
 
 	game.tick();
-	Fl_Box::draw();
 }
 
 void GameOfLife::Runner::Timer_CB(void *userdata)
@@ -35,7 +35,7 @@ void GameOfLife::Runner::Timer_CB(void *userdata)
 	Fl::repeat_timeout(timeout, Timer_CB, userdata);
 }
 
-GameOfLife::Runner::Runner(GameOfLife::Game game_) : Fl_Box(0, 0, 1280, 800, "")
+GameOfLife::Runner::Runner(GameOfLife::Game game_) : Fl_Widget(0, 0, 1280, 800, "")
 {
 	game = game_;
 	Fl::add_timeout(timeout, Timer_CB, (void*)this);

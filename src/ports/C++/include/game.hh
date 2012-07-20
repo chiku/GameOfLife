@@ -21,7 +21,7 @@ namespace GameOfLife
 		Coors *previousCoordinates;
 
 		void syncGenerations();
-		static void accumulationVisitor(::Coordinates coordinates_, void* data_);
+		static void accumulationVisitor(::Coordinates coordinates, void* data);
 		static Coors differencesBetween(const Coors *first, const Coors *second);
 
 	public:

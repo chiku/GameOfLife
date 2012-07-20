@@ -8,10 +8,10 @@ extern "C" {
 
 #include "game.hh"
 
-void GameOfLife::Game::accumulationVisitor(::Coordinates coordinates_, void* data_)
+void GameOfLife::Game::accumulationVisitor(::Coordinates coordinates, void* data)
 {
-	GameOfLife::Coors *allCoordinates = (GameOfLife::Coors*)(data_);
-	allCoordinates->insert(std::make_pair(coordinates_.x, coordinates_.y));
+	GameOfLife::Coors *allCoordinates = (GameOfLife::Coors*)(data);
+	allCoordinates->insert(std::make_pair(coordinates.x, coordinates.y));
 }
 
 GameOfLife::Coors GameOfLife::Game::differencesBetween(const GameOfLife::Coors *first, const GameOfLife::Coors *second)
