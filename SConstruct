@@ -41,21 +41,21 @@ core.Alias('install', core.Install(include_header))
 
 
 # C++ port and interfaces
-port_cpp = Environment(CPPPATH = Split([install_prefix_include, 'ports/C++/src/include']))
+port_cxx = Environment(CPPPATH = Split([install_prefix_include, 'ports/C++/src/include']))
 
-port_cpp_test_files = [port_cpp.Object('ports/C++/src/game.cpp'), 'ports/C++/tests/game_test.cpp', 'ports/C++/tests/igloo_extensions.cpp']
-port_cpp_fltk_files = [port_cpp.Object('ports/C++/src/game.cpp'), 'ports/C++/src/interfaces/fltk/runner.cpp', 'ports/C++/src/interfaces/fltk/main.cpp']
+port_cxx_test_files = [port_cxx.Object('ports/C++/src/game.cxx'), 'ports/C++/tests/game_test.cxx', 'ports/C++/tests/igloo_extensions.cxx']
+port_cxx_fltk_files = [port_cxx.Object('ports/C++/src/game.cxx'), 'ports/C++/src/interfaces/fltk/mark_cell.cxx', 'ports/C++/src/interfaces/fltk/canvas.cxx', 'ports/C++/src/interfaces/fltk/window.cxx', 'ports/C++/src/interfaces/fltk/main.cxx']
 
 if 'CXX' in os.environ:
-  port_cpp.Replace(CXX = os.environ['CXX'])
+  port_cxx.Replace(CXX = os.environ['CXX'])
 
-port_cpp.Append(CXXFLAGS = '--std=c++11 -O3 -Wall')
+port_cxx.Append(CXXFLAGS = '--std=c++11 -O3 -Wall')
 
-port_cpp_test_gol = port_cpp.Program('build/bin/test-gol-cxx', Split(port_cpp_test_files), LIBS=[gol_lib_static, 'fltk'])
-golFLTK = port_cpp.Program('build/bin/golFLTK', Split(port_cpp_fltk_files), LIBS=[gol_lib_static, 'fltk'])
+port_cxx_test_gol = port_cxx.Program('build/bin/test-gol-cxx', Split(port_cxx_test_files), LIBS=[gol_lib_static, 'fltk'])
+golFLTK = port_cxx.Program('build/bin/golFLTK', Split(port_cxx_fltk_files), LIBS=[gol_lib_static, 'fltk'])
 
-port_cpp.Alias('install', port_cpp.Install(install_prefix_bin, port_cpp_test_gol))
-port_cpp.Alias('install', port_cpp.Install(install_prefix_bin, golFLTK))
+port_cxx.Alias('install', port_cxx.Install(install_prefix_bin, port_cxx_test_gol))
+port_cxx.Alias('install', port_cxx.Install(install_prefix_bin, golFLTK))
 
 
 # Ruby port and interfaces

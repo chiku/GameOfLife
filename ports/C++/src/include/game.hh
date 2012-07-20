@@ -35,6 +35,7 @@ namespace GameOfLife
 		Coors previousGeneration() const;
 		Coors cellsToRemove() const;
 		Coors cellsToAdd() const;
+		void dump() const;
 	};
 }
 

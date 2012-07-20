@@ -81,3 +81,8 @@ GameOfLife::Coors GameOfLife::Game::cellsToAdd() const
 {
 	return differencesBetween(currentCoordinates, previousCoordinates);
 }
+
+void GameOfLife::Game::dump() const
+{
+	Game_Dump(game);
+}
