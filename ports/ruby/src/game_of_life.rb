@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative 'interfaces/interfaces'
 require_relative 'lib/game'
 

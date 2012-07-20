@@ -41,10 +41,10 @@ core.Alias('install', core.Install(include_header))
 
 
 # C++ port and interfaces
-port_cpp = Environment(CPPPATH = Split([install_prefix_include, 'src/ports/C++/include']))
+port_cpp = Environment(CPPPATH = Split([install_prefix_include, 'ports/C++/src/include']))
 
-port_cpp_test_files = [port_cpp.Object('src/ports/C++/game.cpp'), 'tests/ports/C++/game_test.cpp', 'tests/ports/C++/igloo_extensions.cpp']
-port_cpp_fltk_files = [port_cpp.Object('src/ports/C++/game.cpp'), 'src/ports/C++/interfaces/fltk/runner.cpp', 'src/ports/C++/interfaces/fltk/main.cpp']
+port_cpp_test_files = [port_cpp.Object('ports/C++/src/game.cpp'), 'ports/C++/tests/game_test.cpp', 'ports/C++/tests/igloo_extensions.cpp']
+port_cpp_fltk_files = [port_cpp.Object('ports/C++/src/game.cpp'), 'ports/C++/src/interfaces/fltk/runner.cpp', 'ports/C++/src/interfaces/fltk/main.cpp']
 
 if 'CXX' in os.environ:
   port_cpp.Replace(CXX = os.environ['CXX'])
@@ -60,4 +60,4 @@ port_cpp.Alias('install', port_cpp.Install(install_prefix_bin, golFLTK))
 
 # Ruby port and interfaces
 port_ruby = Environment(ENV = {'PATH' : os.environ['PATH']})
-ruby_build = port_ruby.Command('ports', [], './extconf.rb --with-gol-dir=/opt/gol && make', chdir='src/ports/ruby/ext')
+ruby_build = port_ruby.Command('ports', [], './extconf.rb --with-gol-dir=/opt/gol && make', chdir='ports/ruby/src/ext')
