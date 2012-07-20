@@ -16,7 +16,6 @@ int main()
 	game->addCellAt(-2, 1);
 
 	GameOfLife::FLTK::Window window(game);
-	window.show();
 
 	return Fl::run();
 }

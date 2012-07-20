@@ -12,15 +12,10 @@ GameOfLife::FLTK::Window::Window(GameOfLife::Game *game)
 	canvas = new GameOfLife::FLTK::Canvas(game, WIDTH, HEIGHT);
 	window->add(canvas);
 	window->end();
+	window->show();
 }
 
 GameOfLife::FLTK::Window::~Window()
 {
 	delete window;
 }
-
-void GameOfLife::FLTK::Window::show()
-{
-	window->show();
-}
-

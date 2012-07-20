@@ -16,7 +16,6 @@ namespace GameOfLife
 		private:
 			const long int WIDTH = 1280;
 			const long int HEIGHT = 800;
-			static constexpr double timeout = 0.50;
 
 			Fl_Double_Window *window;
 			GameOfLife::FLTK::Canvas *canvas;
@@ -27,8 +26,6 @@ namespace GameOfLife
 		public:
 			Window(GameOfLife::Game *game);
 			~Window();
-
-			void show();
 		};
 	}
 }
