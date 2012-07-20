@@ -24,7 +24,7 @@ namespace GameOfLife
 			static void Timer_CB(void *userdata);
 
 		public:
-			Window(GameOfLife::Game *game);
+			Window(GameOfLife::Game game);
 			~Window();
 		};
 	}

@@ -6,14 +6,14 @@
 
 int main()
 {
-	GameOfLife::Game *game = new GameOfLife::Game();
-	game->addCellAt(0, 0);
-	game->addCellAt(1, -1);
-	game->addCellAt(2, -1);
-	game->addCellAt(3, -1);
-	game->addCellAt(-3, -1);
-	game->addCellAt(-2, -1);
-	game->addCellAt(-2, 1);
+	GameOfLife::Game game;
+	game.addCellAt(0, 0)
+		.addCellAt(1, -1)
+		.addCellAt(2, -1)
+		.addCellAt(3, -1)
+		.addCellAt(-3, -1)
+		.addCellAt(-2, -1)
+		.addCellAt(-2, 1);
 
 	GameOfLife::FLTK::Window window(game);
 

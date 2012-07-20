@@ -15,14 +15,14 @@ namespace GameOfLife
 		private:
 			static constexpr double TIMEOUT = 0.50;
 
-			Game *game;
+			Game game;
 			MarkCell *markCell;
 
 			void draw();
 			static void Timer_CB(void *userdata);
 
 		public:
-			Canvas(GameOfLife::Game *game_, long int width, long int height);
+			Canvas(GameOfLife::Game game_, long int width, long int height);
 			~Canvas();
 		};
 	}

@@ -3,7 +3,7 @@
 #include "fltk/canvas.hh"
 #include "fltk/window.hh"
 
-GameOfLife::FLTK::Window::Window(GameOfLife::Game *game)
+GameOfLife::FLTK::Window::Window(GameOfLife::Game game)
 {
 	window = new Fl_Double_Window(1280, 800);
 	window->fullscreen();
