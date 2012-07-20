@@ -44,7 +44,7 @@ core.Alias('install', core.Install(include_header))
 port_cxx = Environment(CPPPATH = Split([install_prefix_include, 'ports/C++/src/include']))
 
 port_cxx_test_files = [port_cxx.Object('ports/C++/src/game.cxx'), 'ports/C++/tests/game_test.cxx', 'ports/C++/tests/igloo_extensions.cxx']
-port_cxx_fltk_files = [port_cxx.Object('ports/C++/src/game.cxx'), 'ports/C++/src/interfaces/fltk/mark_cell.cxx', 'ports/C++/src/interfaces/fltk/canvas.cxx', 'ports/C++/src/interfaces/fltk/window.cxx', 'ports/C++/src/interfaces/fltk/main.cxx']
+port_cxx_fltk_files = [port_cxx.Object('ports/C++/src/game.cxx'), 'ports/C++/src/interfaces/fltk/mark_cell.cxx', 'ports/C++/src/interfaces/fltk/canvas.cxx', 'ports/C++/src/interfaces/fltk/window.cxx', 'ports/C++/src/interfaces/fltk/runner.cxx', 'ports/C++/src/interfaces/fltk/main.cxx']
 
 if 'CXX' in os.environ:
   port_cxx.Replace(CXX = os.environ['CXX'])

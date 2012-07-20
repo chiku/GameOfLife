@@ -20,12 +20,12 @@ namespace GameOfLife
 			Fl_Double_Window *window;
 			GameOfLife::FLTK::Canvas *canvas;
 
-			void draw();
-			static void Timer_CB(void *userdata);
+			void setPropertiesOnWindow();
 
 		public:
-			Window(GameOfLife::Game game);
+			Window();
 			~Window();
+			void attachGameToCanvas(GameOfLife::Game *game);
 		};
 	}
 }

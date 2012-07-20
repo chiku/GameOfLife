@@ -3,19 +3,21 @@
 
 #include "game.hh"
 #include "fltk/window.hh"
+#include "fltk/runner.hh"
 
 int main()
 {
-	GameOfLife::Game game;
-	game.addCellAt(0, 0)
-		.addCellAt(1, -1)
-		.addCellAt(2, -1)
-		.addCellAt(3, -1)
-		.addCellAt(-3, -1)
-		.addCellAt(-2, -1)
-		.addCellAt(-2, 1);
+	GameOfLife::Game *game = new GameOfLife::Game();
+	(*game).addCellAt(0, 0)
+	       .addCellAt(1, -1)
+	       .addCellAt(2, -1)
+	       .addCellAt(3, -1)
+	       .addCellAt(-3, -1)
+	       .addCellAt(-2, -1)
+	       .addCellAt(-2, 1);
 
-	GameOfLife::FLTK::Window window(game);
+	GameOfLife::FLTK::Window *window = new GameOfLife::FLTK::Window();
 
-	return Fl::run();
+	GameOfLife::FLTK::Runner runner(game, window);
+	return runner.init();
 }
