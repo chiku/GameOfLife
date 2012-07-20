@@ -14,8 +14,8 @@ namespace GameOfLife
 			const long int HEIGHT;
 			const int SIZE = 4;
 
-			const Fl_Color ALIVE = FL_RED;
-			const Fl_Color DEAD = FL_GRAY;
+			const Fl_Color ALIVE = fl_rgb_color(220, 80, 120);
+			const Fl_Color DEAD = fl_rgb_color(210, 240, 190);
 
 			void markCellAt(long int x, long int y, Fl_Color colour);
 
