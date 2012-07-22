@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'interfaces/interfaces'
+require_relative 'lib/interfaces/interfaces'
 require_relative 'lib/game'
 
 game = GameOfLife::Game.new

@@ -1,6 +1,6 @@
 require 'json'
 
-require_relative '../ext/game_of_life'
+require_relative 'ext/game_of_life'
 
 module GameOfLife
   class Game
