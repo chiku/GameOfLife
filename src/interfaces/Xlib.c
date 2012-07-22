@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <X11/Xlib.h>
 
 #include "interfaces/Xlib.h"

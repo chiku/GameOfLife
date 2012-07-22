@@ -1,7 +1,6 @@
 #define _POSIX_C_SOURCE 199506L
 
 #include <stdlib.h>
-#include <time.h>
 #include <ncurses.h>
 
 #include "interfaces/curses.h"
