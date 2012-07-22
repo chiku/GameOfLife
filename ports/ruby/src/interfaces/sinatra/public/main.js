@@ -42,8 +42,6 @@
                 var canvas = document.getElementById(selectors.world)
                     context = canvas.getContext('2d');
 
-                displayUrl = urls.display;
-                tickUrl = urls.tick;
                 markCell = new MarkCell({
                     context: context,
                     width: WIDTH,
