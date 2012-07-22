@@ -23,6 +23,7 @@ core.StaticLibrary('build/lib/gol_m', Split(main_files))
 test_gol = core.Program('build/bin/test-gol', Split(['tests/test_suite.c', 'build/lib/libgol.a']), LIBS=['check'])
 gol_curses = core.Program('build/bin/gol-curses', ['src/interfaces/curses.c', 'build/lib/libgol_m.a', 'build/lib/libgol.a'], LIBS=['ncurses'])
 gol_xlib = core.Program('build/bin/gol-xlib', ['src/interfaces/Xlib.c', 'build/lib/libgol_m.a', 'build/lib/libgol.a'], LIBS=['X11'])
+gol_xcb = core.Program('build/bin/gol-xcb', ['src/interfaces/xcb.c', 'build/lib/libgol_m.a', 'build/lib/libgol.a'], LIBS=['xcb'])
 
 source_header = './src/include/game_of_life.h'
 target_header = install_prefix + '/include/game_of_life.h'
@@ -35,6 +36,7 @@ include_header = core.Command(target_header, source_header,
 core.Alias('install', core.Install(install_prefix_bin, test_gol))
 core.Alias('install', core.Install(install_prefix_bin, gol_curses))
 core.Alias('install', core.Install(install_prefix_bin, gol_xlib))
+core.Alias('install', core.Install(install_prefix_bin, gol_xcb))
 core.Alias('install', core.Install(install_prefix_lib, gol_lib_static))
 core.Alias('install', core.Install(install_prefix_lib, gol_lib_dynamic))
 core.Alias('install', core.Install(include_header))
