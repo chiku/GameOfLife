@@ -62,4 +62,4 @@ port_cxx.Alias('install', port_cxx.Install(install_prefix_bin, gol_fltk))
 
 # Ruby port and interfaces
 port_ruby = Environment(ENV = {'PATH' : os.environ['PATH']})
-ruby_build = port_ruby.Command('ports', [], './extconf.rb --with-gol-dir=/opt/gol && make', chdir='ports/ruby/src/ext')
+ruby_build = port_ruby.Command('ports', [], './extconf.rb --with-gol-dir=/opt/gol && make', chdir='ports/ruby/lib/ext')
