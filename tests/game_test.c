@@ -11,7 +11,7 @@ END_TEST
 START_TEST (test_Game_creation_from_file_is_proper)
 {
 	FILE *fp;
-	char file_name[1024];
+	char file_name[L_tmpnam];
 
 	tmpnam(file_name);
 	fp = fopen(file_name, "w");
