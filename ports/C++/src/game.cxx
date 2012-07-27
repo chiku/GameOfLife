@@ -62,6 +62,12 @@ GameOfLife::Game GameOfLife::Game::tick()
 	return *this;
 }
 
+GameOfLife::Game GameOfLife::Game::read(const char filename[])
+{
+	game = Game_Create_From_File(filename);
+	return *this;
+}
+
 GameOfLife::Coors GameOfLife::Game::currentGeneration() const
 {
 	return *currentCoordinates;

@@ -28,6 +28,7 @@ namespace GameOfLife
 		Game();
 
 		long int cellCount() const;
+		Game read(const char filename[]);
 		Game addCellAt(long int x, long int y);
 		bool hasCellAt(long int x, long int y) const;
 		Game tick();

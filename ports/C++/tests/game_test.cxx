@@ -1,5 +1,6 @@
 #include <set>
 #include <utility>
+#include <fstream>
 #include <igloo/igloo_alt.h>
 
 #include "game.hh"
@@ -193,6 +194,39 @@ Describe(GameOfLife_Game)
 			std::set <std::pair <long int, long int> > coordinates = pattern.cellsToAdd();
 
 			Assert::That(coordinates.size(), Equals(0));
+		}
+	};
+
+	Describe(when_created_from_a_file)
+	{
+		GameOfLife::Game game;
+		char fileName[L_tmpnam];
+
+		void SetUp()
+		{
+			tmpnam(fileName);
+			std::ofstream file(fileName);
+			file << "-1 0" << std::endl << "-2 0" << std::endl <<"-3 1";
+			file.close();
+
+			game.read(fileName);
+		}
+
+		void TearDown()
+		{
+			remove(fileName);
+		}
+
+		It(has_correct_cell_count)
+		{
+			Assert::That(game.cellCount(), Equals(3));
+		}
+
+		It(has_cells)
+		{
+			Assert::That(game.hasCellAt(-1L, 0L), IsTrue());
+			Assert::That(game.hasCellAt(-2L, 0L), IsTrue());
+			Assert::That(game.hasCellAt(-3L, 1L), IsTrue());
 		}
 	};
 };
