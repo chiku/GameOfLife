@@ -16,14 +16,14 @@ static void Game_Create_Cell_In_Next_World(Game *self, Cell cell)
 	long int generation = World_Generation_For(self->world, coordinates);
 	Cell new_cell;
 
-	if (Rule_Carry_Forward_Cell(cell_alive, neighbours)) {
-		if (cell_alive) {
-			new_cell = Cell_New_From_Coordinates_With_Incremented_Generation(coordinates, generation);
-		} else {
-			new_cell = Cell_New_From_Coordinates(coordinates);
-		}
-		World_Add_Cell(self->next_world, new_cell);
+	if (cell_alive && Rule_Carry_Forward_Cell_On_Alive(neighbours)) {
+		new_cell = Cell_New_From_Coordinates_With_Incremented_Generation(coordinates, generation);
 	}
+	if (!cell_alive && Rule_Carry_Forward_Cell_On_Dead(neighbours)) {
+		new_cell = Cell_New_From_Coordinates(coordinates);
+	}
+
+	World_Add_Cell(self->next_world, new_cell);
 }
 
 static void Game_Initialize_Neighbours(Coordinates *neighbour_locations)
