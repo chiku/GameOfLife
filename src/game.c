@@ -75,8 +75,10 @@ Game* Game_Create_From_File(const char file_name[])
 
 	while (fgets(input, MAX_SIZE, fp) != NULL) {
 		input[MAX_SIZE - 1] = '\0';
-		sscanf(input, "%ld %ld", &x, &y);
-		Game_Add_Cell_At(game, x, y);
+		if (input[0] != '#') {
+			sscanf(input, "%ld %ld", &x, &y);
+			Game_Add_Cell_At(game, x, y);
+		}
 	}
 	fclose(fp);
 
