@@ -32,11 +32,6 @@ int Cell_Is_At(Cell self, Coordinates coordinates)
 	return Coordinates_Match(self.coordinates, coordinates);
 }
 
-void Cell_Increment_Generation(Cell *self)
-{
-	self->generation++;
-}
-
 void Cell_Dump(Cell self)
 {
 	Coordinates coordinates = self.coordinates;

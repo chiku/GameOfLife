@@ -18,6 +18,17 @@ START_TEST (test_Cell_is_created_from_coordinates)
 }
 END_TEST
 
+START_TEST (test_Cell_generation_can_be_incremented_when_created)
+{
+	Cell cell = Cell_New_From_Coordinates_With_Incremented_Generation(Coordinates_New(5, 4), 5);
+
+	Coordinates coordinates = Cell_Coordinates(cell);
+	fail_unless(coordinates.x == 5, "Expected x-coordinate of cell to be %ld, but was %ld", 5, coordinates.x);
+	fail_unless(coordinates.y == 4, "Expected y-coordinate of cell to be %ld, but was %ld", 4, coordinates.y);
+	fail_unless(cell.generation == 6, "Expected generation of cell to be %ld, but was %ld", 6, cell.generation);
+}
+END_TEST
+
 START_TEST (test_Cell_is_at_location_when_its_coordinates_match)
 {
 	Cell cell = Cell_New(3, 4);
@@ -47,14 +58,5 @@ START_TEST (test_Cell_generation_starts_from_zero)
 	Cell cell = Cell_New(3, 4);
 
 	fail_unless(cell.generation == 0, "Expected cell to be in generation %ld, but was %ld", 0, cell.generation);
-}
-END_TEST
-
-START_TEST (test_Cell_generation_can_be_incremented)
-{
-	Cell cell = Cell_New(3, 4);
-	Cell_Increment_Generation(&cell);
-
-	fail_unless(cell.generation == 1, "Expected cell to be in generation %ld, but was %ld", 1, cell.generation);
 }
 END_TEST

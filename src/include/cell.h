@@ -19,7 +19,6 @@ Cell Cell_New_From_Coordinates_With_Incremented_Generation(Coordinates coordinat
 struct Coordinates Cell_Coordinates(Cell self);
 
 int Cell_Is_At(Cell self, Coordinates coordinates);
-void Cell_Increment_Generation(Cell* self);
 
 void Cell_Dump(Cell self);
 /* Cell Methods */
