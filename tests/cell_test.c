@@ -41,3 +41,20 @@ START_TEST (test_Cell_is_not_at_location_when_its_y_coordinates_do_not_match)
 	fail_if(Cell_Is_At(cell, Coordinates_New(3, -4)), "Expected cell to be not present at location (%ld, %ld), but was", 3, -4);
 }
 END_TEST
+
+START_TEST (test_Cell_generation_starts_from_zero)
+{
+	Cell cell = Cell_New(3, 4);
+
+	fail_unless(cell.generation == 0, "Expected cell to be in generation %ld, but was %ld", 0, cell.generation);
+}
+END_TEST
+
+START_TEST (test_Cell_generation_can_be_incremented)
+{
+	Cell cell = Cell_New(3, 4);
+	Cell_Increment_Generation(&cell);
+
+	fail_unless(cell.generation == 1, "Expected cell to be in generation %ld, but was %ld", 1, cell.generation);
+}
+END_TEST

@@ -34,6 +34,8 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_cell, test_Cell_is_at_location_when_its_coordinates_match);
 	tcase_add_test(tc_cell, test_Cell_is_not_at_location_when_its_x_coordinates_do_not_match);
 	tcase_add_test(tc_cell, test_Cell_is_not_at_location_when_its_y_coordinates_do_not_match);
+	tcase_add_test(tc_cell, test_Cell_generation_starts_from_zero);
+	tcase_add_test(tc_cell, test_Cell_generation_can_be_incremented);
 	suite_add_tcase(s, tc_cell);
 
 	TCase *tc_world = tcase_create("World");
