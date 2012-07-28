@@ -53,6 +53,15 @@ int World_Has_Cell_At(const World *self, Coordinates coordinates)
 	return 0;
 }
 
+long int World_Generation_For(const World *self, Coordinates coordinates)
+{
+	long int i;
+	for (i = 0; i < self->cell_count; i++)
+		if (Cell_Is_At(self->cells[i], coordinates))
+			return self->cells[i].generation;
+	return 0;
+}
+
 int World_Cell_Count_Around(const World *self, Coordinates coordinates, Coordinates *locations, int location_size)
 {
 	long int count = 0, i, corner;

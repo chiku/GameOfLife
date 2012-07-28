@@ -44,6 +44,8 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_world, test_World_creation_is_allocation_followed_by_initialization);
 	tcase_add_test(tc_world, test_World_knows_its_cell_count);
 	tcase_add_test(tc_world, test_World_if_it_has_a_cell_at_specified_location);
+	tcase_add_test(tc_world, test_World_knows_the_generation_for_a_cell_specified_by_its_coordinates_is_the_actual_cell_generation);
+	tcase_add_test(tc_world, test_World_knows_the_generation_for_a_non_existing_cell_is_zero);
 	tcase_add_test(tc_world, test_World_does_not_have_a_cell_at_specified_location_when_cell_is_in_different_world);
 	tcase_add_test(tc_world, test_World_knows_count_of_neighbours_around_locations);
 	tcase_add_test(tc_world, test_World_knows_does_not_count_cell_not_present_in_pool);

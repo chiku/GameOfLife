@@ -54,6 +54,30 @@ START_TEST (test_World_if_it_has_a_cell_at_specified_location)
 }
 END_TEST
 
+START_TEST (test_World_knows_the_generation_for_a_cell_specified_by_its_coordinates_is_the_actual_cell_generation)
+{
+	World *world = World_New();
+	Cell cell1 = Cell_New(0, 0); cell1.generation = 10; World_Add_Cell(world, cell1);
+	Cell cell2 = Cell_New(1, 0); cell2.generation = 11; World_Add_Cell(world, cell2);
+
+	long int gen = World_Generation_For(world, Coordinates_New(0, 0));
+	fail_unless(gen == 10, "Excepted cell (x=%d, y=%d) to have generation %ld, but was %ld", 0, 0, 10, gen);
+	World_Destroy(world);
+}
+END_TEST
+
+START_TEST (test_World_knows_the_generation_for_a_non_existing_cell_is_zero)
+{
+	World *world = World_New();
+	Cell cell1 = Cell_New(0, 0); cell1.generation = 10; World_Add_Cell(world, cell1);
+	Cell cell2 = Cell_New(1, 0); cell2.generation = 11; World_Add_Cell(world, cell2);
+
+	long int gen = World_Generation_For(world, Coordinates_New(0, 1));
+	fail_unless(gen == 0, "Excepted cell (x=%d, y=%d) to have generation %ld, but was %ld", 0, 0, 0, gen);
+	World_Destroy(world);
+}
+END_TEST
+
 START_TEST (test_World_does_not_have_a_cell_at_specified_location_when_cell_is_in_different_world)
 {
 	World *world = World_New();

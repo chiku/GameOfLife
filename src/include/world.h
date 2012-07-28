@@ -23,6 +23,7 @@ long int World_Cell_Count(const World *self);
 
 void World_Add_Cell(World *self, Cell cell);
 int World_Has_Cell_At(const World *self, Coordinates coordinates);
+long int World_Generation_For(const World *self, Coordinates coordinates);
 int World_Cell_Count_Around(const World *self, Coordinates coordinates, Coordinates *neighbour_locations, int location_size);
 World* World_All_Neighbours_For_Set(const World *self, Coordinates *neighbour_locations, int location_size);
 
