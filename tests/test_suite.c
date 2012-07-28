@@ -84,6 +84,8 @@ Suite *create_game_of_life_suite(void)
 	tcase_add_test(tc_game, test_Game_visits_accept_custom_data);
 	tcase_add_test(tc_game, test_Game_is_visitable_for_each_cell_of_previous_generation);
 	tcase_add_test(tc_game, test_Game_tick_preserves_previous_generation);
+	tcase_add_test(tc_game, test_Game_increases_the_number_of_generations_its_cells_have_been_alive_for_on_survival);
+	tcase_add_test(tc_game, test_Game_sets_number_of_generations_for_a_cell_to_zero_on_death);
 	suite_add_tcase(s, tc_game);
 
 	suite_add_tcase(s, tc_rules);

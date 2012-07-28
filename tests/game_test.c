@@ -298,3 +298,58 @@ START_TEST (test_Game_tick_preserves_previous_generation)
 	Game_Destroy(game);
 }
 END_TEST
+
+START_TEST (test_Game_increases_the_number_of_generations_its_cells_have_been_alive_for_on_survival)
+{
+	long int gen;
+	Game *game = Game_New();
+	Game_Add_Cell_At(game, -1, 0);
+	Game_Add_Cell_At(game,  0, 0);
+	Game_Add_Cell_At(game,  1, 0);
+
+	gen = World_Generation_For(game->world, Coordinates_New(0, 0));
+	fail_unless(gen == 0, "On zeroth tick, expected cell (0, 0) to be in generation %ld, but was %ld", 0, gen);
+
+	Game_Tick(game);
+
+	gen = World_Generation_For(game->world, Coordinates_New(0, 0));
+	fail_unless(gen == 1, "On first tick, expected cell (0, 0) to be in generation %ld, but was %ld", 1, gen);
+
+	Game_Tick(game);
+
+	gen = World_Generation_For(game->world, Coordinates_New(0, 0));
+	fail_unless(gen == 2, "On second tick, expected cell (0, 0) to be in generation %ld, but was %ld", 2, gen);
+
+	Game_Tick(game);
+
+	gen = World_Generation_For(game->world, Coordinates_New(0, 0));
+	fail_unless(gen == 3, "On third tick, expected cell (0, 0) to be in generation %ld, but was %ld", 3, gen);
+
+	Game_Destroy(game);
+}
+END_TEST
+
+START_TEST (test_Game_sets_number_of_generations_for_a_cell_to_zero_on_death)
+{
+	long int gen;
+	Game *game = Game_New();
+	Game_Add_Cell_At(game, -1, 0);
+	Game_Add_Cell_At(game,  0, 0);
+	Game_Add_Cell_At(game,  1, 0);
+
+	gen = World_Generation_For(game->world, Coordinates_New(-1, 0));
+	fail_unless(gen == 0, "On zerorh tick, expected cell (-1, 0) to be in generation %ld, but was %ld", 0, gen);
+
+	Game_Tick(game);
+
+	gen = World_Generation_For(game->world, Coordinates_New(-1, 0));
+	fail_unless(gen == 0, "On first tick, expected cell (-1, 0) to be in generation %ld, but was %ld", 0, gen);
+
+	Game_Tick(game);
+
+	gen = World_Generation_For(game->world, Coordinates_New(-1, 0));
+	fail_unless(gen == 0, "On second tick, expected cell (-1, 0) to be in generation %ld, but was %ld", 0, gen);
+
+	Game_Destroy(game);
+}
+END_TEST
