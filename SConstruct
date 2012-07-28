@@ -53,7 +53,7 @@ if 'CXX' in os.environ:
 
 port_cxx.Append(CXXFLAGS = '--std=c++11 -O3 -Wall')
 
-port_cxx_test_gol = port_cxx.Program('build/bin/test-gol-cxx', Split(port_cxx_test_files), LIBS=[gol_lib_static, 'fltk'])
+port_cxx_test_gol = port_cxx.Program('build/bin/test-gol-cxx', Split(port_cxx_test_files), LIBS=[gol_lib_static])
 gol_fltk = port_cxx.Program('build/bin/gol-fltk', Split(port_cxx_fltk_files), LIBS=[gol_lib_static, 'fltk'])
 
 port_cxx.Alias('install', port_cxx.Install(install_prefix_bin, port_cxx_test_gol))
