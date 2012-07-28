@@ -12,8 +12,8 @@ static void Game_Create_Cell_In_Next_World(Game *self, Cell cell)
 {
 	Coordinates coordinates = Cell_Coordinates(cell);
 	int neighbours = Game_Cell_Count_Around(self, coordinates);
-	int cell_alive = World_Has_Cell_At(self->world, coordinates);
 	long int generation = World_Generation_For(self->world, coordinates);
+	int cell_alive = generation > 0;
 	Cell new_cell;
 
 	if (cell_alive && Rule_Carry_Forward_Cell_On_Alive(neighbours)) {
