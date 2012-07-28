@@ -1,6 +1,7 @@
 #include <set>
 #include <utility>
 #include <fstream>
+#include <string>
 #include <igloo/igloo_alt.h>
 
 #include "game.hh"
@@ -209,7 +210,7 @@ Describe(GameOfLife_Game)
 			file << "-1 0" << std::endl << "-2 0" << std::endl <<"-3 1";
 			file.close();
 
-			game.read(fileName);
+			game.read(std::string(fileName));
 		}
 
 		void TearDown()

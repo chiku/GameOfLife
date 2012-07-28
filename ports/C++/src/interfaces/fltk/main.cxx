@@ -13,14 +13,14 @@
 #include "fltk/window.hh"
 #include "fltk/runner.hh"
 
-static void usage(std::string exec_file_name)
+static const void usage(std::string exec_file_name)
 {
 	std::cout << "Usage: " << std::endl
 	             << "\t" << exec_file_name << " <file name>" << std::endl
 	             << "\t" << exec_file_name << " --help (-h)" << std::endl;
 }
 
-static char *handle_command_line_arguments(int argc, char *argv[])
+static const std::string handle_command_line_arguments(int argc, char *argv[])
 {
 	std::string exec_name(argv[0]);
 
@@ -46,13 +46,13 @@ static char *handle_command_line_arguments(int argc, char *argv[])
 		exit(11);
 	}
 
-	return argv[1];
+	return first_arg;
 }
 
 
 int main(int argc, char *argv[])
 {
-	char *file_name = handle_command_line_arguments(argc, argv);
+	std::string file_name = handle_command_line_arguments(argc, argv);
 	GameOfLife::Game *game = new GameOfLife::Game();
 	game->read(file_name);
 

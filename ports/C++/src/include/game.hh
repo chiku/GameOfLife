@@ -1,5 +1,6 @@
 #include <set>
 #include <utility>
+#include <string>
 
 extern "C" {
 	#include <game_of_life.h>
@@ -28,7 +29,7 @@ namespace GameOfLife
 		Game();
 
 		long int cellCount() const;
-		Game read(const char filename[]);
+		Game read(const std::string filename);
 		Game addCellAt(long int x, long int y);
 		bool hasCellAt(long int x, long int y) const;
 		Game tick();

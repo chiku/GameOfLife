@@ -62,9 +62,9 @@ GameOfLife::Game GameOfLife::Game::tick()
 	return *this;
 }
 
-GameOfLife::Game GameOfLife::Game::read(const char filename[])
+GameOfLife::Game GameOfLife::Game::read(const std::string filename)
 {
-	game = Game_Create_From_File(filename);
+	game = Game_Create_From_File(filename.c_str());
 	return *this;
 }
 
