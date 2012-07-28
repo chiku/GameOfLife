@@ -6,13 +6,14 @@
 Cell Cell_New(long int x, long int y)
 {
 	Cell cell = {Coordinates_New(x, y)};
-	cell.generation = 0;
+	cell.generation = 1;
 	return cell;
 }
 
 Cell Cell_New_From_Coordinates(Coordinates coordinates)
 {
 	Cell cell = {coordinates};
+	cell.generation = 1;
 	return cell;
 }
 

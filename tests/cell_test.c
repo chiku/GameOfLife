@@ -18,6 +18,16 @@ START_TEST (test_Cell_is_created_from_coordinates)
 }
 END_TEST
 
+START_TEST (test_Cell_is_at_first_generation_upon_creation)
+{
+	Cell cell1 = Cell_New(0, 0);
+	fail_unless(cell1.generation == 1, "Expected cell generation to be %ld, but was %ld", 1, cell1.generation);
+
+	Cell cell2 = Cell_New_From_Coordinates(Coordinates_New(0, 0));
+	fail_unless(cell2.generation == 1, "Expected cell generation to be %ld, but was %ld", 1, cell2.generation);
+}
+END_TEST
+
 START_TEST (test_Cell_generation_can_be_incremented_when_created)
 {
 	Cell cell = Cell_New_From_Coordinates_With_Incremented_Generation(Coordinates_New(5, 4), 5);
@@ -50,13 +60,5 @@ START_TEST (test_Cell_is_not_at_location_when_its_y_coordinates_do_not_match)
 	Cell cell = Cell_New(3, 4);
 
 	fail_if(Cell_Is_At(cell, Coordinates_New(3, -4)), "Expected cell to be not present at location (%ld, %ld), but was", 3, -4);
-}
-END_TEST
-
-START_TEST (test_Cell_generation_starts_from_zero)
-{
-	Cell cell = Cell_New(3, 4);
-
-	fail_unless(cell.generation == 0, "Expected cell to be in generation %ld, but was %ld", 0, cell.generation);
 }
 END_TEST
