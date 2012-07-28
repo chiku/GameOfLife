@@ -70,10 +70,14 @@ Game* Game_Create_From_File(const char file_name[])
 	FILE *fp = fopen(file_name, "r");
 	Game *game = Game_New();
 	long int x, y;
+	const int MAX_SIZE = 256;
+	char input[MAX_SIZE];
 
-	while (fscanf(fp, "%ld %ld", &x, &y) != EOF)
+	while (fgets(input, MAX_SIZE, fp) != NULL) {
+		input[MAX_SIZE - 1] = '\0';
+		sscanf(input, "%ld %ld", &x, &y);
 		Game_Add_Cell_At(game, x, y);
-
+	}
 	fclose(fp);
 
 	return game;
