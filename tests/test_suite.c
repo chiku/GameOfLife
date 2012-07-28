@@ -63,6 +63,7 @@ Suite *create_game_of_life_suite(void)
 	TCase *tc_game = tcase_create("Game");
 	tcase_add_test(tc_game, test_Game_adds_cell);
 	tcase_add_test(tc_game, test_Game_creation_from_file_is_proper);
+	tcase_add_test(tc_game, test_Game_neglects_lines_that_begin_with_hash_when_reading_file);
 	tcase_add_test(tc_game, test_Game_creation_is_allocation_followed_by_initialization);
 	tcase_add_test(tc_game, test_Game_knows_neighbour_to_north_of_a_cell);
 	tcase_add_test(tc_game, test_Game_knows_neighbour_to_north_east_of_a_cell);

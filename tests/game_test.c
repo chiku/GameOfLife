@@ -31,6 +31,29 @@ START_TEST (test_Game_creation_from_file_is_proper)
 }
 END_TEST
 
+START_TEST (test_Game_neglects_lines_that_begin_with_hash_when_reading_file)
+{
+	FILE *fp;
+	char file_name[L_tmpnam];
+
+	tmpnam(file_name);
+	fp = fopen(file_name, "w");
+	fprintf(fp, "#Comment 0 0\n0 0\n0 1\n0 2\n#Some Comment");
+	fclose(fp);
+
+	Game* game = Game_Create_From_File(file_name);
+	World* world = game->world;
+
+	long int cell_count = World_Cell_Count(world);
+	fail_unless(cell_count == 3, "Expected cell count to be %ld, but was %ld", 3, cell_count);
+	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 0)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 1)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	fail_unless(World_Has_Cell_At(world, Coordinates_New(0, 2)), "Expected world to contain cell (%d, %d) but didn't'", 0, 0);
+	Game_Destroy(game);
+	remove(file_name);
+}
+END_TEST
+
 START_TEST (test_Game_creation_is_allocation_followed_by_initialization)
 {
 	Game *allocated_game = Game_Allocate();
