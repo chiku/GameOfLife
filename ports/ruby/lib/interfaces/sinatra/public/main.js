@@ -10,8 +10,8 @@
 
                 drawAtWithColour = function (colour) {
                     return function (coordinates) {
-                        var x = coordinates[0],
-                            y = coordinates[1],
+                        var x = coordinates.x,
+                            y = coordinates.y,
                             x1 = x * SIZE + width / 2 + SIZE / 2,
                             y1 = y * SIZE + height / 2 + SIZE / 2;
 

@@ -82,47 +82,47 @@ module GameOfLife
 
     describe "current generation cells" do
       it "can be visited" do
-        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5)
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5)
         xs, ys = [], []
-        pattern.each_cell do |x, y|
-          xs << x
-          ys << y
+        game.each_cell do |cell|
+          xs << cell.x
+          ys << cell.y
         end
         xs.must_equal [-1, 0, 1, 5]
         ys.must_equal [ 0,-1, 0, 5]
       end
 
       it "can be collected" do
-        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0)
-        pattern.current_generation.must_equal [[-1, 0], [0, -1], [1, 0]]
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0)
+        game.current_generation.must_equal [Cell.new(-1, 0), Cell.new(0, -1), Cell.new(1, 0)]
       end
 
       it "is not cached" do
-        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0).tick!
-        pattern.current_generation.must_equal [[-2, -1], [-2, 0], [-2, 1]]
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0).tick!
+        game.current_generation.must_equal [Cell.new(-2, -1), Cell.new(-2, 0), Cell.new(-2, 1)]
       end
     end
 
     describe "previous generation cells" do
       it "can be visited" do
-        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
         xs, ys = [], []
-        pattern.each_previous_cell do |x, y|
-          xs << x
-          ys << y
+        game.each_previous_cell do |cell|
+          xs << cell.x
+          ys << cell.y
         end
         xs.must_equal [-1, 0, 1, 5]
         ys.must_equal [ 0,-1, 0, 5]
       end
 
       it "can be collected" do
-        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
-        pattern.previous_generation.must_equal [[-1, 0], [0, -1], [1, 0], [5, 5]]
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(0, -1).add_cell_at(1, 0).add_cell_at(5, 5).tick!
+        game.previous_generation.must_equal [Cell.new(-1, 0), Cell.new(0, -1), Cell.new(1, 0), Cell.new(5, 5)]
       end
 
       it "is not cached" do
-        pattern = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0).tick!.tick!
-        pattern.previous_generation.must_equal [[-2, -1], [-2, 0], [-2, 1]]
+        game = Game.new.add_cell_at(-1, 0).add_cell_at(-2, 0).add_cell_at(-3, 0).tick!.tick!
+        game.previous_generation.must_equal [Cell.new(-2, -1), Cell.new(-2, 0), Cell.new(-2, 1)]
       end
     end
 
@@ -130,7 +130,7 @@ module GameOfLife
       it "are the cells that exist in previous generation but not in current" do
         game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
         game.tick!
-        game.cells_to_remove.must_equal [[-1, 0], [1, 0]]
+        game.cells_to_remove.must_equal [Cell.new(-1, 0), Cell.new(1, 0)]
       end
 
       it "don't include unchanged cell" do
@@ -144,12 +144,13 @@ module GameOfLife
       it "are the cells that exist in current generation but not in previous" do
         game = Game.new.add_cell_at(-1, 0).add_cell_at(0, 0).add_cell_at(1, 0)
         game.tick!
-        game.cells_to_add.must_equal [[0, -1], [0, 1]]
+        game.cells_to_add.must_equal [Cell.new(0, -1), Cell.new(0, 1)]
       end
+
       it "don't include unchanged cell" do
         game = Game.new.add_cell_at(0, 0).add_cell_at(1, 0).add_cell_at(0, 1).add_cell_at(1, 1)
         game.tick!
-        game.cells_to_remove.must_equal []
+        game.cells_to_add.must_equal []
       end
     end
 
@@ -164,20 +165,19 @@ module GameOfLife
 
       it "produces a JSON string representation of the current generation" do
         current = deserialized['current']
-
         current.count.must_equal 3
-        current.include?([0, -1]).must_equal true
-        current.include?([0, 0]).must_equal true
-        current.include?([0, 1]).must_equal true
+        current.include?({"x" => 0, "y" => -1}).must_equal true
+        current.include?({"x" => 0, "y" =>  0}).must_equal true
+        current.include?({"x" => 0, "y" =>  1}).must_equal true
       end
 
       it "produces a JSON string representation of the previous generation" do
         previous = deserialized['previous']
 
         previous.count.must_equal 3
-        previous.include?([-1, 0]).must_equal true
-        previous.include?([0, 0]).must_equal true
-        previous.include?([1, 0]).must_equal true
+        previous.include?({"x" => -1, "y" => 0}).must_equal true
+        previous.include?({"x" =>  0, "y" => 0}).must_equal true
+        previous.include?({"x" =>  1, "y" => 0}).must_equal true
       end
     end
   end

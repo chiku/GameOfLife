@@ -3,6 +3,25 @@
 
 static VALUE gol_gol;
 static VALUE gol_game;
+static VALUE gol_cell;
+
+static VALUE
+gol_cell_initialize(int argc, VALUE* argv, VALUE self)
+{
+	VALUE generation;
+
+	if (argc < 2 || argc > 3) {
+		rb_raise(rb_eArgError, "wrong number of arguments");
+	}
+
+	generation = (argc == 3) ? argv[2] : INT2NUM(1);
+
+	rb_iv_set(self, "@x", argv[0]);
+	rb_iv_set(self, "@y", argv[1]);
+	rb_iv_set(self, "@generation", generation);
+
+	return self;
+}
 
 static VALUE
 gol_game_allocate(VALUE klass)
@@ -49,10 +68,13 @@ gol_game_tick(VALUE self)
 static void
 yield_visitor(Cell cell, void *data)
 {
-	VALUE ary = rb_ary_new();
-	rb_ary_push(ary, LONG2FIX(cell.coordinates.x));
-	rb_ary_push(ary, LONG2FIX(cell.coordinates.y));
-	rb_yield(ary);
+	VALUE args[3];
+
+	args[0] = LONG2FIX(cell.coordinates.x);
+	args[1] = LONG2FIX(cell.coordinates.y);
+	args[2] = LONG2FIX(cell.generation);
+
+	rb_yield(rb_class_new_instance(3, args, gol_cell));
 }
 
 static VALUE
@@ -86,6 +108,8 @@ void Init_game_of_life()
 {
 	gol_gol = rb_define_module("GameOfLife");
 	gol_game = rb_define_class_under(gol_gol, "Game", rb_cObject);
+	gol_cell = rb_define_class_under(gol_gol, "Cell", rb_cObject);
+	rb_define_method(gol_cell, "initialize", gol_cell_initialize, -1);
 
 	rb_define_alloc_func(gol_game, gol_game_allocate);
 	rb_define_method(gol_game, "cell_count", gol_game_cell_count, 0);
