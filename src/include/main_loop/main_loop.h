@@ -22,7 +22,7 @@ void MainLoop_Begin(MainLoop *self);
 void MainLoop_Draw(const MainLoop *self);
 void MainLoop_Erase(const MainLoop *self);
 void MainLoop_Tick(MainLoop *self);
-void MainLoop_Delay(double time_in_s);
+void MainLoop_Delay(long int time_in_ms);
 /* Member methods */
 
 /* Interface of Graphics */

@@ -27,13 +27,9 @@ void MainLoop_Begin(MainLoop *self)
 {
 	while(1) {
 		MainLoop_Erase(self);
-		MainLoop_Delay(0.0);
-
 		MainLoop_Draw(self);
-		MainLoop_Delay(0.005);
-
+		MainLoop_Delay(5);
 		MainLoop_Tick(self);
-		MainLoop_Delay(0.0);
 	}
 }
 
@@ -55,10 +51,10 @@ void MainLoop_Tick(MainLoop *self)
 	self->game = Game_Tick(self->game);
 }
 
-void MainLoop_Delay(double time_in_s)
+void MainLoop_Delay(long int time_in_ms)
 {
 	struct timespec tim;
 	tim.tv_sec = 0;
-	tim.tv_nsec = time_in_s * 1000000000L;
+	tim.tv_nsec = time_in_ms * 1000000L;
 	nanosleep(&tim, NULL);
 }
