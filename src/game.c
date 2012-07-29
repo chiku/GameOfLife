@@ -133,12 +133,12 @@ Game* Game_Tick(Game *self)
 	return self;
 }
 
-void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void *), void *data)
+void Game_At_Each_Cell(const Game *self, void (*visitor)(Cell cell, void *), void *data)
 {
 	World_At_Each_Cell(self->world, visitor, data);
 }
 
-void Game_At_Each_Old_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void *), void *data)
+void Game_At_Each_Old_Cell(const Game *self, void (*visitor)(Cell cell, void *), void *data)
 {
 	World_At_Each_Cell(self->old_world, visitor, data);
 }

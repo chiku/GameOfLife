@@ -47,11 +47,11 @@ gol_game_tick(VALUE self)
 }
 
 static void
-yield_visitor(Coordinates coordinates, void *data)
+yield_visitor(Cell cell, void *data)
 {
 	VALUE ary = rb_ary_new();
-	rb_ary_push(ary, LONG2FIX(coordinates.x));
-	rb_ary_push(ary, LONG2FIX(coordinates.y));
+	rb_ary_push(ary, LONG2FIX(cell.coordinates.x));
+	rb_ary_push(ary, LONG2FIX(cell.coordinates.y));
 	rb_yield(ary);
 }
 

@@ -228,11 +228,12 @@ START_TEST (test_Game_knows_all_cell_locations_near_all_living_cells)
 }
 END_TEST
 
-static long int g_sum_x, g_sum_y, g_trace;
-static void add_up_cell_values(Coordinates coordinates, void *data)
+static long int g_sum_x, g_sum_y, g_sum_gen, g_trace;
+static void add_up_cell_values(Cell cell, void *data)
 {
-	g_sum_x += coordinates.x;
-	g_sum_y += coordinates.y;
+	g_sum_x += cell.coordinates.x;
+	g_sum_y += cell.coordinates.y;
+	g_sum_gen += cell.generation;
 	g_trace = data ? *((long int*)data) : 0;
 }
 
@@ -244,8 +245,9 @@ START_TEST (test_Game_is_visitable_for_each_cell_of_current_generation)
 
 	Game_At_Each_Cell(game, add_up_cell_values, NULL);
 
-	fail_unless(g_sum_x == 1, "Expected sum of x's to be %ld, but was %ld", 1, g_sum_x);
-	fail_unless(g_sum_y == 4, "Expected sum of x's to be %ld, but was %ld", 4, g_sum_y);
+	fail_unless(g_sum_x == 1, "Expected sum of xs to be %ld, but was %ld", 1, g_sum_x);
+	fail_unless(g_sum_y == 4, "Expected sum of ys to be %ld, but was %ld", 4, g_sum_y);
+	fail_unless(g_sum_gen == 2, "Expected sum of generations to be %ld, but was %ld", 2, g_sum_gen);
 	Game_Destroy(game);
 }
 END_TEST

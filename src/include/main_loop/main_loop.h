@@ -10,11 +10,11 @@ struct MainLoop
 {
 	Game *game;
 	Graphics *graphics;
-	void (*draw_cell)(Coordinates coordinates, void *);
+	void (*draw_cell)(Cell cell, void *);
 };
 
 /* Member methods */
-MainLoop* MainLoop_New(Game *game, Graphics *graphics, void (*draw_cell)(Coordinates coordinates, void *));
+MainLoop* MainLoop_New(Game *game, Graphics *graphics, void (*draw_cell)(Cell cell, void *));
 void MainLoop_Destroy(MainLoop *self);
 
 void MainLoop_Begin(MainLoop *self);

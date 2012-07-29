@@ -96,14 +96,12 @@ World* World_All_Neighbours_For_Set(const World *self, Coordinates *locations, i
 	return neighbours;
 }
 
-void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinates, void *), void *data)
+void World_At_Each_Cell(const World *self, void (*visitor)(Cell cell, void *), void *data)
 {
-	Cell cell;
 	long int i;
 
 	for (i = 0; i < self->cell_count; i++) {
-		cell = self->cells[i];
-		visitor(Cell_Coordinates(cell), data);
+		visitor(self->cells[i], data);
 	}
 }
 

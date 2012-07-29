@@ -36,8 +36,8 @@ int Game_Cell_Count_Around(const Game *self, Coordinates coordinates);
 World* Game_Active_Zone(const Game *self);
 
 Game* Game_Tick(Game *self);
-void Game_At_Each_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void*), void *data);
-void Game_At_Each_Old_Cell(const Game *self, void (*visitor)(Coordinates coordinates, void*), void *data);
+void Game_At_Each_Cell(const Game *self, void (*visitor)(Cell cell, void*), void *data);
+void Game_At_Each_Old_Cell(const Game *self, void (*visitor)(Cell cell, void*), void *data);
 
 void Game_Dump(const Game *self);
 /* Game Methods */

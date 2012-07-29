@@ -22,7 +22,7 @@ namespace GameOfLife
 		Coors *previousCoordinates;
 
 		void syncGenerations();
-		static void accumulationVisitor(::Coordinates coordinates, void* data);
+		static void accumulationVisitor(::Cell cell, void* data);
 		static Coors differencesBetween(const Coors *first, const Coors *second);
 
 	public:

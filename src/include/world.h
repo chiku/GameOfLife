@@ -27,7 +27,7 @@ long int World_Generation_For(const World *self, Coordinates coordinates);
 int World_Cell_Count_Around(const World *self, Coordinates coordinates, Coordinates *neighbour_locations, int location_size);
 World* World_All_Neighbours_For_Set(const World *self, Coordinates *neighbour_locations, int location_size);
 
-void World_At_Each_Cell(const World *self, void (*visitor)(Coordinates coordinates, void *), void *data);
+void World_At_Each_Cell(const World *self, void (*visitor)(Cell cell, void *), void *data);
 
 void World_Dump(const World *self);
 /* World Methods */

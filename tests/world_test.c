@@ -147,24 +147,26 @@ START_TEST (test_World_knows_all_cell_locations_near_a_set)
 }
 END_TEST
 
-static long int w_sum_x, w_sum_y, w_trace;
-static void w_add_up_cell_values(Coordinates coordinates, void *data)
+static long int w_sum_x, w_sum_y, w_sum_gen, w_trace;
+static void w_add_up_cell_values(Cell cell, void *data)
 {
-	w_sum_x += coordinates.x;
-	w_sum_y += coordinates.y;
+	w_sum_x += cell.coordinates.x;
+	w_sum_y += cell.coordinates.y;
+	w_sum_gen += cell.generation;
 	w_trace = data ? *((long int*)data) : 0;
 }
 
 START_TEST (test_World_at_cells_is_visitable)
 {
 	World *world = World_New();
-	World_Add_Cell(world, Cell_New(0, -1));
-	World_Add_Cell(world, Cell_New(1, 5));
+	Cell cell1 = Cell_New(0, -1); cell1.generation = 3; World_Add_Cell(world, cell1);
+	Cell cell2 = Cell_New(1,  5); cell2.generation = 1; World_Add_Cell(world, cell2);
 
 	World_At_Each_Cell(world, w_add_up_cell_values, NULL);
 
-	fail_unless(w_sum_x == 1, "Expected sum of x's to be %ld, but was %ld", 1, w_sum_x);
-	fail_unless(w_sum_y == 4, "Expected sum of x's to be %ld, but was %ld", 4, w_sum_y);
+	fail_unless(w_sum_x == 1, "Expected sum of xs to be %ld, but was %ld", 1, w_sum_x);
+	fail_unless(w_sum_y == 4, "Expected sum of ys to be %ld, but was %ld", 4, w_sum_y);
+	fail_unless(w_sum_y == 4, "Expected sum of generations to be %ld, but was %ld", 4, w_sum_gen);
 	World_Destroy(world);
 }
 END_TEST
