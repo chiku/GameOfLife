@@ -21,11 +21,11 @@ module GameOfLife
     end
 
     def to_s
-      "{x: #{x}, y: #{y}}"
+      "(#{x}, #{y}) <#{generation}>"
     end
 
     def to_json(options = {})
-      "{\"x\": #{x}, \"y\": #{y}}"
+      "{\"x\": #{x}, \"y\": #{y}, \"generation\": #{generation}}"
     end
   end
 
@@ -71,8 +71,8 @@ module GameOfLife
     end
 
     def render_generation_with mark_cell
-      cells_to_remove.each { |cell| mark_cell.dead_at(cell.x, cell.y) }
-      cells_to_add.each { |cell| mark_cell.alive_at(cell.x, cell.y) }
+      cells_to_remove.each { |cell| mark_cell.dead_at(cell.x, cell.y, cell.generation) }
+      cells_to_add.each { |cell| mark_cell.alive_at(cell.x, cell.y, cell.generation) }
       tick!
     end
 

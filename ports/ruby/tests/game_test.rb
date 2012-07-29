@@ -166,18 +166,18 @@ module GameOfLife
       it "produces a JSON string representation of the current generation" do
         current = deserialized['current']
         current.count.must_equal 3
-        current.include?({"x" => 0, "y" => -1}).must_equal true
-        current.include?({"x" => 0, "y" =>  0}).must_equal true
-        current.include?({"x" => 0, "y" =>  1}).must_equal true
+        current.include?({"x" => 0, "y" => -1, "generation" => 1}).must_equal true
+        current.include?({"x" => 0, "y" =>  0, "generation" => 2}).must_equal true
+        current.include?({"x" => 0, "y" =>  1, "generation" => 1}).must_equal true
       end
 
       it "produces a JSON string representation of the previous generation" do
         previous = deserialized['previous']
 
         previous.count.must_equal 3
-        previous.include?({"x" => -1, "y" => 0}).must_equal true
-        previous.include?({"x" =>  0, "y" => 0}).must_equal true
-        previous.include?({"x" =>  1, "y" => 0}).must_equal true
+        previous.include?({"x" => -1, "y" => 0, "generation" => 1}).must_equal true
+        previous.include?({"x" =>  0, "y" => 0, "generation" => 1}).must_equal true
+        previous.include?({"x" =>  1, "y" => 0, "generation" => 1}).must_equal true
       end
     end
   end

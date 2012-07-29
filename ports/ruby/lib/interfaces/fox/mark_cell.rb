@@ -16,11 +16,11 @@ module GameOfLife
           @height = options[:height]
         end
 
-        def alive_at x, y
+        def alive_at x, y, generation
           draw_at x, y, ALIVE_COLOUR
         end
 
-        def dead_at x, y
+        def dead_at x, y, generation
           draw_at x, y, DEAD_COLOUR
         end
 

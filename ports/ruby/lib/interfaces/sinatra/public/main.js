@@ -5,24 +5,31 @@
                 context = options.context,
 
                 SIZE = 4,
-                ALIVE_COLOUR = "#cc3366",
-                DEAD_COLOUR = "#acc8ac",
 
-                drawAtWithColour = function (colour) {
-                    return function (coordinates) {
-                        var x = coordinates.x,
-                            y = coordinates.y,
-                            x1 = x * SIZE + width / 2 + SIZE / 2,
-                            y1 = y * SIZE + height / 2 + SIZE / 2;
+                aliveAt = function (cell) {
+                    var colour = "rgb(" + (100 + cell.generation) + ", 90, 100)";
+                    drawAtWithColour(cell, colour);
+                },
 
-                        context.fillStyle = colour;
-                        context.fillRect(x1, y1, SIZE - 1, SIZE - 1);
-                    };
+                deadAt = function (cell) {
+                    var colour = "rgb(200, 255, 200)";
+                    drawAtWithColour(cell, colour);
+                },
+
+                drawAtWithColour = function (cell, colour) {
+                    var x = cell.x,
+                        y = cell.y,
+                        generation = cell.generation;
+                        x1 = x * SIZE + width / 2 + SIZE / 2,
+                        y1 = y * SIZE + height / 2 + SIZE / 2;
+
+                    context.fillStyle = colour;
+                    context.fillRect(x1, y1, SIZE - 1, SIZE - 1);
                 };
 
             return {
-                aliveAt: drawAtWithColour(ALIVE_COLOUR),
-                deadAt: drawAtWithColour(DEAD_COLOUR)
+                aliveAt: aliveAt,
+                deadAt: deadAt
             };
     };
 
@@ -64,11 +71,11 @@
 
             render = function () {
                 var world = fetchWorld();
-                world.previous.forEach(function (coordinates) {
-                    markCell.deadAt(coordinates);
+                world.previous.forEach(function (cell) {
+                    markCell.deadAt(cell);
                 });
-                world.current.forEach(function (coordinates) {
-                    markCell.aliveAt(coordinates);
+                world.current.forEach(function (cell) {
+                    markCell.aliveAt(cell);
                 });
                 tick();
             };
