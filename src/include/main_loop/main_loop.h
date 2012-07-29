@@ -16,13 +16,7 @@ struct MainLoop
 /* Member methods */
 MainLoop* MainLoop_New(Game *game, Graphics *graphics, void (*draw_cell)(Cell cell, void *));
 void MainLoop_Destroy(MainLoop *self);
-
 void MainLoop_Begin(MainLoop *self, long int delay_in_ms);
-
-void MainLoop_Draw(const MainLoop *self);
-void MainLoop_Erase(const MainLoop *self);
-void MainLoop_Tick(MainLoop *self);
-void MainLoop_Delay(long int time_in_ms);
 /* Member methods */
 
 /* Interface of Graphics */
