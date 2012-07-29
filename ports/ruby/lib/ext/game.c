@@ -73,6 +73,15 @@ gol_game_yield_at_each_previous_cell(VALUE self)
 	return self;
 }
 
+static VALUE
+gol_game_dump(VALUE self)
+{
+	Game *game;
+	Data_Get_Struct(self, Game, game);
+	Game_Dump(game);
+	return self;
+}
+
 void Init_game_of_life()
 {
 	gol_gol = rb_define_module("GameOfLife");
@@ -85,4 +94,5 @@ void Init_game_of_life()
 	rb_define_method(gol_game, "tick!", gol_game_tick, 0);
 	rb_define_method(gol_game, "each_cell", gol_game_yield_at_each_cell, 0);
 	rb_define_method(gol_game, "each_previous_cell", gol_game_yield_at_each_previous_cell, 0);
+	rb_define_method(gol_game, "dump", gol_game_dump, 0);
 }
