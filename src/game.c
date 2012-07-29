@@ -14,16 +14,13 @@ static void Game_Create_Cell_In_Next_World(Game *self, Cell cell)
 	int neighbours = Game_Cell_Count_Around(self, coordinates);
 	long int generation = World_Generation_For(self->world, coordinates);
 	int cell_alive = generation > 0;
-	Cell new_cell;
 
 	if (cell_alive && Rule_Carry_Forward_Cell_On_Alive(neighbours)) {
-		new_cell = Cell_New_From_Coordinates_With_Incremented_Generation(coordinates, generation);
+		World_Add_Cell(self->next_world, Cell_New_From_Coordinates_With_Incremented_Generation(coordinates, generation));
 	}
 	if (!cell_alive && Rule_Carry_Forward_Cell_On_Dead(neighbours)) {
-		new_cell = Cell_New_From_Coordinates(coordinates);
+		World_Add_Cell(self->next_world, Cell_New_From_Coordinates(coordinates));
 	}
-
-	World_Add_Cell(self->next_world, new_cell);
 }
 
 static void Game_Initialize_Neighbours(Coordinates *neighbour_locations)
@@ -123,9 +120,9 @@ Game* Game_Tick(Game *self)
 	long int i;
 
 	World *active_zone = Game_Active_Zone(self);
-	for (i = 0; i < active_zone->cell_count; i++)
+	for (i = 0; i < active_zone->cell_count; i++) {
 		Game_Create_Cell_In_Next_World(self, active_zone->cells[i]);
-
+	}
 	World_Destroy(active_zone);
 	World_Destroy(self->old_world);
 
