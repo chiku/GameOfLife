@@ -23,12 +23,12 @@ void MainLoop_Destroy(MainLoop *self)
 	free(self);
 }
 
-void MainLoop_Begin(MainLoop *self)
+void MainLoop_Begin(MainLoop *self, long int delay_in_ms)
 {
 	while(1) {
 		MainLoop_Erase(self);
 		MainLoop_Draw(self);
-		MainLoop_Delay(5);
+		MainLoop_Delay(delay_in_ms);
 		MainLoop_Tick(self);
 	}
 }
