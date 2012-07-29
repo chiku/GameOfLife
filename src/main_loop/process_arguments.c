@@ -40,3 +40,17 @@ char *file_name_on_valid_command_line_arguments(int argc, char *argv[])
 
 	return first_arg;
 }
+
+long int delay_time_on_presence_in_command_line_arguments(int argc, char *argv[])
+{
+	char *second_arg = argv[2];
+	long int delay_time = 100;
+
+	if (argc <= 2 || second_arg[0] == '\0') {
+		return delay_time;
+	}
+
+	delay_time = atol(second_arg);
+	delay_time = delay_time < 10 ? 10 : delay_time;
+	return delay_time;
+}

@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	initialize_signal_handlers();
 
 	char *file_name = file_name_on_valid_command_line_arguments(argc, argv);
-	long int delay = 5;
+	long int delay = delay_time_on_presence_in_command_line_arguments(argc, argv);
 	Game *game = Game_Create_From_File(file_name);
 	Graphics *graphics = Graphics_New();
 
