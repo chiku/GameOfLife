@@ -39,7 +39,7 @@ extern void Graphics_Set_Erase_Color(const Graphics *self);
 /* Interface of signal handling and main */
 extern void cleanup_on_signal();
 void initialize_signal_handlers(void);
-char *handle_command_line_arguments(int argc, char *argv[]);
+char *file_name_on_valid_command_line_arguments(int argc, char *argv[]);
 /* Interface of signal handling and main */
 
 #endif

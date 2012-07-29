@@ -31,7 +31,7 @@ c_test_files = Dir.glob("#{tests_dir}/**/*").select {|file| file.end_with? "_sui
 end
 
 c_core_files = ['src/coordinates.c', 'src/cell.c', 'src/world.c', 'src/rules.c', 'src/game.c']
-c_main_files = ['src/main_loop/main_loop.c', 'src/main_loop/validate_arguments.c', 'src/main_loop/handle_signals.c', 'src/main_loop/main.c']
+c_main_files = ['src/main_loop/main_loop.c', 'src/main_loop/process_arguments.c', 'src/main_loop/handle_signals.c', 'src/main_loop/main.c']
 
 c_gol_dependencies = c_core_files.map {|file| File.join build_dir, file.sub(".c", ".o") }
 c_gol_shared_dependencies = c_core_files.map {|file| File.join build_dir, file.sub(".c", ".so") }

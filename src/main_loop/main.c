@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
 	initialize_signal_handlers();
 
-	char *file_name = handle_command_line_arguments(argc, argv);
+	char *file_name = file_name_on_valid_command_line_arguments(argc, argv);
 	Game *game = Game_Create_From_File(file_name);
 	Graphics *graphics = Graphics_New();
 

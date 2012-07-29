@@ -9,7 +9,7 @@ install_prefix_include = install_prefix + '/include'
 core = Environment(CPPPATH = ['src/include'])
 
 core_files = ['src/coordinates.c', 'src/cell.c', 'src/world.c', 'src/rules.c', 'src/game.c']
-main_files = ['src/main_loop/main_loop.c', 'src/main_loop/validate_arguments.c', 'src/main_loop/handle_signals.c', 'src/main_loop/main.c']
+main_files = ['src/main_loop/main_loop.c', 'src/main_loop/process_arguments.c', 'src/main_loop/handle_signals.c', 'src/main_loop/main.c']
 
 if 'CC' in os.environ:
   core.Replace(CC = os.environ['CC'])
