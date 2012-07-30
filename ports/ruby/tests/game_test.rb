@@ -3,10 +3,18 @@ require 'minitest/spec'
 
 require 'json'
 
-require File.expand_path(File.join('..', 'lib', 'game'))
+require File.expand_path(File.join('..', 'lib', 'game', 'game'))
 
 module GameOfLife
   describe Game do
+    describe "when created with a pattern" do
+      it "adds the passed contents as its cells" do
+        game = Game.new([[1, 1], [-1, 2]])
+        game.has_cell_at?(1, 1).must_equal true
+        game.has_cell_at?(-1, 2).must_equal true
+      end
+    end
+
     describe "when empty" do
       let :empty_game do
         Game.new

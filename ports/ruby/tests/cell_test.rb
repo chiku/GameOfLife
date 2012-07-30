@@ -1,9 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 
-require 'json'
-
-require File.expand_path(File.join('..', 'lib', 'game'))
+require File.expand_path(File.join('..', 'lib', 'game', 'cell'))
 
 module GameOfLife
   describe Cell do
