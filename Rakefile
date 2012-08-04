@@ -1,8 +1,8 @@
 options = {
   cc: ENV['CC'] || 'gcc',
   cxx: ENV['CXX'] || 'g++',
-  cflags: ENV['CFLAGS'] || '-O3 -Wall',
-  cxxflags: ENV['CXXFLAGS'] || '--std=c++11 -O3 -Wall',
+  cflags: ENV['CFLAGS'] || '-O3 -Wall -Wextra',
+  cxxflags: ENV['CXXFLAGS'] || '--std=c++11 -O3 -Wall -Wextra',
   ar: ENV['AR'] || 'ar'
 }
 

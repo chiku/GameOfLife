@@ -14,7 +14,7 @@ main_files = ['src/main_loop/main_loop.c', 'src/main_loop/process_arguments.c', 
 if 'CC' in os.environ:
   core.Replace(CC = os.environ['CC'])
 
-core.Append(CCFLAGS = '-O3 -Wall')
+core.Append(CCFLAGS = '-O3 -Wall -Wextra')
 
 gol_lib_static = core.StaticLibrary('build/lib/gol', Split(core_files))
 gol_lib_dynamic = core.SharedLibrary('build/lib/gol', Split(core_files))
@@ -51,7 +51,7 @@ port_cxx_fltk_files = [port_cxx.Object('ports/C++/src/game.cxx'), 'ports/C++/src
 if 'CXX' in os.environ:
   port_cxx.Replace(CXX = os.environ['CXX'])
 
-port_cxx.Append(CXXFLAGS = '--std=c++11 -O3 -Wall')
+port_cxx.Append(CXXFLAGS = '--std=c++11 -O3 -Wall -Wextra')
 
 port_cxx_test_gol = port_cxx.Program('build/bin/test-gol-cxx', Split(port_cxx_test_files), LIBS=[gol_lib_static])
 gol_fltk = port_cxx.Program('build/bin/gol-fltk', Split(port_cxx_fltk_files), LIBS=[gol_lib_static, 'fltk'])
