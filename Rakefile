@@ -1,3 +1,5 @@
+require_relative 'crake'
+
 options = {
   cc: ENV['CC'] || 'gcc',
   cxx: ENV['CXX'] || 'g++',
@@ -18,10 +20,7 @@ c_test_files = Dir.glob("#{tests_dir}/**/*").select {|file| file.end_with? "_sui
   build_file = File.join(build_dir, source_file).sub(".c", ".o")
 
   task build_file => source_file do
-    FileUtils.mkdir_p File.dirname build_file
-    command = "#{options[:cc]} -o #{build_file} -c #{options[:cflags]} -I#{include_directories} #{source_file}"
-    puts command
-    `#{command}`
+    Crake::Track.new(include_directories, ENV).compile(source_file, build_file)
   end
 
   task "clean:#{build_file}" do
@@ -43,8 +42,7 @@ c_core_files.each do |source_file|
   task build_file => source_file do
     FileUtils.mkdir_p File.dirname build_file
     command = "#{options[:cc]} -o #{build_file} -c -fPIC #{options[:cflags]} -I#{include_directories} #{source_file}"
-    puts command
-    `#{command}`
+    Crake::Command.new.execute(command)
   end
 
   task "clean:#{build_file}" do
@@ -58,8 +56,7 @@ desc "Build #{libgol_static_file}"
 task libgol_static_file => c_gol_dependencies do
   FileUtils.mkdir_p File.dirname libgol_static_file
   command = "#{options[:ar]} rc #{libgol_static_file} #{c_gol_dependencies.join(' ')}"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{libgol_static_file}" do
@@ -72,8 +69,7 @@ desc "Build #{libgol_m_static_file}"
 task libgol_m_static_file => c_main_dependencies do
   FileUtils.mkdir_p File.dirname libgol_m_static_file
   command = "#{options[:ar]} rc #{libgol_m_static_file} #{c_main_dependencies.join(' ')}"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{libgol_m_static_file}" do
@@ -86,8 +82,7 @@ desc "Build #{libgol_dynamic_file}"
 task libgol_dynamic_file => c_gol_shared_dependencies do
   FileUtils.mkdir_p File.dirname libgol_dynamic_file
   command = "#{options[:cc]} -o #{libgol_dynamic_file} -shared #{c_gol_shared_dependencies.join(' ')}"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{libgol_dynamic_file}" do
@@ -100,8 +95,7 @@ test_suite = "build/tests/test_suite.o"
 task gol_test_binary => [test_suite, libgol_static_file] do
   FileUtils.mkdir_p File.dirname gol_test_binary
   command = "#{options[:cc]} -o #{gol_test_binary} #{test_suite} #{libgol_static_file} -lcheck"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{gol_test_binary}" do
@@ -114,8 +108,7 @@ curses_interface = "build/src/interfaces/curses.o"
 task gol_curses_binary => [curses_interface, libgol_m_static_file, libgol_static_file] do
   FileUtils.mkdir_p File.dirname gol_curses_binary
   command = "#{options[:cc]} -o #{gol_curses_binary} #{curses_interface} #{libgol_m_static_file} #{libgol_static_file} -lncurses"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{gol_curses_binary}" do
@@ -128,8 +121,7 @@ xlib_interface = "build/src/interfaces/Xlib.o"
 task gol_xlib_binary => [xlib_interface, libgol_m_static_file, libgol_static_file] do
   FileUtils.mkdir_p File.dirname gol_xlib_binary
   command = "#{options[:cc]} -o #{gol_xlib_binary} #{xlib_interface} #{libgol_m_static_file} #{libgol_static_file} -lX11"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{gol_xlib_binary}" do
@@ -142,8 +134,7 @@ xcb_interface = "build/src/interfaces/xcb.o"
 task gol_xcb_binary => [xcb_interface, libgol_m_static_file, libgol_static_file] do
   FileUtils.mkdir_p File.dirname gol_xcb_binary
   command = "#{options[:cc]} -o #{gol_xcb_binary} #{xcb_interface} #{libgol_m_static_file} #{libgol_static_file} -lxcb"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{gol_xcb_binary}" do
@@ -173,8 +164,7 @@ cpp_test_files = Dir.glob("#{cpp_tests_dir}/**/*").select {|file| file.end_with?
   task build_file => source_file do
     FileUtils.mkdir_p File.dirname build_file
     command = "#{options[:cxx]} -o #{build_file} -c #{options[:cxxflags]} #{cpp_include_directories} #{source_file}"
-    puts command
-    `#{command}`
+    Crake::Command.new.execute(command)
   end
 
   task "clean:#{build_file}" do
@@ -188,8 +178,7 @@ gol_test_cpp_binary_deps = ["build/ports/C++/src/game.o", "build/ports/C++/tests
 task gol_test_cpp_binary => gol_test_cpp_binary_deps do
   FileUtils.mkdir_p File.dirname gol_test_cpp_binary
   command = "#{options[:cxx]} -o #{gol_test_cpp_binary} #{gol_test_cpp_binary_deps.join(" ")}"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{gol_test_cpp_binary}" do
@@ -202,8 +191,7 @@ gol_fltk_binary_deps = ['build/ports/C++/src/game.o', 'build/ports/C++/src/inter
 task gol_fltk_binary => gol_fltk_binary_deps do
   FileUtils.mkdir_p File.dirname gol_fltk_binary
   command = "#{options[:cxx]} -o #{gol_fltk_binary} #{gol_fltk_binary_deps.join(" ")} -lfltk"
-  puts command
-  `#{command}`
+  Crake::Command.new.execute(command)
 end
 
 task "clean:#{gol_fltk_binary}" do
