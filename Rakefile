@@ -1,11 +1,11 @@
 require_relative 'crake'
 
 options = {
-  cc: ENV['CC'] || 'gcc',
-  cxx: ENV['CXX'] || 'g++',
-  cflags: ENV['CFLAGS'] || '-O3 -Wall -Wextra',
+  cc:       ENV['CC']       || 'gcc',
+  cxx:      ENV['CXX']      || 'g++',
+  cflags:   ENV['CFLAGS']   || '-O3 -Wall -Wextra',
   cxxflags: ENV['CXXFLAGS'] || '--std=c++11 -O3 -Wall -Wextra',
-  ar: ENV['AR'] || 'ar'
+  ar:       ENV['AR']       || 'ar'
 }
 
 source_dir = "src"
@@ -40,9 +40,7 @@ c_core_files.each do |source_file|
   build_file = File.join(build_dir, source_file).sub(".c", ".so")
 
   task build_file => source_file do
-    FileUtils.mkdir_p File.dirname build_file
-    command = "#{options[:cc]} -o #{build_file} -c -fPIC #{options[:cflags]} -I#{include_directories} #{source_file}"
-    Crake::Command.new.execute(command)
+    Crake::Track.new(include_directories, ENV).and(cflags: "-fPIC").compile(source_file, build_file)
   end
 
   task "clean:#{build_file}" do
