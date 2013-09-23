@@ -105,7 +105,7 @@ void Game_Add_Cell_At(Game *self, long int x, long int y)
 	World_Add_Cell(self->world, Cell_New(x, y));
 }
 
-int Game_Cell_Count_Around(const const Game *self, Coordinates coordinates)
+int Game_Cell_Count_Around(const Game *self, Coordinates coordinates)
 {
 	return World_Cell_Count_Around(self->world, coordinates, self->neighbour_locations, MAX_NEIGHBOURS);
 }
