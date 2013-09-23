@@ -31,8 +31,8 @@ module GameOfLife
       lines.
         reject {|line| line.start_with? '#'}.
         each_with_index do |line, yi|
-          line.chars
-            .each_with_index do |char, xi|
+          line.chars.
+            each_with_index do |char, xi|
               result << [xi, yi] if char == "*"
               x_max = xi if xi > x_max
           end
