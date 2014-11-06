@@ -1,4 +1,6 @@
 (function () {
+    "use strict";
+
     var MarkCell = function (options) {
             var height = options.height,
                 width = options.width,
@@ -19,7 +21,7 @@
                 drawAtWithColour = function (cell, colour) {
                     var x = cell.x,
                         y = cell.y,
-                        generation = cell.generation;
+                        generation = cell.generation,
                         x1 = x * SIZE + width / 2 + SIZE / 2,
                         y1 = y * SIZE + height / 2 + SIZE / 2;
 
@@ -46,7 +48,7 @@
             markCell,
 
             initialize = function (options) {
-                var canvas = document.getElementById(selectors.world)
+                var canvas = document.getElementById(selectors.world),
                     context = canvas.getContext('2d');
 
                 markCell = new MarkCell({
