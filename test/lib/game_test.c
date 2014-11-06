@@ -11,9 +11,8 @@ END_TEST
 START_TEST (test_Game_creation_from_file_is_proper)
 {
 	FILE *fp;
-	char file_name[L_tmpnam];
+	const char* file_name = "test.lif";
 
-	tmpnam(file_name);
 	fp = fopen(file_name, "w");
 	fprintf(fp, "0 0\n0 1\n0 2");
 	fclose(fp);
@@ -34,9 +33,8 @@ END_TEST
 START_TEST (test_Game_neglects_lines_that_begin_with_hash_when_reading_file)
 {
 	FILE *fp;
-	char file_name[L_tmpnam];
+	const char* file_name = "test.lif";
 
-	tmpnam(file_name);
 	fp = fopen(file_name, "w");
 	fprintf(fp, "#Comment 0 0\n0 0\n0 1\n0 2\n#Some Comment");
 	fclose(fp);
