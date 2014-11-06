@@ -30,5 +30,8 @@ add_executable (gol-c-xcb src/ports/C/interfaces/xcb.c)
 target_link_libraries(gol-c-xcb gol-loop gol xcb)
 
 include_directories ("${CMAKE_SOURCE_DIR}/src/ports/C++/include")
+add_executable (gol-test-cxx src/ports/C++/game.cxx test/ports/C++/game_test.cxx)
+target_link_libraries(gol-test-cxx gol boost_unit_test_framework)
+
 add_executable (gol-cxx-fltk src/ports/C++/game.cxx src/ports/C++/interfaces/fltk/mark_cell.cxx src/ports/C++/interfaces/fltk/canvas.cxx src/ports/C++/interfaces/fltk/runner.cxx src/ports/C++/interfaces/fltk/window.cxx src/ports/C++/interfaces/fltk/main.cxx)
-target_link_libraries(gol-cxx-fltk gol-loop gol fltk)
+target_link_libraries(gol-cxx-fltk gol fltk)
