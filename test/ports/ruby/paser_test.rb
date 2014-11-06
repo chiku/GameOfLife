@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 
-require File.expand_path(File.join('..', 'lib', 'game', 'parser'))
+require File.expand_path(File.join('..', '..', '..', 'src', 'ports', 'ruby', 'lib', 'game', 'parser'))
 
 module GameOfLife
   describe Parser do

@@ -11,7 +11,6 @@ module GameOfLife
     def initialize(pattern = [])
       @cache_current = false
       @cache_previous = false
-      puts pattern.inspect
       pattern.each {|x, y| add_cell_at(x, y)}
     end
 
