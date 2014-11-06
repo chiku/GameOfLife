@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+gem "gtk2"
+gem "fxruby"
+gem "sinatra"

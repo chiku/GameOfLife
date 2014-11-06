@@ -1,0 +1,36 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    atk (2.2.3)
+      glib2 (= 2.2.3)
+    cairo (1.12.9)
+      pkg-config (>= 1.1.5)
+    fxruby (1.6.28)
+    gdk_pixbuf2 (2.2.3)
+      glib2 (= 2.2.3)
+    glib2 (2.2.3)
+      pkg-config
+    gtk2 (2.2.3)
+      atk (= 2.2.3)
+      gdk_pixbuf2 (= 2.2.3)
+      pango (= 2.2.3)
+    pango (2.2.3)
+      cairo (>= 1.12.5)
+      glib2 (= 2.2.3)
+    pkg-config (1.1.5)
+    rack (1.5.2)
+    rack-protection (1.5.3)
+      rack
+    sinatra (1.4.5)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    tilt (1.4.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fxruby
+  gtk2
+  sinatra
