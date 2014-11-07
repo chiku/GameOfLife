@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/spec'
 
-require File.expand_path(File.join('..', '..', '..', 'src', 'ports', 'ruby', 'lib', 'game', 'cell'))
+require File.expand_path(File.join('..', '..', '..', 'src', 'impl', 'ruby', 'lib', 'game', 'cell'))
 
 module GameOfLife
   describe Cell do

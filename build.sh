@@ -12,9 +12,9 @@ make
 ./gol-test-cxx --show-progress
 
 popd
-pushd src/ports/ruby/lib/ext
+pushd src/impl/ruby/lib/ext
 ./extconf.rb
 make
 popd
-cd test/ports/ruby
+cd test/impl/ruby
 rake

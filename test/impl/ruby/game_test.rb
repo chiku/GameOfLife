@@ -3,7 +3,7 @@ require 'minitest/spec'
 
 require 'json'
 
-require File.expand_path(File.join('..', '..', '..', 'src', 'ports', 'ruby', 'lib', 'game', 'game'))
+require File.expand_path(File.join('..', '..', '..', 'src', 'impl', 'ruby', 'lib', 'game', 'game'))
 
 module GameOfLife
   describe Game do
