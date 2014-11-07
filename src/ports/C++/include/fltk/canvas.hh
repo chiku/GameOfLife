@@ -3,8 +3,8 @@
 #include "game.hh"
 #include "fltk/mark_cell.hh"
 
-#ifndef __GAME_OF_LIFE_CANVAS_CXX__
-#define __GAME_OF_LIFE_CANVAS_CXX__
+#ifndef GAME_OF_LIFE_CANVAS_CXX_HH
+#define GAME_OF_LIFE_CANVAS_CXX_HH
 
 namespace GameOfLife
 {

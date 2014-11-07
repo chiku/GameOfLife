@@ -4,8 +4,8 @@
 #include "game.hh"
 #include "fltk/canvas.hh"
 
-#ifndef __GAME_OF_LIFE_WINDOW_CXX__
-#define __GAME_OF_LIFE_WINDOW_CXX__
+#ifndef GAME_OF_LIFE_WINDOW_HH
+#define GAME_OF_LIFE_WINDOW_HH
 
 namespace GameOfLife
 {

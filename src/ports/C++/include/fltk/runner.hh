@@ -1,8 +1,8 @@
 #include "game.hh"
 #include "fltk/window.hh"
 
-#ifndef __GAME_OF_LIFE_RUNNER_CXX__
-#define __GAME_OF_LIFE_RUNNER_CXX__
+#ifndef GAME_OF_LIFE_RUNNER_HH
+#define GAME_OF_LIFE_RUNNER_HH
 
 namespace GameOfLife
 {

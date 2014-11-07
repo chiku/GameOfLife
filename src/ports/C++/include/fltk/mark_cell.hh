@@ -1,7 +1,7 @@
 #include <FL/Fl.H>
 
-#ifndef __GAME_OF_LIFE_MARK_CELL_CXX__
-#define __GAME_OF_LIFE_MARK_CELL_CXX__
+#ifndef GAME_OF_LIFE_MARK_CELL_HH
+#define GAME_OF_LIFE_MARK_CELL_HH
 
 namespace GameOfLife
 {

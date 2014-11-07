@@ -6,8 +6,8 @@ extern "C" {
 	#include <game_of_life.h>
 }
 
-#ifndef __GAME_OF_LIFE_CXX__
-#define __GAME_OF_LIFE_CXX__
+#ifndef GAME_OF_LIFE_HH
+#define GAME_OF_LIFE_HH
 
 
 namespace GameOfLife
