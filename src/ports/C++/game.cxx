@@ -8,29 +8,6 @@ extern "C" {
 
 #include "game.hh"
 
-void GameOfLife::Game::accumulationVisitor(::Cell cell, void* data)
-{
-	GameOfLife::Coors *allCoordinates = (GameOfLife::Coors*)(data);
-	allCoordinates->insert(std::make_pair(cell.coordinates.x, cell.coordinates.y));
-}
-
-GameOfLife::Coors GameOfLife::Game::differencesBetween(const GameOfLife::Coors *first, const GameOfLife::Coors *second)
-{
-	GameOfLife::Coors result;
-	std::set_difference(first->begin(), first->end(),
-	                    second->begin(), second->end(),
-	                    std::inserter(result, result.end()));
-	return result;
-}
-
-void GameOfLife::Game::syncGenerations()
-{
-	currentCoordinates->clear();
-	previousCoordinates->clear();
-	Game_At_Each_Cell(game, accumulationVisitor, (void*)currentCoordinates);
-	Game_At_Each_Old_Cell(game, accumulationVisitor, (void*)previousCoordinates);
-}
-
 GameOfLife::Game::Game()
 {
 	game = Game_New();
@@ -88,3 +65,25 @@ GameOfLife::Coors GameOfLife::Game::cellsToAdd() const
 	return differencesBetween(currentCoordinates, previousCoordinates);
 }
 
+void GameOfLife::Game::accumulationVisitor(::Cell cell, void* data)
+{
+	GameOfLife::Coors *allCoordinates = (GameOfLife::Coors*)(data);
+	allCoordinates->insert(std::make_pair(cell.coordinates.x, cell.coordinates.y));
+}
+
+GameOfLife::Coors GameOfLife::Game::differencesBetween(const GameOfLife::Coors *first, const GameOfLife::Coors *second)
+{
+	GameOfLife::Coors result;
+	std::set_difference(first->begin(), first->end(),
+	                    second->begin(), second->end(),
+	                    std::inserter(result, result.end()));
+	return result;
+}
+
+void GameOfLife::Game::syncGenerations()
+{
+	currentCoordinates->clear();
+	previousCoordinates->clear();
+	Game_At_Each_Cell(game, accumulationVisitor, (void*)currentCoordinates);
+	Game_At_Each_Old_Cell(game, accumulationVisitor, (void*)previousCoordinates);
+}

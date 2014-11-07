@@ -16,15 +16,6 @@ namespace GameOfLife
 
 	class Game
 	{
-	private:
-		::Game *game;
-		Coors *currentCoordinates;
-		Coors *previousCoordinates;
-
-		void syncGenerations();
-		static void accumulationVisitor(::Cell cell, void* data);
-		static Coors differencesBetween(const Coors *first, const Coors *second);
-
 	public:
 		Game();
 
@@ -37,6 +28,15 @@ namespace GameOfLife
 		Coors previousGeneration() const;
 		Coors cellsToRemove() const;
 		Coors cellsToAdd() const;
+
+	private:
+		::Game *game;
+		Coors *currentCoordinates;
+		Coors *previousCoordinates;
+
+		void syncGenerations();
+		static void accumulationVisitor(::Cell cell, void* data);
+		static Coors differencesBetween(const Coors *first, const Coors *second);
 	};
 }
 

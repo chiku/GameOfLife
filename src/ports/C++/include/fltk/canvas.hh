@@ -12,19 +12,18 @@ namespace GameOfLife
 	{
 		class Canvas : public Fl_Widget
 		{
-		private:
-			static constexpr double TIMEOUT = 0.50;
-
-			GameOfLife::Game *game;
-			MarkCell *markCell;
-
-			void draw();
-			static void Timer_CB(void *userdata);
-
 		public:
 			Canvas(long int width, long int height);
 			~Canvas();
 			void attachGame(GameOfLife::Game *game_);
+
+		private:
+			GameOfLife::Game *game;
+			MarkCell *markCell;
+
+			void draw();
+			static double Timeout();
+			static void Timer_CB(void *userdata);
 		};
 	}
 }

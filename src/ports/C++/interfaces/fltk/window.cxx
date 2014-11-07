@@ -3,7 +3,7 @@
 #include "fltk/canvas.hh"
 #include "fltk/window.hh"
 
-GameOfLife::FLTK::Window::Window()
+GameOfLife::FLTK::Window::Window() : WIDTH(1280), HEIGHT(800)
 {
 	window = new Fl_Double_Window(1280, 800);
 	canvas = new GameOfLife::FLTK::Canvas(WIDTH, HEIGHT);
@@ -15,6 +15,11 @@ GameOfLife::FLTK::Window::~Window()
 	delete window;
 }
 
+void GameOfLife::FLTK::Window::attachGameToCanvas(GameOfLife::Game *game)
+{
+	canvas->attachGame(game);
+}
+
 void GameOfLife::FLTK::Window::setPropertiesOnWindow()
 {
 	window->fullscreen();
@@ -22,9 +27,4 @@ void GameOfLife::FLTK::Window::setPropertiesOnWindow()
 	window->add(canvas);
 	window->end();
 	window->show();
-}
-
-void GameOfLife::FLTK::Window::attachGameToCanvas(GameOfLife::Game *game)
-{
-	canvas->attachGame(game);
 }

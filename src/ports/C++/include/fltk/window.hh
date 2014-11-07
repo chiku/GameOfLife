@@ -13,19 +13,19 @@ namespace GameOfLife
 	{
 		class Window
 		{
+		public:
+			Window();
+			~Window();
+			void attachGameToCanvas(GameOfLife::Game *game);
+
 		private:
-			const long int WIDTH = 1280;
-			const long int HEIGHT = 800;
+			const long int WIDTH;
+			const long int HEIGHT;
 
 			Fl_Double_Window *window;
 			GameOfLife::FLTK::Canvas *canvas;
 
 			void setPropertiesOnWindow();
-
-		public:
-			Window();
-			~Window();
-			void attachGameToCanvas(GameOfLife::Game *game);
 		};
 	}
 }

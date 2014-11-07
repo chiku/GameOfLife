@@ -9,7 +9,7 @@ include (CheckIncludeFileCXX)
 check_include_files	(check.h HAVE_CHECK_H)
 
 set(CMAKE_C_FLAGS "-Wall -Werror -fPIC")
-set(CMAKE_CXX_FLAGS "--std=c++11 -Wall -Werror")
+set(CMAKE_CXX_FLAGS "-Wall -Werror")
 
 include_directories ("${CMAKE_SOURCE_DIR}/src/lib/include")
 add_library (gol src/lib/coordinates.c src/lib/cell.c src/lib/rules.c src/lib/world.c src/lib/game.c)
