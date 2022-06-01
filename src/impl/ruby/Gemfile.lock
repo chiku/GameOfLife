@@ -18,7 +18,7 @@ GEM
       cairo (>= 1.12.5)
       glib2 (= 2.2.3)
     pkg-config (1.1.5)
-    rack (1.5.2)
+    rack (1.6.13)
     rack-protection (1.5.3)
       rack
     sinatra (1.4.5)
