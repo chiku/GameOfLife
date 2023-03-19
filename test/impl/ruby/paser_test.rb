@@ -13,7 +13,7 @@ module GameOfLife
 -1 1
 1 -2
         PATTERN
-        Parser.new(pattern).parse.must_equal [[1, 0], [-1, 1], [1, -2]]
+        expect(Parser.new(pattern).parse).must_equal [[1, 0], [-1, 1], [1, -2]]
       end
 
       it "ignores spaces at the extremes" do
@@ -23,7 +23,7 @@ module GameOfLife
   -1 -2
 3 4 
 PATTERN
-        Parser.new(pattern).parse.must_equal [[4, 3], [-1,-2], [3, 4]]
+        expect(Parser.new(pattern).parse).must_equal [[4, 3], [-1,-2], [3, 4]]
       end
 
       it "ignores separations made using double spaces" do
@@ -33,7 +33,7 @@ PATTERN
  -4  4
 1 2
 PATTERN
-        Parser.new(pattern).parse.must_equal [[2, 3], [-4,4], [1, 2]]
+        expect(Parser.new(pattern).parse).must_equal [[2, 3], [-4,4], [1, 2]]
       end
 
       it "ignores malformed lines" do
@@ -43,7 +43,7 @@ PATTERN
 4 bat
 man 2
 PATTERN
-        Parser.new(pattern).parse.must_equal []
+        expect(Parser.new(pattern).parse).must_equal []
       end
     end
 
@@ -55,7 +55,7 @@ PATTERN
 *..
 .*.
 PATTERN
-        Parser.new(pattern).parse.must_equal [[-1, 1], [0, 1], [1, 1], [-1, 0], [0, -1]]
+        expect(Parser.new(pattern).parse).must_equal [[-1, 1], [0, 1], [1, 1], [-1, 0], [0, -1]]
       end
 
       it "centers x's using maximum width" do
@@ -65,12 +65,12 @@ PATTERN
 **.
 ..*
 PATTERN
-        Parser.new(pattern).parse.must_equal [[-2, 1], [-1, 1], [-2, 0], [-1, 0], [0, -1]]
+        expect(Parser.new(pattern).parse).must_equal [[-2, 1], [-1, 1], [-2, 0], [-1, 0], [0, -1]]
       end
     end
 
     it "is an empty array when invalid file format" do
-      Parser.new("").parse.must_equal []
+      expect(Parser.new("").parse).must_equal []
     end
   end
 end
