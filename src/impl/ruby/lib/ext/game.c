@@ -11,7 +11,7 @@ gol_cell_initialize(int argc, VALUE* argv, VALUE self)
 	VALUE generation;
 
 	if (argc < 2 || argc > 3) {
-		rb_raise(rb_eArgError, "wrong number of arguments");
+		rb_raise(rb_eArgError, "wrong number of arguments (given %d, expected 2..3)", argc);
 	}
 
 	generation = (argc == 3) ? argv[2] : INT2NUM(1);
@@ -61,7 +61,6 @@ gol_game_tick(VALUE self)
 	Game *game;
 	Data_Get_Struct(self, Game, game);
 	Game_Tick(game);
-	self = Data_Wrap_Struct(gol_game, 0, 0, game);
 	return self;
 }
 
