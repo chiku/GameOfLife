@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/chiku/GameOfLife.svg?branch=master)](https://travis-ci.org/chiku/GameOfLife)
+[![Build Status](https://github.com/chiku/GameOfLife/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/chiku/GameOfLife/actions/workflows/build.yml)
 
 Implement Conway's game of life in C and port it to C++ and ruby.
 
