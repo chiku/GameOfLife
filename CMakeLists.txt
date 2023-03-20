@@ -6,8 +6,6 @@ include (CheckCXXSourceCompiles)
 include (CheckIncludeFiles)
 include (CheckIncludeFileCXX)
 
-check_include_files	(check.h HAVE_CHECK_H)
-
 set(CMAKE_C_FLAGS "-Wall -Werror -fPIC")
 set(CMAKE_CXX_FLAGS "-Wall -Werror")
 
@@ -18,7 +16,7 @@ include_directories ("${CMAKE_SOURCE_DIR}/src/impl/C/include")
 add_library (gol-loop src/impl/C/main_loop/handle_signals.c src/impl/C/main_loop/process_arguments.c src/impl/C/main_loop/main_loop.c src/impl/C/main_loop/main.c) 
 
 add_executable (gol-test-c test/lib/test_suite.c)
-target_link_libraries(gol-test-c gol check)
+target_link_libraries(gol-test-c gol)
 
 add_executable (gol-c-curses src/impl/C/interfaces/curses.c)
 target_link_libraries(gol-c-curses gol-loop gol curses)
@@ -31,7 +29,7 @@ target_link_libraries(gol-c-xcb gol-loop gol xcb)
 
 include_directories ("${CMAKE_SOURCE_DIR}/src/impl/C++/include")
 add_executable (gol-test-cxx src/impl/C++/game.cxx test/impl/C++/game_test.cxx)
-target_link_libraries(gol-test-cxx gol boost_unit_test_framework)
+target_link_libraries(gol-test-cxx gol)
 
 add_executable (gol-cxx-fltk src/impl/C++/game.cxx src/impl/C++/interfaces/fltk/mark_cell.cxx src/impl/C++/interfaces/fltk/canvas.cxx src/impl/C++/interfaces/fltk/runner.cxx src/impl/C++/interfaces/fltk/window.cxx src/impl/C++/interfaces/fltk/main.cxx)
 target_link_libraries(gol-cxx-fltk gol fltk)
