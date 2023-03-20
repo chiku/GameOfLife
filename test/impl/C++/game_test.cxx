@@ -1,13 +1,12 @@
-#define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE GameOfLife
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include <set>
 #include <utility>
 #include <fstream>
 #include <string>
-#include <boost/test/unit_test.hpp>
 
 #include "game.hh"
+#include "doctest.hh"
 
 class GameOfLifeTestFixture
 {
@@ -16,54 +15,52 @@ public:
     ~GameOfLifeTestFixture() {}
 };
 
-BOOST_FIXTURE_TEST_SUITE(GameOfLifeTest, GameOfLifeTestFixture)
-
-BOOST_AUTO_TEST_CASE(Empty_game_has_a_cell_count_0)
+TEST_CASE("Empty game has a cell count 0")
 {
     GameOfLife::Game emptyGame;
-    BOOST_CHECK_EQUAL(emptyGame.cellCount(), 0);
+    CHECK(emptyGame.cellCount() == 0);
 }
 
-BOOST_AUTO_TEST_CASE(Game_after_one_cell_has_a_cell_count_1)
+TEST_CASE("Game after one cell has a cell count 1")
 {
     GameOfLife::Game game;
     game.addCellAt(1, 0);
-    BOOST_CHECK_EQUAL(game.cellCount(), 1);
+    CHECK(game.cellCount() == 1);
 }
 
-BOOST_AUTO_TEST_CASE(Game_after_two_cells_has_a_cell_count_1)
+TEST_CASE("Game after two cells has a cell count 1")
 {
     GameOfLife::Game game;
     game.addCellAt(1, 0).addCellAt(0, 1);
-    BOOST_CHECK_EQUAL(game.cellCount(), 2);
+    CHECK(game.cellCount() == 2);
 }
 
-BOOST_AUTO_TEST_CASE(Game_has_cell_where_it_is_created)
+TEST_CASE("Game has cell where it is created")
 {
     GameOfLife::Game game;
     game.addCellAt(1, 0);
-    BOOST_CHECK(game.hasCellAt(1, 0));
+    CHECK(game.hasCellAt(1, 0));
 }
 
-BOOST_AUTO_TEST_CASE(Game_does_not_have_cell_where_it_is_not_created)
+TEST_CASE("Game does not have cell where it is not created")
 {
     GameOfLife::Game game;
     game.addCellAt(1, 0);
-    BOOST_CHECK(!game.hasCellAt(0, 1));
+    CHECK(!game.hasCellAt(0, 1));
 }
 
-BOOST_AUTO_TEST_CASE(Blinker_after_a_tick_has_three_cells_at_opposite_fringes_of_the_original)
+TEST_CASE("Blinker after a tick has three cells at opposite fringes of the original")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(0, 0).addCellAt(1, 0);
     game.tick();
-    BOOST_CHECK_EQUAL(game.cellCount(), 3);
-    BOOST_CHECK(game.hasCellAt(0, -1));
-    BOOST_CHECK(game.hasCellAt(0, 0));
-    BOOST_CHECK(game.hasCellAt(0, 1));
+    REQUIRE(game.cellCount() == 3);
+    CHECK(game.hasCellAt(0, -1));
+    CHECK(game.hasCellAt(0, 0));
+    CHECK(game.hasCellAt(0, 1));
 }
 
-BOOST_AUTO_TEST_CASE(Stress_test_blinker)
+TEST_CASE("Stress test blinker")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(0, 0).addCellAt(1, 0);
@@ -71,106 +68,106 @@ BOOST_AUTO_TEST_CASE(Stress_test_blinker)
     for (long int i = 0; i < 1000; i++) {
         game.tick();
     }
-    BOOST_CHECK_EQUAL(game.cellCount(), 3);
+    CHECK(game.cellCount() == 3);
 }
 
-BOOST_AUTO_TEST_CASE(Game_has_the_coordinates_of_the_current_generation_of_cells)
+TEST_CASE("Game has the coordinates of the current generation of cells")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(0, -1).addCellAt(1, 0).addCellAt(5, 5);
     std::set <std::pair <long int, long int> > coordinates = game.currentGeneration();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 4);
-    BOOST_CHECK(coordinates.find(std::make_pair(-1L,  0L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair( 0L, -1L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair( 1L,  0L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair( 5L,  5L)) != coordinates.end());
+    REQUIRE(coordinates.size() == 4);
+    CHECK(coordinates.find(std::make_pair(-1L,  0L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair( 0L, -1L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair( 1L,  0L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair( 5L,  5L)) != coordinates.end());
 }
 
-BOOST_AUTO_TEST_CASE(Current_generation_is_not_cached)
+TEST_CASE("Current generation is not cached")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(-2, 0).addCellAt(-3, 0);
     game.tick();
     std::set <std::pair <long int, long int> > coordinates = game.currentGeneration();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 3);
-    BOOST_CHECK(coordinates.find(std::make_pair(-2L, -1L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair(-2L,  0L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair(-2L,  1L)) != coordinates.end());
+    REQUIRE(coordinates.size() == 3);
+    CHECK(coordinates.find(std::make_pair(-2L, -1L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair(-2L,  0L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair(-2L,  1L)) != coordinates.end());
 }
 
-BOOST_AUTO_TEST_CASE(Game_has_the_coordinates_of_the_previous_generation_of_cells)
+TEST_CASE("Game has the coordinates of the previous generation of cells")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(0, -1).addCellAt(1, 0).addCellAt(5, 5).tick();
     std::set <std::pair <long int, long int> > coordinates = game.previousGeneration();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 4);
-    BOOST_CHECK(coordinates.find(std::make_pair(-1L,  0L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair( 0L, -1L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair( 1L,  0L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair( 5L,  5L)) != coordinates.end());
+    REQUIRE(coordinates.size() == 4);
+    CHECK(coordinates.find(std::make_pair(-1L,  0L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair( 0L, -1L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair( 1L,  0L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair( 5L,  5L)) != coordinates.end());
 }
 
-BOOST_AUTO_TEST_CASE(Previous_generation_is_not_cached)
+TEST_CASE("Previous generation is not cached")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(-2, 0).addCellAt(-3, 0);
     game.tick().tick();
     std::set <std::pair <long int, long int> > coordinates = game.previousGeneration();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 3);
-    BOOST_CHECK(coordinates.find(std::make_pair(-2L, -1L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair(-2L,  0L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair(-2L,  1L)) != coordinates.end());
+    REQUIRE(coordinates.size() == 3);
+    CHECK(coordinates.find(std::make_pair(-2L, -1L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair(-2L,  0L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair(-2L,  1L)) != coordinates.end());
 }
 
-BOOST_AUTO_TEST_CASE(Cells_that_exist_in_previous_generation_but_not_in_current_are_removed)
+TEST_CASE("Cells that exist in previous generation but not in current are removed")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(0, 0).addCellAt(1, 0);
     game.tick();
     std::set <std::pair <long int, long int> > coordinates = game.cellsToRemove();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 2);
-    BOOST_CHECK(coordinates.find(std::make_pair(-1L, 0L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair( 1L, 0L)) != coordinates.end());
+    REQUIRE(coordinates.size() == 2);
+    CHECK(coordinates.find(std::make_pair(-1L, 0L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair( 1L, 0L)) != coordinates.end());
 }
 
-BOOST_AUTO_TEST_CASE(Cells_that_exist_in_previous_and_current_generations_are_not_removed)
+TEST_CASE("Cells that exist in previous and current generations are not removed")
 {
     GameOfLife::Game game;
     game.addCellAt(0, 0).addCellAt(0, 1).addCellAt(1, 0).addCellAt(1, 1);
     game.tick();
     std::set <std::pair <long int, long int> > coordinates = game.cellsToRemove();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 0);
+    CHECK(coordinates.size() == 0);
 }
 
-BOOST_AUTO_TEST_CASE(Cells_that_dont_exist_in_previous_generation_but_in_current_are_added)
+TEST_CASE("Cells that dont exist in previous generation but in current are added")
 {
     GameOfLife::Game game;
     game.addCellAt(-1, 0).addCellAt(0, 0).addCellAt(1, 0);
     game.tick();
     std::set <std::pair <long int, long int> > coordinates = game.cellsToAdd();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 2);
-    BOOST_CHECK(coordinates.find(std::make_pair(0L, -1L)) != coordinates.end());
-    BOOST_CHECK(coordinates.find(std::make_pair(0L,  1L)) != coordinates.end());
+    REQUIRE(coordinates.size() == 2);
+    CHECK(coordinates.find(std::make_pair(0L, -1L)) != coordinates.end());
+    CHECK(coordinates.find(std::make_pair(0L,  1L)) != coordinates.end());
 }
 
-BOOST_AUTO_TEST_CASE(Cells_that_exist_in_previous_and_current_generations_are_not_added)
+TEST_CASE("Cells that exist in previous and current generations are not added")
 {
     GameOfLife::Game game;
     game.addCellAt(0, 0).addCellAt(0, 1).addCellAt(1, 0).addCellAt(1, 1);
     game.tick();
     std::set <std::pair <long int, long int> > coordinates = game.cellsToAdd();
 
-    BOOST_CHECK_EQUAL(coordinates.size(), 0);
+    CHECK(coordinates.size() == 0);
 }
 
-BOOST_AUTO_TEST_CASE(Game_reads_cells_from_file)
+TEST_CASE("Game reads cells from file")
 {
     const char *fileName = "test.lif";
     std::ofstream file(fileName);
@@ -179,11 +176,9 @@ BOOST_AUTO_TEST_CASE(Game_reads_cells_from_file)
     GameOfLife::Game game;
     game.read(fileName);
 
-    BOOST_CHECK_EQUAL(game.cellCount(), 3);
-    BOOST_CHECK(game.hasCellAt(-1L, 0L));
-    BOOST_CHECK(game.hasCellAt(-2L, 0L));
-    BOOST_CHECK(game.hasCellAt(-3L, 1L));
+    REQUIRE(game.cellCount() == 3);
+    CHECK(game.hasCellAt(-1L, 0L));
+    CHECK(game.hasCellAt(-2L, 0L));
+    CHECK(game.hasCellAt(-3L, 1L));
     remove(fileName);
 }
-
-BOOST_AUTO_TEST_SUITE_END()
