@@ -1,21 +1,21 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib/interfaces/interfaces'
-require_relative 'lib/game'
-
-file_name = ARGV[0]
+file_name, runner_kind = ARGV[0], ARGV[1]
 
 unless file_name
   puts "Please give a file name as the first argument"
-  exit 20
+  exit 2
 end
 
 begin
   raw_lines = File.read(file_name)
 rescue => ex
   puts "Error when opening '#{file_name}': #{ex.message}"
-  exit 21
+  exit 1
 end
+
+require_relative 'lib/interfaces/interfaces'
+require_relative 'lib/game'
 
 lines = GameOfLife::Parser.new(raw_lines).parse
 game = GameOfLife::Game.new(lines)
@@ -29,4 +29,4 @@ runner['gtk'] = gtk
 runner['fox'] = fox
 runner['sinatra'] = sinatra
 
-runner[ARGV[1]].start game
+runner[runner_kind].start game
