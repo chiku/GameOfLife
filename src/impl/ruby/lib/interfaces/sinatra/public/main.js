@@ -69,10 +69,10 @@
                 var request = new XMLHttpRequest();
                 request.open("POST", tickUrl, false);
                 request.send();
+                return JSON.parse(request.responseText)['world'];
             },
 
-            render = function () {
-                var world = fetchWorld();
+            render = function (world) {
                 world.previous.forEach(function (cell) {
                     markCell.deadAt(cell);
                 });
@@ -80,10 +80,15 @@
                     markCell.aliveAt(cell);
                 });
                 tick();
+            },
+
+            loop = function() {
+
             };
 
         window.onload = function () {
             initialize();
+            render(fetchWorld());
             window.setInterval(render, TIME_INTERVAL);
         };
     };

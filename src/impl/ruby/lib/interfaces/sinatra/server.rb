@@ -18,6 +18,7 @@ module GameOfLife
 
         post '/world/tick' do
           StoredGame.tick!
+          StoredGame.response
         end
       end
     end
