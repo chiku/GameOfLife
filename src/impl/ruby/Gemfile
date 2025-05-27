@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
-gem "gtk2"
-gem "fxruby"
-gem "sinatra"
+gem "gtk3", "~> 4.2"
+gem "fxruby", "~> 1.6"
+gem "sinatra", "~> 4.1"
+gem "rackup", "~> 2.2"
+gem "webrick", "~> 1.9"

@@ -1,5 +1,5 @@
+cmake_minimum_required (VERSION 3.10.0)
 project (GameOfLife C CXX)
-cmake_minimum_required (VERSION 2.8.7)
 
 include (CheckCSourceCompiles)
 include (CheckCXXSourceCompiles)

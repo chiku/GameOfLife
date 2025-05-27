@@ -1,4 +1,4 @@
-require 'gtk2'
+require 'gtk3'
 require_relative 'mark_cell'
 
 module GameOfLife
@@ -7,7 +7,6 @@ module GameOfLife
       class Window < ::Gtk::Window
         class << self
           def init
-            ::Gtk.init
           end
 
           def main
@@ -28,7 +27,7 @@ module GameOfLife
 
           init_ui
           set_default_size width, height
-          fullscreen
+          maximize
 
           show_all
         end
@@ -46,25 +45,28 @@ module GameOfLife
         end
 
         def context
-          @context ||= container.window.create_cairo_context
+          container.window.create_cairo_context
         end
 
-        def mark_cell
-          @mark_cell ||= MarkCell.new context: context, width: width, height: height
+        def mark_cell context
+          MarkCell.new context: context, width: width, height: height
         end
 
         def init_ui
-          container.signal_connect 'expose_event' do
-            on_expose_draw
+          container.signal_connect 'draw' do |_, ctx|
+            on_draw ctx
           end
 
           add container
+
+          ::GLib::Timeout.add @time_interval do
+            queue_draw
+            true
+          end
         end
 
-        def on_expose_draw
-          ::Gtk.timeout_add @time_interval do
-            @game.render_generation_with mark_cell
-          end
+        def on_draw context
+          @game.render_generation_with mark_cell(context)
         end
       end
     end

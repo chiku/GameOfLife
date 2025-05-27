@@ -4,7 +4,7 @@
 typedef struct Graphics Graphics;
 
 Graphics* Graphics_Allocate();
-Graphics* Graphics_Initialize();
+Graphics* Graphics_Initialize(Graphics *self);
 Graphics* Graphics_New();
 void Graphics_Destroy(Graphics *self);
 

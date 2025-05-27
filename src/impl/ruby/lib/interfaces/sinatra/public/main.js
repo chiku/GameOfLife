@@ -89,7 +89,9 @@
         window.onload = function () {
             initialize();
             render(fetchWorld());
-            window.setInterval(render, TIME_INTERVAL);
+            window.setInterval(function () {
+                render(fetchWorld());
+            }, TIME_INTERVAL);
         };
     };
 
