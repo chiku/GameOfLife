@@ -5,6 +5,16 @@ static VALUE gol_gol;
 static VALUE gol_game;
 static VALUE gol_cell;
 
+static void gol_game_free(void *ptr) {
+	Game_Destroy(ptr);
+}
+
+static const rb_data_type_t gol_game_data_type = {
+	"GameOfLife::Game",
+	{0, gol_game_free, 0,},
+	0, 0, RUBY_TYPED_FREE_IMMEDIATELY,
+};
+
 static VALUE
 gol_cell_initialize(int argc, VALUE* argv, VALUE self)
 {
@@ -27,14 +37,14 @@ static VALUE
 gol_game_allocate(VALUE klass)
 {
 	Game *game = Game_New();
-	return Data_Wrap_Struct(klass, 0, 0, game);
+	return TypedData_Wrap_Struct(klass, &gol_game_data_type, game);
 }
 
 static VALUE
 gol_game_cell_count(VALUE self)
 {
 	Game *game;
-	Data_Get_Struct(self, Game, game);
+	TypedData_Get_Struct(self, Game, &gol_game_data_type, game);
 	return LONG2FIX(Game_Cell_Count(game));
 }
 
@@ -42,7 +52,7 @@ static VALUE
 gol_game_has_cell_at(VALUE self, VALUE x, VALUE y)
 {
 	Game *game;
-	Data_Get_Struct(self, Game, game);
+	TypedData_Get_Struct(self, Game, &gol_game_data_type, game);
 	return Game_Has_Cell_At(game, FIX2LONG(x), FIX2LONG(y)) ? Qtrue : Qfalse;
 }
 
@@ -50,7 +60,7 @@ static VALUE
 gol_game_add_cell_at(VALUE self, VALUE x, VALUE y)
 {
 	Game *game;
-	Data_Get_Struct(self, Game, game);
+	TypedData_Get_Struct(self, Game, &gol_game_data_type, game);
 	Game_Add_Cell_At(game, FIX2LONG(x), FIX2LONG(y));
 	return self;
 }
@@ -59,7 +69,7 @@ static VALUE
 gol_game_tick(VALUE self)
 {
 	Game *game;
-	Data_Get_Struct(self, Game, game);
+	TypedData_Get_Struct(self, Game, &gol_game_data_type, game);
 	Game_Tick(game);
 	return self;
 }
@@ -80,7 +90,7 @@ static VALUE
 gol_game_yield_at_each_cell(VALUE self)
 {
 	Game *game;
-	Data_Get_Struct(self, Game, game);
+	TypedData_Get_Struct(self, Game, &gol_game_data_type, game);
 	Game_At_Each_Cell(game, yield_visitor, NULL);
 	return self;
 }
@@ -89,7 +99,7 @@ static VALUE
 gol_game_yield_at_each_previous_cell(VALUE self)
 {
 	Game *game;
-	Data_Get_Struct(self, Game, game);
+	TypedData_Get_Struct(self, Game, &gol_game_data_type, game);
 	Game_At_Each_Old_Cell(game, yield_visitor, NULL);
 	return self;
 }
@@ -98,12 +108,12 @@ static VALUE
 gol_game_dump(VALUE self)
 {
 	Game *game;
-	Data_Get_Struct(self, Game, game);
+	TypedData_Get_Struct(self, Game, &gol_game_data_type, game);
 	Game_Dump(game);
 	return self;
 }
 
-void Init_game_of_life()
+void Init_game_of_life(void)
 {
 	gol_gol = rb_define_module("GameOfLife");
 	gol_game = rb_define_class_under(gol_gol, "Game", rb_cObject);
